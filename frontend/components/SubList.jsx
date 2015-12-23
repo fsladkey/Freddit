@@ -10,23 +10,25 @@ var SubList = React.createClass({
   },
 
   componentDidMount: function () {
-    this.benchListener = SubStore.addListener(this._subChanged);
+    this.subListener = SubStore.addListener(this._subChanged);
     SubApiUtil.fetchSubs();
   },
 
   componentWillUnmount: function () {
-    this.benchListener.remove();
+    this.subListener.remove();
   },
 
   render: function () {
+    var subs =  (
+      this.state.subs.map(function (sub) {
+        return <li key={sub.id}><a href={"#/r/" + sub.title}>{sub.title}</a></li>;
+      })
+    );
+
     return (
       <div className="sub-list">
       <ul>
-        {
-          this.state.subs.map(function (sub) {
-            return <li key={sub.id}>{sub.title}</li>;
-          })
-        }
+        {subs}
       </ul>
       </div>
     );

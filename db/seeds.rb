@@ -16,14 +16,14 @@ firetrux = User.create!(username: "Firetrux", email: "firetrux@firetrux.com", pa
 end
 
 Sub.destroy_all
-cats = Sub.create!(title: "Cats", description: "This is a subfreddit all about cats. Cats cats cats.")
-dogs = Sub.create!(title: "Dogs", description: "Dogs are great! Don't you like dogs?")
-ruby = Sub.create!(title: "Ruby", description: "For all your Ruby needs!")
-java = Sub.create!(title: "Java", description: "Serious languages only within. No scripts please.")
-cplusplus = Sub.create!(title: "C++", description: "If you don't already know the answer, we can't possibly be bothered to help you.")
-python = Sub.create!(title: "Python", description: "Is this a subfreddit for snakes or the programming language? Does it matter?.")
-javascript = Sub.create!(title: "Javascript", description: "Abandon all hope, ye who enter here.")
-app_academy = Sub.create!(title: "App Academy", description: "Learn all the things!")
+cats = Sub.create!(title: "cats", description: "This is a subfreddit all about cats. Cats cats cats.")
+dogs = Sub.create!(title: "dogs", description: "Dogs are great! Don't you like dogs?")
+ruby = Sub.create!(title: "ruby", description: "For all your Ruby needs!")
+java = Sub.create!(title: "java", description: "Serious languages only within. No scripts please.")
+cplusplus = Sub.create!(title: "c++", description: "If you don't already know the answer, we can't possibly be bothered to help you.")
+python = Sub.create!(title: "python", description: "Is this a subfreddit for snakes or the programming language? Does it matter?.")
+javascript = Sub.create!(title: "javascript", description: "Abandon all hope, ye who enter here.")
+app_academy = Sub.create!(title: "appacademy", description: "Learn all the things!")
 
 Moderation.destroy_all
 Moderation.create!(user_id: fred.id, sub_id: python.id)

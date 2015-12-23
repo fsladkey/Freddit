@@ -1,4 +1,4 @@
-var SubActions = require('../actions/sub_api_actions');
+var SubActions = require('../actions/sub_actions');
 
 SubApiUtil = {
   fetchSubs: function(){

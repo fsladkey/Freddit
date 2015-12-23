@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   root "static_pages#root"
 
-  namespace :api do
-    resources :subs, only: [:index]
+  namespace :api, constraints: { format: 'json' } do
+    resources :posts, only: [:index]
+    resources :subs, only: [:index] do
+      resources :posts, only: [:index]
+    end
   end
 
 end

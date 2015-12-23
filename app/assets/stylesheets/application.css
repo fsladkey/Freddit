@@ -51,7 +51,7 @@ body {
 
 .sub-list {
   font-size: 10px;
-  background: #ccc;
+  background: #ddd;
   border-bottom: 1px solid grey;
 }
 
@@ -64,4 +64,35 @@ body {
   margin: 3px 0;
   padding: 3px 6px 3px 5px;
   border-right: 1px solid #aaa;
+}
+
+.sub-list > ul > li:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  padding: 5px 10px;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.sub-name {
+  position: absolute;
+  left: 120px;
+  top: 53px;
+}
+
+.user-info {
+  font-size: 12px;
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  top: 55px;
+  background: lightcyan;
+  border-top-left-radius: 5px;
+  padding: 3px;
+}
+
+.main-content {
+  padding-top: 75px;
 }

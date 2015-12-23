@@ -10,8 +10,8 @@ var NavBar = React.createClass({
     return (
       <div className="nav-bar">
         <SubList/>
-        <h1 className="logo">freddit</h1>
-        <h3 className="sub-name">{subName}</h3>
+        <h1 className="logo"><a href="/#/">freddit</a></h1>
+        <h3 className="sub-name"><a href={"/#/r/" + subName}>{subName}</a></h3>
         <UserInfo/>
       </div>
     );

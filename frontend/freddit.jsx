@@ -5,6 +5,7 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 var Sub = require('./components/Sub');
+var Post = require('./components/Post');
 
 var App = React.createClass({
   render: function(){
@@ -19,7 +20,9 @@ var App = React.createClass({
 var routes = (
   <Route path="/" component={App}>
     <IndexRoute component={Sub}/>
-    <Route path="r/:subName" component={Sub}/>
+    <Route path="r/:subName" component={Sub}>
+      <Route path=":id" component={Post}/>
+    </Route>
   </Route>
 );
 

@@ -44,10 +44,12 @@ class User < ActiveRecord::Base
   private
 
   def ensure_session_token
+    return session_token if session_token
     loop do
       session_token = User.random_digest
       unless User.exists?(session_token: session_token)
-        return self.session_token ||= session_token
+        update(session_token: session_token)
+        return self.session_token
       end
     end
   end

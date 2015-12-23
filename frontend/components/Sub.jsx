@@ -6,11 +6,17 @@ var Posts = require('./Posts');
 var Sub = React.createClass({
 
   render: function () {
+    var body;
+    if (this.props.children) {
+      body = this.props.children;
+    } else {
+      body = <Posts subName={this.props.params.subName}/>;
+    }
     return (
       <div>
         <NavBar subName={this.props.params.subName}/>
         <div className="main-content">
-          <Posts subName={this.props.params.subName}/>
+          {body}
         </div>
       </div>
     );

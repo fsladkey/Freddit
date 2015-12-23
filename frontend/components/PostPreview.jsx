@@ -6,7 +6,7 @@ var PostPreview = React.createClass({
   render: function () {
     var post = this.props.post,
         sub = post.sub,
-        url = "/r/" + sub.title + "/" + post.id;
+        url = "/#/r/" + sub.title + "/" + post.id;
 
     return (
       <li><a href={url}>{post.title}</a></li>

@@ -12,6 +12,4 @@ SubApiUtil = {
   }
 };
 
-window.ApiUtil = SubApiUtil;
-
 module.exports = SubApiUtil;

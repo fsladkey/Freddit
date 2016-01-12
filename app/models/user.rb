@@ -12,10 +12,13 @@
 #
 
 class User < ActiveRecord::Base
-  attr_reader :password
-  after_initialize :ensure_session_token
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
-  validates :username, :email, :password_digest, presence: true
+
+  validates :username, :email, presence: true
   validates :username, :email, uniqueness: true
 
   has_many :posts
@@ -27,31 +30,5 @@ class User < ActiveRecord::Base
     through: :moderations,
     source: :sub
   )
-
-  def self.random_digest
-    SecureRandom.urlsafe_base64
-  end
-
-  def password=(password)
-    @password = password
-    self.password_digest = BCrypt::Password.create(password)
-  end
-
-  def is_password?(password)
-    BCrypt::Password.new(password).is_password?(password)
-  end
-
-  private
-
-  def ensure_session_token
-    return session_token if session_token
-    loop do
-      session_token = User.random_digest
-      unless User.exists?(session_token: session_token)
-        update(session_token: session_token)
-        return self.session_token
-      end
-    end
-  end
 
 end

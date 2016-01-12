@@ -32,6 +32,4 @@ PostApiUtil = {
   }
 };
 
-window.ApiUtil = PostApiUtil;
-
 module.exports = PostApiUtil;

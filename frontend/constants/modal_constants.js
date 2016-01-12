@@ -1,4 +1,4 @@
-var SubConstants = {
+var ModalConstants = {
   RECEIVE_MODAL: "RECEIVE_MODAL"
 };
 

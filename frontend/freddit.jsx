@@ -6,18 +6,7 @@ var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 var Sub = require('./components/Sub');
 var Post = require('./components/Post');
-var UserApiUtil = require('./util/user_api_util');
-var UserStore = require('./stores/user_store');
-
-var App = React.createClass({
-  render: function(){
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-});
+var App = require('./components/App');
 
 var routes = (
   <Route path="/" component={App}>

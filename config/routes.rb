@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
   root "static_pages#root"
 
-  devise_for :users
+  # devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'sessions',
+    registrations: 'registrations'
+  }
 
   namespace :api, constraints: { format: 'json' } do
     resources :users, only: [:index] do

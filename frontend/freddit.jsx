@@ -7,6 +7,7 @@ var IndexRoute = ReactRouter.IndexRoute;
 var Sub = require('./components/Sub');
 var Post = require('./components/Post');
 var UserApiUtil = require('./util/user_api_util');
+var UserStore = require('./stores/user_store');
 
 var App = React.createClass({
   render: function(){

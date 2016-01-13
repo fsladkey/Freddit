@@ -40,6 +40,24 @@ body {
   font-size: 16px;
 }
 
+input {
+  border: 1px solid black;
+  display: block;
+  background: white;
+  border-radius: 3px;
+  padding: 3px 2px;
+  margin: 10px 0;
+}
+
+label {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+overflow:hidden;
+}
+
 .nav-bar {
   position: fixed;
   background: paleturquoise;
@@ -120,5 +138,53 @@ body {
   transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
-  background: skyblue;
+  padding: 50px;
+  box-shadow: 3px 3px 10px black;
+  border-radius: 5px;
+  background: #D6F5FF;
+  display: flex;
+  flex-direction: row;
+}
+
+.sign-up-form,
+.sign-in-form {
+  padding: 50px;
+  width: 50%;
+}
+
+.sign-up-form > h2,
+.sign-in-form > h2{
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.clickable:hover {
+  cursor:pointer;
+  text-decoration: underline;
+}
+
+.post-preview {
+  display: block;
+  padding: 10px;
+}
+
+.post-preview > h4 {
+  font-size: 1.2em;
+}
+
+.post-preview > p {
+  font-size: 0.9em;
+}
+
+.post-detail {
+
+}
+
+.post-detail > h3 {
+  font-size: 26px;
+  padding: 5px;
+}
+
+.post-detail > p {
+  padding: 5px;
 }

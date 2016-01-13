@@ -5,6 +5,10 @@ var Posts = require('./Posts');
 
 var Sub = React.createClass({
 
+  componentDidMount: function () {
+
+  },
+
   render: function () {
     var body;
     if (this.props.children) {

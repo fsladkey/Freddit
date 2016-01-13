@@ -17,7 +17,17 @@ var routes = (
   </Route>
 );
 
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+
+var scrollToTop = function () {
+  window.scrollTo(0, 0);
+};
+
 $(function () {
   var root = document.getElementById('content');
-  ReactDOM.render(<Router>{routes}</Router>, root);
+  ReactDOM.render(<Router onUpdate={scrollToTop}>{routes}</Router>, root);
 });

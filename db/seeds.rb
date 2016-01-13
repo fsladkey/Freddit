@@ -25,6 +25,15 @@ python = Sub.create!(title: "python", description: "Is this a subfreddit for sna
 javascript = Sub.create!(title: "javascript", description: "Abandon all hope, ye who enter here.")
 app_academy = Sub.create!(title: "appacademy", description: "Learn all the things!")
 
+22.times do
+  new_sub = User.all.sample.moderated_subs.new(
+    title: [Faker::Hipster.word, Faker::Hacker.noun].sample,
+    description: [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
+    )
+  redo unless new_sub.valid?
+  new_sub.save!
+end
+
 Moderation.destroy_all
 Moderation.create!(user_id: fred.id, sub_id: python.id)
 Moderation.create!(user_id: jonathan.id, sub_id: ruby.id)
@@ -38,6 +47,13 @@ Moderation.create!(user_id: carl.id, sub_id: app_academy.id)
 Moderation.create!(user_id: fred.id, sub_id: app_academy.id)
 
 Post.destroy_all
-100.times do
-  Post.create!(user_id: User.pluck(:id).sample, sub_id: Sub.pluck(:id).sample, title: "#{Faker::Hacker.noun} #{Faker::Hacker.ingverb}", body: Faker::Hacker.say_something_smart)
+500.times do
+  title = ["#{Faker::Hacker.noun} #{Faker::Hacker.ingverb}", Faker::Hipster.sentence].sample
+  body = [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
+  Post.create!(
+    user_id: User.pluck(:id).sample,
+    sub_id: Sub.pluck(:id).sample,
+    title: title,
+    body: body
+  )
 end

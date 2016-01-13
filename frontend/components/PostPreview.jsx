@@ -9,7 +9,10 @@ var PostPreview = React.createClass({
         url = "/#/r/" + sub.title + "/" + post.id;
 
     return (
-      <li><a href={url}>{post.title}</a></li>
+      <li className="post-preview">
+        <h4><a className="clickable" href={url}>{post.title}</a></h4>
+        <p>Submitted by {post.user.username}</p>
+      </li>
     );
   }
 

@@ -6,13 +6,14 @@ var PostApiUtil = require('../util/post_api_util');
 var Post = React.createClass({
 
   getInitialState: function () {
-    return {post: this.findPostById(this.props.params.id)};
+    return {post: PostStore.find(this.props.params.id)};
   },
 
   componentDidMount: function () {
-    jQuery("abbr.timeago").timeago();
     this.postListener = PostStore.addListener(this._postsChanged);
     PostApiUtil.fetchPost(this.props.params.id);
+    // HACKY AS SHIT I KNOW, GODDAMN
+    setTimeout(function () { jQuery("abbr.timeago").timeago(); }, 100);
   },
 
   componentWillUnmount: function () {
@@ -23,20 +24,15 @@ var Post = React.createClass({
     PostApiUtil.fetchPost(this.newProps.params.id);
   },
 
-  findPostById: function (postId) {
-    return PostStore.all().find(function (post) {
-      return post.id == postId;
-    });
-  },
-
   render: function () {
     var post = this.state.post;
+
     if (post) {
       return (
-        <div>
-        <h3>{post.title}</h3>
-        <p>{post.body}</p>
-        <p>Submitted <abbr className="timeago" title={post.created_at}>{post.created_at}</abbr> by {post.user.username}</p>
+        <div className="post-detail">
+          <h3>{post.title}</h3>
+          <p>{post.body}</p>
+          <p>Submitted <abbr className="timeago" title={post.created_at}>{post.created_at}</abbr> by {post.user.username}</p>
         </div>
       );
     } else {
@@ -45,7 +41,7 @@ var Post = React.createClass({
   },
 
   _postsChanged: function () {
-    this.setState({post: this.findPostById(this.props.params.id)});
+    this.setState({post: PostStore.find(this.props.params.id)});
   }
 
 

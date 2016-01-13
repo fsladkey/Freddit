@@ -19,6 +19,12 @@ PostStore.all = function () {
   return _posts.slice();
 };
 
+PostStore.find = function (id) {
+  return PostStore.all().find(function (post) {
+    return post.id == id;
+  });
+};
+
 PostStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case PostConstants.RECEIVE_POSTS:

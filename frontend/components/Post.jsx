@@ -27,7 +27,7 @@ var Post = React.createClass({
 
   render: function () {
     var post = this.state.post;
-
+    debugger
     if (post) {
       return (
         <div>

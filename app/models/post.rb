@@ -16,6 +16,6 @@ class Post < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :sub
-  has_many :comments, as: :commentable
+  has_many :comments
 
 end

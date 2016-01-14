@@ -12,10 +12,11 @@
 #
 
 class Comment < ActiveRecord::Base
-  validates :body, :user_id, :commentable_type, :commentable_id, presence: true
+  validates :body, :user_id, :post_id, presence: true
 
-  belongs_to :commentable, polymorphic: true
+  belongs_to :comment
+  belongs_to :post
   belongs_to :user
-  has_many :comments, as: :commentable
+  has_many :child_comments, class_name: "Comment", foreign_key: :parent_comment_id
 
 end

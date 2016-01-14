@@ -60,7 +60,12 @@ end
 
 Comment.destroy_all
 1000.times do
-  parent = (Post.all + Comment.all).sample
+  post = (Post.all).sample
+  parent_comment_id = [Comment.pluck(:id).sample, nil].sample
   body = [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
-  parent.comments.create!(body: body, user_id: User.pluck(:id).sample)
+  post.comments.create!(
+    body: body,
+    user_id: User.pluck(:id).sample,
+    parent_comment_id: parent_comment_id
+  )
 end

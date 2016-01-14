@@ -13,6 +13,6 @@ json.user do
 end
 
 json.comments post.comments do |comment|
-  json.extract! comment, :id, :user_id, :body, :commentable_id, :commentable_type
+  json.extract! comment, :id, :body, :user_id, :parent_comment_id, :post_id
   json.user comment.user
 end

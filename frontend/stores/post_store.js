@@ -6,8 +6,14 @@ var PostConstants = require('../constants/post_constants');
 
 var replacePost = function (newPost) {
   var replaced = false;
+
   _posts = _posts.map(function (post) {
-    return post.id == newPost.id ? newPost : post;
+    if (post.id == newPost.id) {
+      replaced = true;
+      return newPost;
+    } else {
+      return post;
+    }
   });
 
   if (!replaced) {

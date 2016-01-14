@@ -75,13 +75,14 @@ overflow:hidden;
 
 .sub-list > ul {
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
 }
 
 .sub-list > ul > li {
   margin: 3px 0;
   padding: 3px 6px 3px 5px;
   border-right: 1px solid #aaa;
+  flex-shrink: 0;
 }
 
 .sub-list > ul > li:hover {
@@ -187,4 +188,16 @@ overflow:hidden;
 
 .post-detail > p {
   padding: 5px;
+}
+
+.comments {
+  border: 1px solid black;
+}
+
+.comment > p {
+  padding: 5px;
+}
+
+.comment > a {
+ padding: 2px 5px;
 }

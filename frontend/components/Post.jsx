@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var PostStore = require('../stores/post_store');
 var PostApiUtil = require('../util/post_api_util');
+var Comments = require('./Comments');
 
 var Post = React.createClass({
 
@@ -29,10 +30,15 @@ var Post = React.createClass({
 
     if (post) {
       return (
-        <div className="post-detail">
-          <h3>{post.title}</h3>
-          <p>{post.body}</p>
-          <p>Submitted <abbr className="timeago" title={post.created_at}>{post.created_at}</abbr> by {post.user.username}</p>
+        <div>
+          <div className="post-detail">
+            <h3>{post.title}</h3>
+            <p>{post.body}</p>
+            <p>Submitted <abbr className="timeago" title={post.created_at}>{post.created_at}</abbr> by {post.user.username}</p>
+          </div>
+          <div>
+            <Comments comments={post.comments}/>
+          </div>
         </div>
       );
     } else {

@@ -59,9 +59,10 @@ Post.destroy_all
 end
 
 Comment.destroy_all
-1000.times do
+5000.times do
   post = (Post.all).sample
-  parent_comment_id = [Comment.pluck(:id).sample, nil].sample
+  # Post.limit(1).order("RANDOM()").first.id
+  parent_comment_id = [post.comments.pluck(:id).sample, nil].sample
   body = [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
   post.comments.create!(
     body: body,

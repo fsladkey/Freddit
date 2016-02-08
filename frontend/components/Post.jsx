@@ -25,19 +25,30 @@ var Post = React.createClass({
     PostApiUtil.fetchPost(this.newProps.params.id);
   },
 
+  postComments: function () {
+    return this.state.post.comments.filter(function (comment) {
+      return !comment.parent_comment_id;
+    });
+  },
+
   render: function () {
     var post = this.state.post;
-    debugger
     if (post) {
       return (
         <div>
           <div className="post-detail">
             <h3>{post.title}</h3>
             <p>{post.body}</p>
-            <p>Submitted <abbr className="timeago" title={post.created_at}>{post.created_at}</abbr> by {post.user.username}</p>
+            <p>
+              Submitted
+                <abbr
+                  className="timeago"
+                  title={post.created_at}>{post.created_at}
+                </abbr> by <a className="clickable" href="#">{post.user.username}</a>
+            </p>
           </div>
-          <div>
-            <Comments comments={post.comments}/>
+          <div className="post-comments">
+            <Comments comments={this.postComments()}/>
           </div>
         </div>
       );

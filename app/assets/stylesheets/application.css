@@ -159,6 +159,10 @@ overflow:hidden;
   text-transform: uppercase;
 }
 
+.clickable {
+  color: #315b7d;
+}
+
 .clickable:hover {
   cursor:pointer;
   text-decoration: underline;
@@ -191,9 +195,16 @@ overflow:hidden;
 }
 
 .comments {
-  border: 1px solid black;
+  margin-left: 50px;
 }
 
+.post-comments {
+  margin-left: -50px;
+}
+
+.comment {
+  border-bottom: 1px solid lightgrey;
+}
 .comment > p {
   padding: 5px;
 }

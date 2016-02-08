@@ -16,15 +16,17 @@ var Comment = React.createClass({
 
   render: function () {
     var comment = this.props.comment;
-    debugger
     return (
-      <li className="comment">
-        <p>{comment.body}</p>
+      <li>
+      <div className="comment">
         <p>
-          <a href="#">
-            posted by: {comment.user.username}
+          <a href="#" className="clickable">
+          {comment.user.username}
           </a>
         </p>
+
+        <p>{comment.body}</p>
+      </div>
         <Comments comments={this.childComments()}/>
       </li>
     );

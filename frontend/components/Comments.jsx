@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Comment = require('./Comment');
 
 var Comments = React.createClass({
 
@@ -20,3 +19,4 @@ var Comments = React.createClass({
 });
 
 module.exports = Comments;
+var Comment = require('./Comment');

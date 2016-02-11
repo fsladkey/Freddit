@@ -4,10 +4,8 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   helper_method :current_user, :logged_in?
 
-  private
+  # before_filter :configure_permitted_parameters, if: :devise_controller?
 
-  def user_params
-    params.require(:user).permit(:username, :password, :email)
-  end
+  private
 
 end

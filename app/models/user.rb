@@ -25,8 +25,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
 
-  validates :username, :email, presence: true
-  validates :username, :email, uniqueness: true
+  validates :username, :email, presence: true, uniqueness: true
+
 
   has_many :posts
 
@@ -37,5 +37,4 @@ class User < ActiveRecord::Base
     through: :moderations,
     source: :sub
   )
-
 end

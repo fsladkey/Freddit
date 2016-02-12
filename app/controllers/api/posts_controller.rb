@@ -1,11 +1,7 @@
 class Api::PostsController < ApplicationController
 
   def index
-    if params[:sub_id]
-      @posts = Post.includes(:sub, :user).where(sub_id: params[:sub_id])
-    else
-      @posts = Post.includes(:sub, :user).limit(100)
-    end
+    @posts = Post.includes(:sub, :user).limit(100)
     render :index
   end
 

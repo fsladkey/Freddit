@@ -11,8 +11,8 @@ var Posts = React.createClass({
   },
 
   componentDidMount: function () {
-    sub = this.findSubByName(this.props.subName);
     this.postListener = PostStore.addListener(this._postsChanged);
+    sub = this.findSubByName(this.props.subName);
     sub ? PostApiUtil.fetchSubPosts(sub.id) : PostApiUtil.fetchAllPosts();
   },
 

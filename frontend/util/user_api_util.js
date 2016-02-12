@@ -1,12 +1,13 @@
 var UserActions = require('../actions/user_actions');
 
 UserApiUtil = {
-  fetchCurrentUser: function(){
+  fetchCurrentUser: function(cb){
     $.ajax({
       method: "GET",
-      url: "/api/session/currentuser",
+      url: "/api/session",
       success: function (currentUser) {
         UserActions.receiveCurrentUser(currentUser);
+        cb && cb();
       }
     });
   },

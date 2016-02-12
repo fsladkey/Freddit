@@ -11,7 +11,7 @@ class Api::SessionsController < ApplicationController
       sign_in!(user)
       render json: user
     else
-      render json: "Invalid log in credentials"
+      render json: ["Invalid log in credentials"]
     end
   end
 
@@ -21,6 +21,7 @@ class Api::SessionsController < ApplicationController
 
   def destroy
     sign_out! if signed_in?
+    render json: ["successfly logged out"]
   end
 
 end

@@ -1,7 +1,7 @@
 class Api::PostsController < ApplicationController
 
   def index
-    @posts = Post.includes(:sub, :user).limit(100)
+    @posts = Post.includes(:sub, :user).limit(30)
     render :index
   end
 

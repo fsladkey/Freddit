@@ -6,24 +6,24 @@ var ModalActions = require('../actions/modal_actions');
 var SignInForm = React.createClass({
 
   getInitialState: function () {
-    return {email: "", password: ""};
+    return {username: "", password: ""};
   },
 
   componentDidMount: function () {
-    ReactDOM.findDOMNode(this.refs.emailInput).focus();
+    ReactDOM.findDOMNode(this.refs.usernameInput).focus();
   },
 
   handleSubmit: function () {
     var data = {
-      email: this.state.email,
+      username: this.state.username,
       password: this.state.password,
     };
     UserApiUtil.signInUser(data);
     ModalActions.receiveModal(null);
   },
 
-  emailChange: function (e) {
-    this.setState({email: e.currentTarget.value});
+  usernameChange: function (e) {
+    this.setState({username: e.currentTarget.value});
   },
 
   passwordChange: function (e) {
@@ -37,11 +37,11 @@ var SignInForm = React.createClass({
         <form onSubmit={this.handleSubmit}>
           <label>Email</label>
             <input
-              onChange={this.emailChange}
-              ref="emailInput"
+              onChange={this.usernameChange}
+              ref="usernameInput"
               type="text"
               placeholder="email"
-              value={this.state.email}/>
+              value={this.state.username}/>
 
           <label>Password</label>
             <input

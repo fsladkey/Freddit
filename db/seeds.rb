@@ -1,16 +1,16 @@
 User.destroy_all
-fred = User.create!(username: "Fred", email: "fred@fred.com", password: "fredfred", password_confirmation: "fredfred")
-lily = User.create!(username: "Lily", email: "lily@lily.com", password: "lilylily", password_confirmation: "lilylily")
-carl = User.create!(username: "Carl", email: "carl@carl.com", password: "carlcarl", password_confirmation: "carlcarl")
-tommy = User.create!(username: "Tommy", email: "tommy@tommy.com", password: "tommytommy", password_confirmation: "tommytommy")
-jonathan = User.create!(username: "Jonathan", email: "jonathan@jonathan.com", password: "jonathanjonathan", password_confirmation: "jonathanjonathan")
-sennnacy = User.create!(username: "Sennacy", email: "sennacy@sennacy.com", password: "sennacysennacy", password_confirmation: "sennacysennacy")
-firetrux = User.create!(username: "Firetrux", email: "firetrux@firetrux.com", password: "firetruxfiretrux", password_confirmation: "firetruxfiretrux")
+fred = User.create!(username: "Fred", email: "fred@fred.com", password: "fredfred")
+lily = User.create!(username: "Lily", email: "lily@lily.com", password: "lilylily")
+carl = User.create!(username: "Carl", email: "carl@carl.com", password: "carlcarl")
+tommy = User.create!(username: "Tommy", email: "tommy@tommy.com", password: "tommytommy")
+jonathan = User.create!(username: "Jonathan", email: "jonathan@jonathan.com", password: "jonathanjonathan")
+sennnacy = User.create!(username: "Sennacy", email: "sennacy@sennacy.com", password: "sennacysennacy")
+firetrux = User.create!(username: "Firetrux", email: "firetrux@firetrux.com", password: "firetruxfiretrux")
 
 50.times do
   name = Faker::Internet.user_name
   email = Faker::Internet.email
-  user = User.new(username: name, email: email, password: "password", password_confirmation: "password")
+  user = User.new(username: name, email: email, password: "password")
   redo unless user.valid?
   user.save!
 end

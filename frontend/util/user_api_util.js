@@ -4,8 +4,7 @@ UserApiUtil = {
   fetchCurrentUser: function(){
     $.ajax({
       method: "GET",
-      url: "/api/users/currentuser",
-      dataType: "json",
+      url: "/api/session/currentuser",
       success: function (currentUser) {
         UserActions.receiveCurrentUser(currentUser);
       }
@@ -15,11 +14,10 @@ UserApiUtil = {
   signOutUser: function () {
     $.ajax({
       method: "DELETE",
-      url: "/users/sign_out",
-      dataType: "json",
+      url: "/api/session",
       success: function (currentUser) {
         UserActions.receiveCurrentUser(null);
-      }
+      },
     });
   },
 
@@ -27,24 +25,25 @@ UserApiUtil = {
     $.ajax({
       method: "POST",
       data: {user: data},
-      url: "/users",
-      dataType: "json",
+      url: "/api/users",
       success: function (currentUser) {
         UserActions.receiveCurrentUser(currentUser);
       },
-      error: function (error) {
-      }
     });
   },
 
   signInUser: function(data){
+    debugger
     $.ajax({
       method: "POST",
-      url: "/users/sign_in",
+      url: "/api/session",
       data: {user: data},
-      dataType: "json",
       success: function (currentUser) {
+        debugger
         UserActions.receiveCurrentUser(currentUser);
+      },
+      error: function () {
+        debugger
       }
     });
   }

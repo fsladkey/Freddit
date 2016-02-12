@@ -19,6 +19,7 @@ var Sub = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
+    this.setState({sub: SubStore.findByName(newProps.params.subName)});
     SubApiUtil.fetchSub(newProps.params.subName);
   },
 

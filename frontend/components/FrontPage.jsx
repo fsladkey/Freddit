@@ -5,7 +5,7 @@ var Posts = require('./Posts');
 
 var FrontPage = React.createClass({
   getInitialState: function () {
-    return { posts: []};
+    return { posts: PostStore.all()};
   },
 
   componentDidMount: function () {

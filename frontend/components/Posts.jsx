@@ -6,34 +6,9 @@ var PostPreview = require('./PostPreview');
 
 var Posts = React.createClass({
 
-  getInitialState: function () {
-    return { posts: []};
-  },
-
-  componentDidMount: function () {
-    this.postListener = PostStore.addListener(this._postsChanged);
-    sub = this.findSubByName(this.props.subName);
-    sub ? PostApiUtil.fetchSubPosts(sub.id) : PostApiUtil.fetchAllPosts();
-  },
-
-  componentWillUnmount: function () {
-    this.postListener.remove();
-  },
-
-  componentWillReceiveProps: function (newProps) {
-    sub = this.findSubByName(newProps.subName);
-    sub ? PostApiUtil.fetchSubPosts(sub.id) : PostApiUtil.fetchAllPosts();
-  },
-
-  findSubByName: function (subName) {
-    return SubStore.all().find(function(sub) {
-      return sub.title == subName;
-    });
-  },
-
   render: function () {
     var posts = (
-      this.state.posts.map(function (post) {
+      this.props.posts.map(function (post) {
         return <PostPreview key={post.id }post={post}/>;
       })
     );
@@ -47,9 +22,6 @@ var Posts = React.createClass({
     );
   },
 
-  _postsChanged: function () {
-    this.setState({posts: PostStore.all()});
-  }
 
 });
 

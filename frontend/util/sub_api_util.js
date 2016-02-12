@@ -9,6 +9,17 @@ SubApiUtil = {
         SubActions.receiveAll(subs);
       }
     });
+  },
+
+  fetchSub: function(subName){
+    $.ajax({
+      method: "GET",
+      url: "/api/subs/" + subName,
+      data: {subName: subName},
+      success: function (sub) {
+        SubActions.receiveSub(sub);
+      }
+    });
   }
 };
 

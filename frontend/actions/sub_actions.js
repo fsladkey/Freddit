@@ -7,6 +7,12 @@ var SubActions = {
       actionType: SubConstants.RECEIVE_SUBS,
       subs: subs
     });
+  },
+  receiveSub: function (sub) {
+    AppDispatcher.dispatch({
+      actionType: SubConstants.RECEIVE_SUB,
+      sub: sub
+    });
   }
 };
 

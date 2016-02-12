@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
     resources :posts, only: [:index, :show]
 
-    resources :subs, only: [:index] do
+    resources :subs, only: [:index, :show] do
       member do
         get "posts"
       end

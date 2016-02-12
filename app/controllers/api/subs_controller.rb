@@ -5,9 +5,9 @@ class Api::SubsController < ApplicationController
     render json: @subs
   end
 
-  def posts
-    @posts = Post.includes(:sub, :user).where(sub_id: params[:id])
-    render "api/posts/index"
+  def show
+    @sub = Sub.includes(posts: [:user]).find_by(title: params[:id])
+    render :show
   end
 
 end

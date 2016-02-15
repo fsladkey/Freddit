@@ -2,6 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var NavBar = require('./NavBar');
 var Posts = require('./Posts');
+var SideBar = require('./SideBar');
+
 
 var Sub = React.createClass({
 
@@ -44,7 +46,7 @@ var Sub = React.createClass({
         <div className="main-content">
           {body}
         </div>
-        <SideBar sub={this.state.sub}/> 
+        <SideBar sub={this.state.sub}/>
       </div>
     );
   }

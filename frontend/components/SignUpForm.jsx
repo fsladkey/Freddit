@@ -9,7 +9,8 @@ var SignUpForm = React.createClass({
     return {username: "", email: "", password: "", passwordConfirmation: ""};
   },
 
-  handleSubmit: function () {
+  handleSubmit: function (e) {
+    e.preventDefault();
     var data = {
       username: this.state.username,
       email: this.state.email,
@@ -40,7 +41,7 @@ var SignUpForm = React.createClass({
     return (
       <div className="sign-in-form">
         <h2>Create an Account</h2>
-        
+
         <form onSubmit={this.handleSubmit}>
           <label>Username</label>
           <input

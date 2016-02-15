@@ -9,7 +9,8 @@ var SideSignInForm = React.createClass({
     return {username: "", password: ""};
   },
 
-  handleSubmit: function () {
+  handleSubmit: function (e) {
+    e.preventDefault();
     var data = {
       username: this.state.username,
       password: this.state.password,
@@ -27,8 +28,7 @@ var SideSignInForm = React.createClass({
 
   render: function () {
     return (
-      <div className="side sign-in-form">
-        <h2>Sign In</h2>
+      <div className="side-sign-in-form">
         <form onSubmit={this.handleSubmit}>
           <label>Email</label>
             <input

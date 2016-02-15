@@ -51,16 +51,21 @@ input {
 }
 
 label {
-  position:absolute;
-  left:-10000px;
-  top:auto;
-  width:1px;
-  height:1px;
-overflow:hidden;
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow:hidden;
+}
+
+.freddit {
+  position: relative;
 }
 
 .nav-bar {
   position: fixed;
+  z-index: 100;
   background: paleturquoise;
   height: 75px;
   width: 100%;
@@ -256,4 +261,45 @@ overflow:hidden;
 
 .post-detail-left {
   padding: 0 10px 0 0;
+}
+
+.sidebar {
+  position: absolute;
+  top: 77px;
+  right: 0;
+  width: 300px;
+  background: #eee;
+  box-shadow: -1px 1px 3px grey;
+  border-radius: 0 0 0 10px;
+}
+
+.sidebar .search {
+  width: 80%;
+  padding: 5px;
+  margin: 15px;
+}
+
+.side-sign-in-form {
+  margin: 15px;
+  width: 80%;
+}
+
+.new-post-form {
+
+}
+
+.new-post-form h4 {
+  padding: 15px;
+  font-size: 1.3em;
+}
+
+
+.new-post-form input {
+  color: black;
+  border: 1px solid black;
+  display: block;
+  background: white;
+  border-radius: 3px;
+  padding: 3px 2px;
+  margin: 10px 0;
 }

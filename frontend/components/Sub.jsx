@@ -41,12 +41,12 @@ var Sub = React.createClass({
       body = <Posts posts={posts}/>;
     }
     return (
-      <div>
+      <div className="freddit">
         <NavBar subName={this.props.params.subName}/>
         <div className="main-content">
           {body}
         </div>
-        <SideBar sub={this.state.sub}/>
+        <SideBar history={this.props.history} sub={this.state.sub}/>
       </div>
     );
   }

@@ -13,7 +13,7 @@ var App = React.createClass({
     if (!UserStore.currentUser()) {
       UserApiUtil.fetchCurrentUser();
     }
-    
+
     this.modalListener = ModalStore.addListener(this._modalChanged);
   },
 

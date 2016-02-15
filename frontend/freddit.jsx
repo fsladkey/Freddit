@@ -8,6 +8,7 @@ var IndexRoute = ReactRouter.IndexRoute;
 var Sub = require('./components/Sub');
 var FrontPage = require('./components/FrontPage');
 var Post = require('./components/Post');
+var PostForm = require('./components/PostForm');
 var App = require('./components/App');
 var UserStore = require('./stores/user_store');
 var UserApiUtil = require('./util/user_api_util');
@@ -32,6 +33,7 @@ var routes = (
     <Route path="/" component={App} >
       <IndexRoute component={FrontPage}/>
       <Route path="r/:subName" component={Sub}>
+        <Route path="new" component={PostForm}/>
         <Route path=":id" component={Post}/>
       </Route>
     </Route>

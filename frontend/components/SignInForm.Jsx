@@ -13,7 +13,8 @@ var SignInForm = React.createClass({
     ReactDOM.findDOMNode(this.refs.usernameInput).focus();
   },
 
-  handleSubmit: function () {
+  handleSubmit: function (e) {
+    e.preventDefault();
     var data = {
       username: this.state.username,
       password: this.state.password,

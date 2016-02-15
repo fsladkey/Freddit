@@ -8,7 +8,12 @@ Rails.application.routes.draw do
 
     resource :session, only: [:create, :show, :destroy]
 
-    resources :posts, only: [:index, :show]
+    resources :posts, only: [:index, :show] do
+      member do
+        post "upvote"
+        post "downvote"
+      end
+    end
 
     resources :subs, only: [:index, :show] do
       member do

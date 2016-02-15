@@ -44,6 +44,7 @@ var Sub = React.createClass({
         <div className="main-content">
           {body}
         </div>
+        <SideBar sub={this.state.sub}/> 
       </div>
     );
   }

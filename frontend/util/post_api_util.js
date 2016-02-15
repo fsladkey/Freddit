@@ -29,6 +29,28 @@ PostApiUtil = {
         PostActions.receivePost(post);
       }
     });
+  },
+
+  upvote: function(postId){
+    $.ajax({
+      method: "POST",
+      url: "/api/posts/" + postId + "/upvote",
+      success: function (vote) {
+        debugger
+        PostActions.receiveVote(vote);
+      }
+    });
+  },
+
+  downvote: function(postId){
+    $.ajax({
+      method: "POST",
+      url: "/api/posts/" + postId + "/downvote",
+      success: function (vote) {
+        debugger
+        PostActions.receiveVote(vote);
+      }
+    });
   }
 };
 

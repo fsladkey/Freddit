@@ -15,10 +15,11 @@ var Comment = React.createClass({
   },
 
   render: function () {
-    var comment = this.props.comment;
+    var comment = this.props.comment,
+        commentClass = this.props.commentClass == "even" ? "odd" : "even";
     return (
+      <div className={"comment " + commentClass}>
       <li>
-      <div className="comment">
         <p>
           <a href="#" className="clickable">
           {comment.user.username}
@@ -26,9 +27,9 @@ var Comment = React.createClass({
         </p>
 
         <p>{comment.body}</p>
-      </div>
-        <Comments comments={this.childComments()}/>
+        <Comments commentClass={commentClass} comments={this.childComments()}/>
       </li>
+      </div>
     );
   }
 

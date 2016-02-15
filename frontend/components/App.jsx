@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ModalStore = require('../stores/modal_store');
+var UserStore = require('../stores/user_store');
 
 var App = React.createClass({
 
@@ -9,6 +10,10 @@ var App = React.createClass({
   },
 
   componentDidMount: function () {
+    if (!UserStore.currentUser()) {
+      UserApiUtil.fetchCurrentUser();
+    }
+    
     this.modalListener = ModalStore.addListener(this._modalChanged);
   },
 

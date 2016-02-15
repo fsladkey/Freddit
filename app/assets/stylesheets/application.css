@@ -10,6 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require font-awesome
  *= require_tree .
  *= require_self
  */
@@ -171,39 +172,58 @@ overflow:hidden;
 .post-preview {
   display: block;
   padding: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
-.post-preview > h4 {
+.post-preview h4 {
   font-size: 1.2em;
 }
 
 .post-preview > p {
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 .post-detail {
-
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
-.post-detail > h3 {
-  font-size: 26px;
+.post-detail h3 {
+  font-size: 18px;
   padding: 5px;
 }
 
-.post-detail > p {
-  padding: 5px;
+.post-detail p {
+}
+
+.post-body {
+  border: 1px solid #eee;
+  padding: 7px;
+}
+
+.submitter-info {
+  font-size: 12px;
+  padding: 2px 5px 10px 5px;
+}
+
+.hidden {
+  display: none;
 }
 
 .comments {
-  margin-left: 50px;
+  margin-left: 25px;
 }
 
 .post-comments {
-  margin-left: -50px;
+  margin-left: -25px;
 }
 
 .comment {
-  border-bottom: 1px solid lightgrey;
+  border: 1px solid lightgrey;
+  padding: 7px;
+  margin: 5px;
 }
 .comment > p {
   padding: 5px;
@@ -211,4 +231,29 @@ overflow:hidden;
 
 .comment > a {
  padding: 2px 5px;
+}
+
+.odd {
+  background: #eee;
+}
+
+.even {
+  background: white;
+}
+
+.post-vote-form {
+  font-size: 16px;
+}
+
+.post-vote-form > button {
+  display: block;
+  cursor: pointer;
+  padding: 3px;
+}
+.post-preview-left {
+  padding: 0 10px 0 2px;
+}
+
+.post-detail-left {
+  padding: 0 10px 0 0;
 }

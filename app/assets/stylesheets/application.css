@@ -194,6 +194,10 @@ overflow:hidden;
   padding: 5px;
 }
 
+.hidden {
+  display: none;
+}
+
 .comments {
   margin-left: 50px;
 }

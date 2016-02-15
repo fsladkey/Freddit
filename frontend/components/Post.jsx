@@ -7,14 +7,18 @@ var Comments = require('./Comments');
 var Post = React.createClass({
 
   getInitialState: function () {
-    return {post: PostStore.find(this.props.params.id)};
+    return {post: PostStore.find(this.props.params.id), showTime: false};
   },
 
   componentDidMount: function () {
     this.postListener = PostStore.addListener(this._postsChanged);
     PostApiUtil.fetchPost(this.props.params.id);
-    // HACKY AS SHIT I KNOW, GODDAMN
-    setTimeout(function () { jQuery("abbr.timeago").timeago(); }, 100);
+    jQuery("abbr.timeago").timeago();
+
+    setTimeout(function () {
+      jQuery("abbr.timeago").timeago();
+      this.setState({showTime: true});
+    }.bind(this), 300);
   },
 
   componentWillUnmount: function () {
@@ -22,6 +26,7 @@ var Post = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
+    jQuery("abbr.timeago").timeago();
     PostApiUtil.fetchPost(this.newProps.params.id);
   },
 
@@ -33,6 +38,7 @@ var Post = React.createClass({
 
   render: function () {
     var post = this.state.post;
+    var className = this.state.showTime ? "timeago" : "timeago hidden";
     if (post) {
       return (
         <div>
@@ -40,9 +46,8 @@ var Post = React.createClass({
             <h3>{post.title}</h3>
             <p>{post.body}</p>
             <p>
-              Submitted
-                <abbr
-                  className="timeago"
+              Submitted <abbr
+                  className={className}
                   title={post.created_at}>{post.created_at}
                 </abbr> by <a className="clickable" href="#">{post.user.username}</a>
             </p>

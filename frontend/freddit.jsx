@@ -29,7 +29,7 @@ var _checkForSignedIn = function (state, replace, callback) {
 
 var routes = (
   <Router history={browserHistory} onUpdate={_scrollToTop}>
-    <Route path="/" component={App} onEnter={_checkForSignedIn}>
+    <Route path="/" component={App} >
       <IndexRoute component={FrontPage}/>
       <Route path="r/:subName" component={Sub}>
         <Route path=":id" component={Post}/>

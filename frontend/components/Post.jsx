@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var PostStore = require('../stores/post_store');
 var PostApiUtil = require('../util/post_api_util');
 var Comments = require('./Comments');
+var VoteForm = require('./VoteForm');
 
 var Post = React.createClass({
 
@@ -39,27 +40,42 @@ var Post = React.createClass({
   render: function () {
     var post = this.state.post;
     var className = this.state.showTime ? "timeago" : "timeago hidden";
+
     if (post) {
       return (
         <div>
+
           <div className="post-detail">
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            <p>
+            <div className="post-detail-left">
+              <VoteForm post={post}/>
+            </div>
+
+            <div className="post-detail-right">
+              <h3>{post.title}</h3>
+              <p className="submitter-info">
               Submitted <abbr
-                  className={className}
-                  title={post.created_at}>{post.created_at}
-                </abbr> by <a className="clickable" href="#">{post.user.username}</a>
-            </p>
-          </div>
-          <div className="post-comments">
-            <Comments comments={this.postComments()}/>
-          </div>
+              className={className}
+              title={post.created_at}>{post.created_at}
+              </abbr> by <a className="clickable" href="#">{post.user.username}</a>
+              </p>
+              <div className="post-body">
+                <p>{post.body}</p>
+              </div>
+            </div>
+
+            </div>
+            <div className="post-comments">
+              <Comments comments={this.postComments()}/>
+            </div>
+
         </div>
       );
     } else {
-      return <div></div>;
+      return (
+        <div></div>
+      );
     }
+
   },
 
   _postsChanged: function () {

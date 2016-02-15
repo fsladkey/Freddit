@@ -15,7 +15,6 @@ var addSub = function (newSub) {
   });
 
   if (!replaced) {
-    debugger
     _subs.push(newSub);
   }
 };

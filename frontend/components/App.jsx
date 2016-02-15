@@ -10,11 +10,10 @@ var App = React.createClass({
   },
 
   componentDidMount: function () {
-    if (UserStore.currentUser()) {
-      callback();
-    } else {
+    if (!UserStore.currentUser()) {
       UserApiUtil.fetchCurrentUser();
     }
+    
     this.modalListener = ModalStore.addListener(this._modalChanged);
   },
 

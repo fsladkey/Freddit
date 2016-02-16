@@ -59,9 +59,10 @@ PostStore.find = function (id) {
 };
 
 PostStore.findBySub = function (id, sortBy) {
-  var compare = sortBy == "recent" ? recentCompare : null
+  // var compare = sortBy == "recent" ? recentCompare : null
+  var compare = recentCompare;
   var posts = _posts[id] || [];
-  debugger
+  // debugger
   return posts.sort(compare).slice();
 };
 

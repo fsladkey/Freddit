@@ -32,6 +32,7 @@ var Sub = React.createClass({
 
   _postsChanged: function () {
     this.setState(this.getStateFromStore());
+    console.log("sub rendered");
   },
 
   render: function () {

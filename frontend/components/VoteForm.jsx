@@ -9,9 +9,20 @@ var UserStore = require('../stores/user_store');
 
 var VoteForm = React.createClass({
 
+  getInitialState: function () {
+    return this.getStateFromStore();
+  },
+
+  getStateFromStore: function () {
+    return {post: PostStore.find(this.props.post.id)};
+  },
+
   componentDidMount: function () {
     this.postListener = PostStore.addListener(this._postsChanged);
-    PostApiUtil.fetchPost(this.props.post.id);
+    // do I need this fetch?
+    if (!this.state.post) {
+      PostApiUtil.fetchPost(this.props.post.id);
+    }
   },
 
   componentWillUnmount: function () {
@@ -42,7 +53,7 @@ var VoteForm = React.createClass({
 
 
   _postsChanged: function () {
-    this.setState({post: PostStore.find(this.props.post.id)});
+    this.setState(this.getStateFromStore());
   }
 
 });

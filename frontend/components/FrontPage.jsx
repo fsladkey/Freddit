@@ -6,7 +6,11 @@ var SideBar = require('./SideBar');
 
 var FrontPage = React.createClass({
   getInitialState: function () {
-    return { posts: PostStore.all()};
+    return this.getStateFromStore();
+  },
+
+  getStateFromStore: function () {
+    return { posts: PostStore.all("recent")};
   },
 
   componentDidMount: function () {
@@ -19,7 +23,7 @@ var FrontPage = React.createClass({
   },
 
   _postsChanged: function () {
-    this.setState({posts: PostStore.all()});
+    this.setState(this.getStateFromStore());
   },
 
   render: function () {

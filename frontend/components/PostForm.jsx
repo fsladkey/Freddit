@@ -4,7 +4,7 @@ var PostStore = require('../stores/post_store');
 var SubStore = require('../stores/sub_store');
 var PostApiUtil = require('../util/post_api_util');
 
-var Post = React.createClass({
+var PostForm = React.createClass({
   getInitialState: function () {
     return {title: "", body: "", sub: SubStore.findByName(this.props.params.subName)};
   },
@@ -14,6 +14,10 @@ var Post = React.createClass({
     if (!this.state.sub) {
       SubApiUtil.fetchSub(this.props.params.subName);
     }
+  },
+
+  componentWillUnmount: function () {
+    this.subListener.remove();
   },
 
   handleTitleChange: function (e) {
@@ -34,7 +38,9 @@ var Post = React.createClass({
       title: this.state.title,
       body: this.state.body,
       sub_id: this.state.sub.id
-    });
+    }, function () {
+      this.props.history.push("/r/" + this.state.sub.title);
+    }.bind(this));
   },
 
   render: function () {
@@ -50,13 +56,13 @@ var Post = React.createClass({
         <form onSubmit={this.handleSubmit}>
           <section>
             <h4>Title</h4>
-            <input onChange={this.handleTitleChange} placeholder="the title!"/>
+            <input onChange={this.handleTitleChange} placeholder="the title!" value={this.state.title}/>
           </section>
 
           <label>Title</label>
           <section>
             <h4>Body</h4>
-            <textarea onChange={this.handleBodyChange} placeholder="the body!"></textarea>
+            <textarea onChange={this.handleBodyChange} placeholder="the body!" value={this.state.body}></textarea>
           </section>
 
           <section>
@@ -77,4 +83,4 @@ var Post = React.createClass({
 
 });
 
-module.exports = Post;
+module.exports = PostForm;

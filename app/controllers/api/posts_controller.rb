@@ -10,6 +10,15 @@ class Api::PostsController < ApplicationController
     render :show
   end
 
+  def create
+    @post = current_user.posts.new(post_params)
+    if @post.save
+      render :show
+    else
+      render json: @post.errors.full_messages
+    end
+  end
+
   def vote(direction)
     @vote = current_user.votes.find_or_create_by(
       votable_id: params[:id],
@@ -33,4 +42,7 @@ class Api::PostsController < ApplicationController
     vote(-1)
   end
 
+  def post_params
+    params.require(:post).permit(:title, :body, :sub_id)
+  end
 end

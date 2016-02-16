@@ -4,6 +4,15 @@ var _posts = {};
 var PostStore = new Store(AppDispatcher);
 var PostConstants = require('../constants/post_constants');
 
+var recentCompare = function compare(a, b) {
+  if (a.created_at > b.created_at) {
+    return -1;
+  }
+  else {
+    return 1;
+  }
+};
+
 var addPosts = function (posts) {
   _posts = {};
   posts.forEach(function (post) {
@@ -31,14 +40,16 @@ var replacePost = function (newPost) {
   _posts[newPost.sub_id] = newPosts;
 };
 
-PostStore.all = function () {
+PostStore.all = function (sortBy) {
+  var compare = sortBy == "recent" ? recentCompare : null
   var posts = [];
 
   var keys = Object.keys(_posts);
   for (var idx = 0; idx < keys.length; idx++) {
     posts = posts.concat(_posts[keys[idx]])
   }
-  return posts;
+
+  return posts.sort(compare);
 };
 
 PostStore.find = function (id) {
@@ -47,9 +58,11 @@ PostStore.find = function (id) {
   });
 };
 
-PostStore.findBySub = function (id) {
-  var posts = _posts[id] || []
-  return posts.slice();
+PostStore.findBySub = function (id, sortBy) {
+  var compare = sortBy == "recent" ? recentCompare : null
+  var posts = _posts[id] || [];
+  debugger
+  return posts.sort(compare).slice();
 };
 
 PostStore.__onDispatch = function (payload) {

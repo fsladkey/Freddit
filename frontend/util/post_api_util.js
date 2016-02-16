@@ -32,13 +32,15 @@ PostApiUtil = {
     });
   },
 
-  createPost: function(post){
+  createPost: function(post, cb){
+    debugger
     $.ajax({
-      method: "GET",
+      method: "POST",
       url: "/api/posts/",
       data: { post: post },
       success: function (post) {
         PostActions.receivePost(post);
+        cb && cb();
       }
     });
   },

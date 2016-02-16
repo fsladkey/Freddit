@@ -9,7 +9,7 @@ var SubApiUtil = require('../util/sub_api_util');
 var Sub = React.createClass({
 
   getInitialState: function () {
-    return { sub: SubStore.findByName(this.props.params.subName) };
+    return this.getStateFromStore();
   },
 
   componentDidMount: function () {
@@ -22,12 +22,16 @@ var Sub = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    this.setState({sub: SubStore.findByName(newProps.params.subName)});
+    this.setState(this.getStateFromStore());
     SubApiUtil.fetchSub(newProps.params.subName);
   },
 
+  getStateFromStore: function () {
+    return { sub: SubStore.findByName(this.props.params.subName) };
+  },
+
   _postsChanged: function () {
-    this.setState({ sub: SubStore.findByName(this.props.params.subName) });
+    this.setState(this.getStateFromStore());
   },
 
   render: function () {
@@ -38,7 +42,7 @@ var Sub = React.createClass({
       body = this.props.children;
     } else {
       sub = this.state.sub || {};
-      posts = PostStore.findBySub(sub.id);
+      posts = PostStore.findBySub(sub.id, "recent");
       body = (
         <div>
           <Posts posts={posts}/>

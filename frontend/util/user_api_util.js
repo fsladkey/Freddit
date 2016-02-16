@@ -34,13 +34,11 @@ UserApiUtil = {
   },
 
   signInUser: function(data){
-    debugger
     $.ajax({
       method: "POST",
       url: "/api/session",
       data: {user: data},
       success: function (currentUser) {
-        debugger
         UserActions.receiveCurrentUser(currentUser);
       },
       error: function () {

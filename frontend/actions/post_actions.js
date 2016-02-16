@@ -8,6 +8,13 @@ var PostActions = {
       posts: posts
     });
   },
+  receiveSubPosts: function(posts, subId){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.RECEIVE_SUB_POSTS,
+      posts: posts,
+      subId: subId
+    });
+  },
 
   receivePost: function(post){
     AppDispatcher.dispatch({

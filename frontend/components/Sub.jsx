@@ -3,7 +3,8 @@ var ReactDOM = require('react-dom');
 var NavBar = require('./NavBar');
 var Posts = require('./Posts');
 var SideBar = require('./SideBar');
-
+var PostStore = require('../stores/post_store');
+var SubApiUtil = require('../util/sub_api_util');
 
 var Sub = React.createClass({
 
@@ -12,12 +13,12 @@ var Sub = React.createClass({
   },
 
   componentDidMount: function () {
-    this.subListener = SubStore.addListener(this._subsChanged);
+    this.postListener = PostStore.addListener(this._postsChanged);
     SubApiUtil.fetchSub(this.props.params.subName);
   },
 
   componentWillUnmount: function () {
-    this.subListener.remove();
+    this.postListener.remove();
   },
 
   componentWillReceiveProps: function (newProps) {
@@ -25,7 +26,7 @@ var Sub = React.createClass({
     SubApiUtil.fetchSub(newProps.params.subName);
   },
 
-  _subsChanged: function () {
+  _postsChanged: function () {
     this.setState({ sub: SubStore.findByName(this.props.params.subName) });
   },
 
@@ -36,17 +37,22 @@ var Sub = React.createClass({
     if (this.props.children) {
       body = this.props.children;
     } else {
-      sub = this.state.sub;
-      posts = sub && sub.posts ? sub.posts : [];
-      body = <Posts posts={posts}/>;
+      sub = this.state.sub || {};
+      posts = PostStore.findBySub(sub.id);
+      body = (
+        <div>
+          <Posts posts={posts}/>
+          <SideBar history={this.props.history} sub={this.state.sub}/>
+        </div>
+      );
     }
     return (
-      <div className="freddit">
+      <div>
         <NavBar subName={this.props.params.subName}/>
         <div className="main-content">
           {body}
+
         </div>
-        <SideBar history={this.props.history} sub={this.state.sub}/>
       </div>
     );
   }

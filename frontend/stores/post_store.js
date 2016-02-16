@@ -1,13 +1,22 @@
 var Store = require('flux/utils').Store;
 var AppDispatcher = require('../dispatcher/dispatcher');
-var _posts = [];
+var _posts = {};
 var PostStore = new Store(AppDispatcher);
 var PostConstants = require('../constants/post_constants');
 
+var addPosts = function (posts) {
+  _posts = {};
+  posts.forEach(function (post) {
+    _posts[post.sub_id] = _posts[post.sub_id] || [];
+    _posts[post.sub_id].push(post);
+  });
+};
+
 var replacePost = function (newPost) {
+  var posts = _posts[newPost.sub_id] || [];
   var replaced = false;
 
-  _posts = _posts.map(function (post) {
+  newPosts = posts.map(function (post) {
     if (post.id == newPost.id) {
       replaced = true;
       return newPost;
@@ -17,12 +26,19 @@ var replacePost = function (newPost) {
   });
 
   if (!replaced) {
-    _posts.push(newPost);
+    newPosts.push(newPost);
   }
+  _posts[newPost.sub_id] = newPosts;
 };
 
 PostStore.all = function () {
-  return _posts.slice();
+  var posts = [];
+
+  var keys = Object.keys(_posts);
+  for (var idx = 0; idx < keys.length; idx++) {
+    posts = posts.concat(_posts[keys[idx]])
+  }
+  return posts;
 };
 
 PostStore.find = function (id) {
@@ -31,10 +47,19 @@ PostStore.find = function (id) {
   });
 };
 
+PostStore.findBySub = function (id) {
+  var posts = _posts[id] || []
+  return posts.slice();
+};
+
 PostStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case PostConstants.RECEIVE_POSTS:
-      _posts = payload.posts;
+      addPosts(payload.posts);
+      PostStore.__emitChange();
+      break;
+    case PostConstants.RECEIVE_SUB_POSTS:
+      _posts[payload.subId] = payload.posts
       PostStore.__emitChange();
       break;
     case PostConstants.RECEIVE_POST:

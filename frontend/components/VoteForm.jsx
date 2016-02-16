@@ -1,8 +1,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var PostStore = require('../stores/post_store');
-var PostApiUtil = require('../util/post_api_util');
+var SignInModal = require('./SignInModal');
 var Comments = require('./Comments');
+var PostApiUtil = require('../util/post_api_util');
+var ModalActions = require('../actions/modal_actions');
+var PostStore = require('../stores/post_store');
+var UserStore = require('../stores/user_store');
 
 var VoteForm = React.createClass({
 
@@ -16,7 +19,11 @@ var VoteForm = React.createClass({
   },
 
   upvote: function () {
-    PostApiUtil.upvote(this.props.post.id);
+    if (UserStore.currentUser()) {
+      PostApiUtil.upvote(this.props.post.id);
+    } else {
+      ModalActions.receiveModal(<SignInModal/>);
+    }
   },
 
   downvote: function () {

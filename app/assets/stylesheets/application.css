@@ -63,6 +63,10 @@ label {
   position: relative;
 }
 
+.flex-container {
+  display: flex;
+}
+
 .nav-bar {
   position: fixed;
   z-index: 100;
@@ -105,6 +109,10 @@ label {
   position: absolute;
   left: 120px;
   top: 53px;
+}
+
+.sub-name:hover {
+  text-decoration: underline;
 }
 
 .user-info {
@@ -277,6 +285,22 @@ label {
   border-radius: 0 0 0 10px;
 }
 
+.sidebar .new-post-button {
+  padding: 10px 20px;
+  margin: 15px;
+  background: linear-gradient(45deg, paleturquoise, steelblue);
+  border: 2px outset black;
+  border-radius: 3px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sidebar .new-post-button:hover {
+  color: white;
+  border: 2px inset black;
+  text-shadow: 1px 1px 1px black;
+}
+
 .sidebar .search {
   width: 80%;
   padding: 5px;
@@ -284,8 +308,26 @@ label {
 }
 
 .side-sign-in-form {
+  padding: 5px 10px;
   margin: 15px;
   width: 80%;
+  border: 1px solid black;
+  display: flex;
+}
+
+.side-sign-in-form input {
+  width: 50%;
+  margin: 5px;
+  padding: 5px;
+}
+
+.side-sign-in-form .side-login-button {
+  text-align: center;
+  width: 50px;
+  height: 25px;
+  margin-left: 190px;
+  font-size: 12px;
+
 }
 
 .new-post-form {

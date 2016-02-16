@@ -16,12 +16,13 @@ var SideBar = React.createClass({
 
   render: function () {
     var sub = this.props.sub;
+    var signInForm = UserStore.currentUser() ? <SideSignInForm sub={sub} /> : null;
 
     return (
       <div className="sidebar">
-        <button onClick={this.handleClick}>Make A New Post</button>
+        <button className="new-post-button" onClick={this.handleClick}>Make A New Post</button>
         <input className="search" placeholder="search" />
-        <SideSignInForm sub={sub} />
+        {signInForm}
       </div>
     );
   }

@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var NavBar = require('./NavBar');
 var Posts = require('./Posts');
+var SideBar = require('./SideBar');
 
 var FrontPage = React.createClass({
   getInitialState: function () {
@@ -35,6 +36,7 @@ var FrontPage = React.createClass({
         <div className="main-content">
           {body}
         </div>
+        <SideBar history={this.props.history} sub={this.state.sub}/>
       </div>
     );
   }

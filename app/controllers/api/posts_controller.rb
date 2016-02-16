@@ -11,16 +11,14 @@ class Api::PostsController < ApplicationController
   end
 
   def vote(direction)
-    @vote = current_user.votes.where(
+    @vote = current_user.votes.find_or_create_by(
       votable_id: params[:id],
       votable_type: "Post"
-    ).first
+    )
 
-    @vote ||= current_user.votes.new()
-
-    @vote.value = @vote.value == direction ? 0 : direction
+    @vote.value = (@vote.value == direction ? 0 : direction)
     if @vote.save
-      @post = @vote.post
+      @post = @vote.votable
       render :show
     else
       render json: @vote.errors.full_messages

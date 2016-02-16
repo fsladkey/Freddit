@@ -27,26 +27,29 @@ var Sub = React.createClass({
   },
 
   getStateFromStore: function () {
-    return { sub: SubStore.findByName(this.props.params.subName) };
+    var sub = SubStore.findByName(this.props.params.subName);
+    var posts = [];
+    if (sub) {
+      posts = PostStore.findBySub(sub.id);
+    }
+
+    return { sub: sub, posts: posts };
   },
 
   _postsChanged: function () {
     this.setState(this.getStateFromStore());
-    console.log("sub rendered");
+    console.log("post store changed");
   },
 
   render: function () {
-    var body,
-        sub,
-        posts;
+    var body;
+
     if (this.props.children) {
       body = this.props.children;
     } else {
-      sub = this.state.sub || {};
-      posts = PostStore.findBySub(sub.id, "recent");
       body = (
         <div>
-          <Posts posts={posts}/>
+          <Posts posts={this.state.posts}/>
           <SideBar history={this.props.history} sub={this.state.sub}/>
         </div>
       );

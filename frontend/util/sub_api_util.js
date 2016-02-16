@@ -18,6 +18,7 @@ SubApiUtil = {
       data: {subName: subName},
       success: function (sub) {
         SubActions.receiveSub(sub);
+        PostActions.receivePosts(sub.posts);
       }
     });
   }

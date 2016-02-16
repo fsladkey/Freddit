@@ -7,10 +7,10 @@ var PostPreview = React.createClass({
   componentDidMount: function () {
     jQuery("abbr.timeago").timeago();
 
-    setTimeout(function () {
-      jQuery("abbr.timeago").timeago();
-      this.setState({showTime: true});
-    }.bind(this), 300);
+    // setTimeout(function () {
+    //   jQuery("abbr.timeago").timeago();
+    //   this.setState({showTime: true});
+    // }.bind(this), 300);
   },
 
   render: function () {

@@ -255,6 +255,10 @@ label {
   cursor: pointer;
   padding: 3px;
 }
+
+.post-vote-form > .votes {
+  padding: 2px 6px;
+}
 .post-preview-left {
   padding: 0 10px 0 2px;
 }
@@ -288,18 +292,36 @@ label {
 
 }
 
-.new-post-form h4 {
+.new-post-form > h4 {
   padding: 15px;
   font-size: 1.3em;
 }
 
+.new-post-form section {
+  padding: 20px;
+  background: paleturquoise;
+  width: 500px;
+  margin: 20px;
+}
 
-.new-post-form input {
+.new-post-form section > h4 {
+  margin-bottom: 10px;
+}
+
+.new-post-form input,
+.new-post-form textarea {
   color: black;
   border: 1px solid black;
   display: block;
   background: white;
+  padding: 10px;
+  width: 95%;
+  border-radius: 1px;
+}
+
+.new-post-form button {
+  border: 1px solid black;
   border-radius: 3px;
-  padding: 3px 2px;
-  margin: 10px 0;
+  padding: 5px 10px;
+  margin: 10px 20px;
 }

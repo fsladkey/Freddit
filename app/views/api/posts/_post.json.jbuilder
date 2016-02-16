@@ -4,6 +4,8 @@ json.created_at post.created_at.iso8601
 json.updated_at post.updated_at.iso8601
 json.comments post.comments
 
+json.total_votes post.total_votes
+
 json.sub do
   json.title post.sub.title
 end

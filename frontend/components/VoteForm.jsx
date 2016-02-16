@@ -27,7 +27,7 @@ var VoteForm = React.createClass({
     return (
     <div className="post-vote-form">
       <button className="vote-arrow" onClick={this.upvote}><i className="fa fa-arrow-up"></i></button>
-        <div>{this.props.post.votes}</div>
+        <div className="votes">{this.props.post.total_votes}</div>
       <button className="vote-arrow"  onClick={this.downvote}><i className="fa fa-arrow-down"></i></button>
     </div>
     );

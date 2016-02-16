@@ -14,7 +14,7 @@ var PostActions = {
       actionType: PostConstants.RECEIVE_POST,
       post: post
     });
-  }
+  },
 };
 
 module.exports = PostActions;

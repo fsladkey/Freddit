@@ -38,7 +38,6 @@ PostStore.__onDispatch = function (payload) {
       PostStore.__emitChange();
       break;
     case PostConstants.RECEIVE_POST:
-
       replacePost(payload.post);
       PostStore.__emitChange();
       break;

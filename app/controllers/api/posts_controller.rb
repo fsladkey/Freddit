@@ -20,7 +20,8 @@ class Api::PostsController < ApplicationController
 
     @vote.value = @vote.value == direction ? 0 : direction
     if @vote.save
-      render json: @vote
+      @post = @vote.post
+      render :show
     else
       render json: @vote.errors.full_messages
     end

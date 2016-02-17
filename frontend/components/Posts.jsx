@@ -9,8 +9,8 @@ var Posts = React.createClass({
   render: function () {
     var posts = (
       this.props.posts.map(function (post) {
-        return <PostPreview key={post.id }post={post}/>;
-      })
+        return <PostPreview showSub={this.props.showSub} key={post.id }post={post}/>;
+      }, this)
     );
 
     return (

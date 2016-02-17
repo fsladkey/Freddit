@@ -22,6 +22,13 @@ var PostActions = {
       post: post
     });
   },
+
+  receiveComment: function(comment){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.RECEIVE_COMMENT,
+      comment: comment
+    });
+  },
 };
 
 module.exports = PostActions;

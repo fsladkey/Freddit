@@ -14,7 +14,13 @@ json.user do
   json.username post.user.username
 end
 
+
+# json.posts post.comments, partial: 'api/comments/comment', as: :comment
 json.comments post.comments do |comment|
   json.extract! comment, :id, :body, :user_id, :parent_comment_id, :post_id
   json.user comment.user
+end
+
+json.votes post.votes do |vote|
+  json.extract! vote, :id, :user_id
 end

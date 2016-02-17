@@ -10,7 +10,7 @@ var FrontPage = React.createClass({
   },
 
   getStateFromStore: function () {
-    return { posts: PostStore.all("recent")};
+    return { posts: PostStore.all("upvoted")};
   },
 
   componentDidMount: function () {
@@ -31,7 +31,7 @@ var FrontPage = React.createClass({
     if (this.props.children) {
       body = this.props.children;
     } else {
-      body = <Posts posts={this.state.posts}/>;
+      body = <Posts posts={this.state.posts} showSub={true}/>;
     }
 
     return (

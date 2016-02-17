@@ -41,12 +41,42 @@ var VoteForm = React.createClass({
     PostApiUtil.downvote(this.props.post.id);
   },
 
+  upvoteActive: function () {
+    var result = "";
+    var currentUser = UserStore.currentUser();
+    if (!currentUser) {
+      return result;
+    }
+    this.props.post.votes.forEach(function (vote) {
+      if (vote.user_id == currentUser.id && vote.value == 1) {
+        result = "active";
+      }
+    });
+    return result;
+  },
+
+  downvoteActive: function () {
+    var result = "";
+    var currentUser = UserStore.currentUser();
+    if (!currentUser) {
+      return result;
+    }
+    this.props.post.votes.forEach(function (vote) {
+      if (vote.user_id == currentUser.id && vote.value == -1) {
+        result = "active";
+      }
+    });
+    return result;
+  },
+
   render: function () {
+    var upvoteActive = this.upvoteActive();
+    var downvoteActive = this.downvoteActive();
     return (
     <div className="post-vote-form">
-      <button className="vote-arrow" onClick={this.upvote}><i className="fa fa-arrow-up"></i></button>
+      <button className="vote-arrow" onClick={this.upvote}><i className={"fa fa-arrow-up" + upvoteActive}></i></button>
         <div className="votes">{this.props.post.total_votes}</div>
-      <button className="vote-arrow"  onClick={this.downvote}><i className="fa fa-arrow-down"></i></button>
+      <button className="vote-arrow"  onClick={this.downvote}><i className={"fa fa-arrow-down" + downvoteActive}></i></button>
     </div>
     );
   },

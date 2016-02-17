@@ -4,6 +4,7 @@ var PostStore = require('../stores/post_store');
 var PostApiUtil = require('../util/post_api_util');
 var Comments = require('./Comments');
 var VoteForm = require('./VoteForm');
+var CommentForm = require('./CommentForm');
 
 var Post = React.createClass({
 
@@ -13,6 +14,7 @@ var Post = React.createClass({
 
   componentDidMount: function () {
     this.postListener = PostStore.addListener(this._postsChanged);
+
     var setTimeAgo = function () {
       jQuery("abbr.timeago").timeago();
     }.bind(this);
@@ -65,7 +67,8 @@ var Post = React.createClass({
 
             </div>
             <div className="post-comments">
-              <Comments comments={this.postComments()}/>
+              <CommentForm post={post} hideCancel={true} />
+              <Comments post={post} comments={this.postComments()} />
             </div>
 
         </div>

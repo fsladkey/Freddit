@@ -6,13 +6,21 @@ var Comments = React.createClass({
   render: function () {
     var comments = this.props.comments.map(
       function (comment) {
-        return <Comment commentClass={this.props.commentClass} comment={comment} key={comment.id}/>;
+        return (
+          <Comment
+            commentClass={this.props.commentClass}
+            comment={comment}
+            post={this.props.post}
+            key={comment.id}/>
+        );
     }, this);
 
     return (
-      <ul className="comments">
-        {comments}
-      </ul>
+      <div>
+        <ul className="comments">
+          {comments}
+        </ul>
+    </div>
     );
   }
 

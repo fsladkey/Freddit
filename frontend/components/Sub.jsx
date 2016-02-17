@@ -30,7 +30,7 @@ var Sub = React.createClass({
     var sub = SubStore.findByName(this.props.params.subName);
     var posts = [];
     if (sub) {
-      posts = PostStore.findBySub(sub.id);
+      posts = PostStore.findBySub(sub.id, "upvoted");
     }
 
     return { sub: sub, posts: posts };
@@ -38,7 +38,6 @@ var Sub = React.createClass({
 
   _postsChanged: function () {
     this.setState(this.getStateFromStore());
-    console.log("post store changed");
   },
 
   render: function () {
@@ -49,7 +48,7 @@ var Sub = React.createClass({
     } else {
       body = (
         <div>
-          <Posts posts={this.state.posts}/>
+          <Posts posts={this.state.posts} showSub={false}/>
           <SideBar history={this.props.history} sub={this.state.sub}/>
         </div>
       );

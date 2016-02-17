@@ -21,10 +21,9 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
 
   has_many :posts
-
   has_many :moderations
-
   has_many :votes
+  has_many :comments
 
   has_many(
     :moderated_subs,

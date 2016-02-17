@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :create, :destroy]
 
     resource :session, only: [:create, :show, :destroy]
+    resources :comments, only: [:create]
 
     resources :posts, only: [:index, :show, :create] do
       member do

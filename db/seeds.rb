@@ -61,7 +61,7 @@ end
 Comment.destroy_all
 5000.times do
   post = (Post.all).sample
-  # Post.limit(1).order("RANDOM()").first.id
+
   parent_comment_id = [post.comments.pluck(:id).sample, nil].sample
   body = [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
   post.comments.create!(
@@ -69,4 +69,14 @@ Comment.destroy_all
     user_id: User.pluck(:id).sample,
     parent_comment_id: parent_comment_id
   )
+end
+
+Vote.destroy_all
+User.all.each do |user|
+  300.times do
+    post = Post.all.sample
+    vote = user.votes.new(votable_id: post.id, votable_type: "Post", value: [1, -1].sample)
+    redo unless vote.valid?
+    vote.save!
+  end
 end

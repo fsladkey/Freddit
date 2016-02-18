@@ -4,13 +4,12 @@ var VoteForm = require('./VoteForm');
 
 var PostPreview = React.createClass({
 
+  getInitialState: function () {
+    return { showPreview: false };
+  },
+
   componentDidMount: function () {
     jQuery("abbr.timeago").timeago();
-
-    // setTimeout(function () {
-    //   jQuery("abbr.timeago").timeago();
-    //   this.setState({showTime: true});
-    // }.bind(this), 300);
   },
 
   subInfo: function () {
@@ -23,9 +22,24 @@ var PostPreview = React.createClass({
     return"#/r/" + subName;
   },
 
+  togglePreview: function () {
+    this.setState({ showPreview: !this.state.showPreview });
+  },
+
+  postPreview: function () {
+    if (this.state.showPreview) {
+      return (
+        <p className="preview">
+          {this.props.post.body}
+        </p>
+      );
+    }
+  },
+
   render: function () {
     var post = this.props.post,
-        sub = post.sub;
+        sub = post.sub,
+        postUrl = this.subUrl() + "/" + post.id;
 
     return (
       <li className="post-preview">
@@ -36,7 +50,7 @@ var PostPreview = React.createClass({
 
         <div className="post-preview-right">
           <h4>
-            <a className="clickable" href={this.subUrl() + "/" + post.id}>{post.title}</a>
+            <a className="clickable" href={postUrl}>{post.title}</a>
           </h4>
           <p>
             Submitted <abbr
@@ -45,6 +59,11 @@ var PostPreview = React.createClass({
             </abbr> by <a className="clickable" href="#">{post.user.username}</a>
             {this.subInfo()}
           </p>
+          <p>
+            <button className="clickable" onClick={this.togglePreview}>Preview</button>
+            <a className="clickable" href={postUrl}>{post.comments.length} comments</a>
+          </p>
+          {this.postPreview()}
         </div>
 
       </li>

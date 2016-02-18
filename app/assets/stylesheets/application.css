@@ -197,6 +197,18 @@ label {
   font-size: 0.8em;
 }
 
+.post-preview button {
+  margin-right: 10px;
+}
+
+.preview {
+  max-width: 700px;
+  margin-top: 10px;
+  border: 1px solid #aaa;
+  padding: 15px;
+  border-radius: 3px;
+}
+
 .post-detail {
   padding: 10px;
   display: flex;
@@ -271,6 +283,7 @@ label {
   width: 400px;
   height: 100px;
   border: 1px solid #aaa;
+  background: white;
 }
 
 .comment-buttons {

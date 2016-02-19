@@ -19,4 +19,8 @@ class Post < ActiveRecord::Base
   has_many :comments
   has_many :votes, as: :votable
 
+  def total_votes
+    votes.pluck(:value).inject(&:+) || 0
+  end
+
 end

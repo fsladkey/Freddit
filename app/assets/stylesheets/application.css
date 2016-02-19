@@ -63,6 +63,10 @@ label {
   position: relative;
 }
 
+.flex-container {
+  display: flex;
+}
+
 .nav-bar {
   position: fixed;
   z-index: 100;
@@ -105,6 +109,10 @@ label {
   position: absolute;
   left: 120px;
   top: 53px;
+}
+
+.sub-name:hover {
+  text-decoration: underline;
 }
 
 .user-info {
@@ -230,6 +238,13 @@ label {
   padding: 7px;
   margin: 5px;
 }
+
+.comment button {
+  font-size: 14px;
+  border: 1px solid #aaa;
+  padding: 5px;
+  background: white;
+}
 .comment > p {
   padding: 5px;
 }
@@ -246,6 +261,30 @@ label {
   background: white;
 }
 
+.comment-form {
+  margin-left: 30px;
+  margin-top: 5px;
+}
+
+.comment-form > textarea {
+  padding: 10px;
+  width: 400px;
+  height: 100px;
+  border: 1px solid #aaa;
+}
+
+.comment-buttons {
+  display: flex;
+  flex-flow: row;
+}
+
+.comment-buttons > button {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #aaa;
+  margin-right: 10px;
+}
+
 .post-vote-form {
   font-size: 16px;
 }
@@ -255,6 +294,15 @@ label {
   cursor: pointer;
   padding: 3px;
 }
+
+.post-vote-form > .votes {
+  padding: 2px 6px;
+}
+
+.active {
+  color: orange;
+}
+
 .post-preview-left {
   padding: 0 10px 0 2px;
 }
@@ -273,6 +321,22 @@ label {
   border-radius: 0 0 0 10px;
 }
 
+.sidebar .new-post-button {
+  padding: 10px 20px;
+  margin: 15px;
+  background: linear-gradient(45deg, paleturquoise, steelblue);
+  border: 2px outset black;
+  border-radius: 3px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sidebar .new-post-button:hover {
+  color: white;
+  border: 2px inset black;
+  text-shadow: 1px 1px 1px black;
+}
+
 .sidebar .search {
   width: 80%;
   padding: 5px;
@@ -280,26 +344,62 @@ label {
 }
 
 .side-sign-in-form {
+  padding: 5px 10px;
   margin: 15px;
   width: 80%;
+  border: 1px solid black;
+  display: flex;
+}
+
+.side-sign-in-form input {
+  width: 50%;
+  margin: 5px;
+  padding: 5px;
+}
+
+.side-sign-in-form .side-login-button {
+  text-align: center;
+  width: 50px;
+  height: 25px;
+  margin-left: 190px;
+  font-size: 12px;
+
 }
 
 .new-post-form {
 
 }
 
-.new-post-form h4 {
+.new-post-form > h4 {
   padding: 15px;
   font-size: 1.3em;
 }
 
+.new-post-form section {
+  padding: 20px;
+  background: paleturquoise;
+  width: 500px;
+  margin: 20px;
+}
 
-.new-post-form input {
+.new-post-form section > h4 {
+  margin-bottom: 10px;
+}
+
+.new-post-form input,
+.new-post-form textarea {
   color: black;
   border: 1px solid black;
   display: block;
   background: white;
+  padding: 10px;
+  width: 95%;
+  border-radius: 1px;
+}
+
+.new-post-form button {
+  border: 1px solid black;
   border-radius: 3px;
-  padding: 3px 2px;
-  margin: 10px 0;
+  padding: 5px 10px;
+  margin: 10px 20px;
 }

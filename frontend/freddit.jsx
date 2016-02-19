@@ -9,6 +9,7 @@ var Sub = require('./components/Sub');
 var FrontPage = require('./components/FrontPage');
 var Post = require('./components/Post');
 var PostForm = require('./components/PostForm');
+var SideBar = require('./components/SideBar');
 var App = require('./components/App');
 var UserStore = require('./stores/user_store');
 var UserApiUtil = require('./util/user_api_util');

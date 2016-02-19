@@ -1,4 +1,5 @@
 var SubActions = require('../actions/sub_actions');
+var PostActions = require('../actions/post_actions');
 
 SubApiUtil = {
   fetchSubs: function(){
@@ -18,6 +19,7 @@ SubApiUtil = {
       data: {subName: subName},
       success: function (sub) {
         SubActions.receiveSub(sub);
+        PostActions.receiveSubPosts(sub.posts, sub.id);
       }
     });
   }

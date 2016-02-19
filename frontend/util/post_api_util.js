@@ -21,12 +21,26 @@ PostApiUtil = {
     });
   },
 
-  fetchPost: function(postId){
+  fetchPost: function(postId, cb){
     $.ajax({
       method: "GET",
       url: "/api/posts/" + postId,
       success: function (post) {
         PostActions.receivePost(post);
+        cb && cb();
+      }
+    });
+  },
+
+  createPost: function(post, cb){
+    debugger
+    $.ajax({
+      method: "POST",
+      url: "/api/posts/",
+      data: { post: post },
+      success: function (post) {
+        PostActions.receivePost(post);
+        cb && cb();
       }
     });
   },
@@ -35,9 +49,8 @@ PostApiUtil = {
     $.ajax({
       method: "POST",
       url: "/api/posts/" + postId + "/upvote",
-      success: function (vote) {
-        debugger
-        PostActions.receiveVote(vote);
+      success: function (post) {
+        PostActions.receivePost(post);
       }
     });
   },
@@ -46,9 +59,8 @@ PostApiUtil = {
     $.ajax({
       method: "POST",
       url: "/api/posts/" + postId + "/downvote",
-      success: function (vote) {
-        debugger
-        PostActions.receiveVote(vote);
+      success: function (post) {
+        PostActions.receivePost(post);
       }
     });
   }

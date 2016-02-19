@@ -4,22 +4,26 @@ var PostStore = require('../stores/post_store');
 var PostApiUtil = require('../util/post_api_util');
 var Comments = require('./Comments');
 var VoteForm = require('./VoteForm');
+var CommentForm = require('./CommentForm');
 
 var Post = React.createClass({
 
   getInitialState: function () {
-    return {post: PostStore.find(this.props.params.id), showTime: false};
+    return {post: PostStore.find(this.props.params.id)};
   },
 
   componentDidMount: function () {
     this.postListener = PostStore.addListener(this._postsChanged);
-    PostApiUtil.fetchPost(this.props.params.id);
-    jQuery("abbr.timeago").timeago();
 
-    setTimeout(function () {
+    var setTimeAgo = function () {
       jQuery("abbr.timeago").timeago();
-      this.setState({showTime: true});
-    }.bind(this), 300);
+    }.bind(this);
+
+    if (!this.state.post) {
+      PostApiUtil.fetchPost(this.props.params.id, setTimeAgo);
+    } else {
+      setTimeAgo();
+    }
   },
 
   componentWillUnmount: function () {
@@ -27,7 +31,6 @@ var Post = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    jQuery("abbr.timeago").timeago();
     PostApiUtil.fetchPost(this.newProps.params.id);
   },
 
@@ -39,7 +42,6 @@ var Post = React.createClass({
 
   render: function () {
     var post = this.state.post;
-    var className = this.state.showTime ? "timeago" : "timeago hidden";
 
     if (post) {
       return (
@@ -54,7 +56,7 @@ var Post = React.createClass({
               <h3>{post.title}</h3>
               <p className="submitter-info">
               Submitted <abbr
-              className={className}
+              className="timeago"
               title={post.created_at}>{post.created_at}
               </abbr> by <a className="clickable" href="#">{post.user.username}</a>
               </p>
@@ -65,7 +67,8 @@ var Post = React.createClass({
 
             </div>
             <div className="post-comments">
-              <Comments comments={this.postComments()}/>
+              <CommentForm post={post} hideCancel={true} />
+              <Comments post={post} comments={this.postComments()} />
             </div>
 
         </div>

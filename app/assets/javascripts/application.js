@@ -11,6 +11,6 @@
 // about supported directives.
 //
 //= require jquery
+//= require timeago.js
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .

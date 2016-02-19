@@ -7,16 +7,25 @@ var PostPreview = React.createClass({
   componentDidMount: function () {
     jQuery("abbr.timeago").timeago();
 
-    setTimeout(function () {
-      jQuery("abbr.timeago").timeago();
-      this.setState({showTime: true});
-    }.bind(this), 300);
+    // setTimeout(function () {
+    //   jQuery("abbr.timeago").timeago();
+    //   this.setState({showTime: true});
+    // }.bind(this), 300);
+  },
+
+  subInfo: function () {
+    var subUrl = this.subUrl();
+    return this.props.showSub ? <span> to: <a className="clickable" href={subUrl}>{subUrl.slice(1)}</a></span> : null;
+  },
+
+  subUrl: function () {
+    var subName = this.props.post.sub.title;
+    return"#/r/" + subName;
   },
 
   render: function () {
     var post = this.props.post,
-        sub = post.sub,
-        url = "/#/r/" + sub.title + "/" + post.id;
+        sub = post.sub;
 
     return (
       <li className="post-preview">
@@ -27,13 +36,14 @@ var PostPreview = React.createClass({
 
         <div className="post-preview-right">
           <h4>
-            <a className="clickable" href={url}>{post.title}</a>
+            <a className="clickable" href={this.subUrl() + "/" + post.id}>{post.title}</a>
           </h4>
           <p>
             Submitted <abbr
               className="timeago"
               title={post.created_at}>{post.created_at}
             </abbr> by <a className="clickable" href="#">{post.user.username}</a>
+            {this.subInfo()}
           </p>
         </div>
 

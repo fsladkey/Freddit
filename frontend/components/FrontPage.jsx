@@ -2,10 +2,15 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var NavBar = require('./NavBar');
 var Posts = require('./Posts');
+var SideBar = require('./SideBar');
 
 var FrontPage = React.createClass({
   getInitialState: function () {
-    return { posts: PostStore.all()};
+    return this.getStateFromStore();
+  },
+
+  getStateFromStore: function () {
+    return { posts: PostStore.all("upvoted")};
   },
 
   componentDidMount: function () {
@@ -18,7 +23,7 @@ var FrontPage = React.createClass({
   },
 
   _postsChanged: function () {
-    this.setState({posts: PostStore.all()});
+    this.setState(this.getStateFromStore());
   },
 
   render: function () {
@@ -26,7 +31,7 @@ var FrontPage = React.createClass({
     if (this.props.children) {
       body = this.props.children;
     } else {
-      body = <Posts posts={this.state.posts}/>;
+      body = <Posts posts={this.state.posts} showSub={true}/>;
     }
 
     return (
@@ -35,6 +40,7 @@ var FrontPage = React.createClass({
         <div className="main-content">
           {body}
         </div>
+        <SideBar history={this.props.history} sub={this.state.sub}/>
       </div>
     );
   }

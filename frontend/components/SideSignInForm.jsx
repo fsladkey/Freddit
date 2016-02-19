@@ -30,20 +30,22 @@ var SideSignInForm = React.createClass({
     return (
       <div className="side-sign-in-form">
         <form onSubmit={this.handleSubmit}>
-          <label>Email</label>
-            <input
-              onChange={this.usernameChange}
-              type="text"
-              placeholder="email"
-              value={this.state.username}/>
+          <div className="flex-container">
+            <label>Email</label>
+              <input
+                onChange={this.usernameChange}
+                type="text"
+                placeholder="email"
+                value={this.state.username}/>
 
-          <label>Password</label>
-            <input
-              onChange={this.passwordChange}
-              type="password"
-              placeholder="password"
-              value={this.state.password}/>
-          <input  type="submit" value="Sign In"/>
+            <label>Password</label>
+              <input
+                onChange={this.passwordChange}
+                type="password"
+                placeholder="password"
+                value={this.state.password}/>
+          </div>
+          <input className="side-login-button" type="submit" value="Sign In"/>
         </form>
       </div>
     );

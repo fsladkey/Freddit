@@ -1,8 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Comments = require('./Comments');
+var CommentForm = require('./CommentForm');
+var SignInModal = require('./SignInModal');
+var ModalActions = require('../actions/modal_actions');
 
 var Comment = React.createClass({
+
+  getInitialState: function () {
+    return { showForm: false };
+  },
 
   childComments: function () {
     var parentComment = this.props.comment;
@@ -14,9 +21,27 @@ var Comment = React.createClass({
 
   },
 
+  toggleForm: function () {
+    if (UserStore.currentUser()) {
+      this.setState({ showForm: !this.state.showForm });
+    } else {
+      ModalActions.receiveModal(<SignInModal/>);
+    }
+  },
+
   render: function () {
     var comment = this.props.comment,
-        commentClass = this.props.commentClass == "even" ? "odd" : "even";
+        commentClass = this.props.commentClass == "even" ? "odd" : "even",
+        commentForm;
+    if (this.state.showForm) {
+      commentForm = (
+        <CommentForm
+          toggleForm={this.toggleForm}
+          parentComment={comment}
+          post={this.props.post} />
+      );
+    }
+
     return (
       <div className={"comment " + commentClass}>
       <li>
@@ -27,7 +52,13 @@ var Comment = React.createClass({
         </p>
 
         <p>{comment.body}</p>
-        <Comments commentClass={commentClass} comments={this.childComments()}/>
+        <button onClick={this.toggleForm}>reply</button>
+        {commentForm}
+        <Comments
+          commentClass={commentClass}
+          comments={this.childComments()}
+          post={this.props.post}
+          />
       </li>
       </div>
     );

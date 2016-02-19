@@ -8,10 +8,21 @@ module.exports = {
       url: "/api/comments/",
       data: {comment: comment},
       success: function (comment) {
-        debugger
         PostActions.receiveComment(comment);
         cb && cb();
       }
     });
+  },
+
+  destroyComment: function(id){
+    $.ajax({
+      method: "DELETE",
+      url: "/api/comments/" + id,
+      success: function (comment) {
+        PostActions.deleteComment(comment);
+      }
+    });
   }
+
+
 };

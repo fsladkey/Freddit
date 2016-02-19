@@ -29,6 +29,13 @@ var PostActions = {
       comment: comment
     });
   },
+
+  deleteComment: function(comment){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.DELETE_COMMENT,
+      comment: comment
+    });
+  },
 };
 
 module.exports = PostActions;

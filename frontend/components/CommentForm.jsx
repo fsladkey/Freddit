@@ -18,7 +18,6 @@ var CommentForm = React.createClass({
   },
 
   handleSubmit: function (e) {
-    debugger
     e.preventDefault();
     var comment = {
       body: this.state.body,
@@ -28,6 +27,7 @@ var CommentForm = React.createClass({
 
     CommentApiUtil.createComment(comment, function () {
       this.setState({ body: "" });
+      debugger
       this.props.toggleForm && this.props.toggleForm();
     }.bind(this));
   },

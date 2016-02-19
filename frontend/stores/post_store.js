@@ -67,6 +67,23 @@ var addComment = function (comment) {
   }
 };
 
+var removeComment = function (comment) {
+  var post = PostStore.find(comment.post_id);
+
+  if (post) {
+    var index;
+
+    post.comments.find(function (oldComment, idx) {
+      if (comment.id == oldComment.id) {
+        index = idx;
+        return true;
+      }
+    });
+
+    post.comments.splice(index, 1);
+  }
+};
+
 PostStore.all = function (sortBy) {
   var compare = findCompare(sortBy);
 
@@ -109,6 +126,10 @@ PostStore.__onDispatch = function (payload) {
       break;
     case PostConstants.RECEIVE_COMMENT:
       addComment(payload.comment);
+      PostStore.__emitChange();
+      break;
+    case PostConstants.DELETE_COMMENT:
+      removeComment(payload.comment);
       PostStore.__emitChange();
       break;
   }

@@ -4,11 +4,25 @@ var Comments = require('./Comments');
 var CommentForm = require('./CommentForm');
 var SignInModal = require('./SignInModal');
 var ModalActions = require('../actions/modal_actions');
+var CommentApiUtil = require('../util/comment_api_util');
+var UserStore = require('../stores/user_store');
 
 var Comment = React.createClass({
 
   getInitialState: function () {
-    return { showForm: false };
+    return { showForm: false, currentUser: UserStore.currentUser() };
+  },
+
+  componentDidMount: function () {
+    this.userListener = UserStore.addListener(this._usersChanged);
+  },
+
+  componentWillUnmount: function () {
+  this.userListener.remove();
+  },
+
+  _usersChanged: function () {
+    this.setState({ currentUser: UserStore.currentUser() });
   },
 
   childComments: function () {
@@ -27,6 +41,17 @@ var Comment = React.createClass({
     } else {
       ModalActions.receiveModal(<SignInModal/>);
     }
+  },
+
+  deleteButton: function () {
+    var currentUser = this.state.currentUser;
+    if (currentUser && currentUser.id == this.props.comment.user_id) {
+      return <button onClick={this.deleteComment}>delete</button>;
+    }
+  },
+
+  deleteComment: function () {
+    CommentApiUtil.destroyComment(this.props.comment.id);
   },
 
   render: function () {
@@ -53,6 +78,7 @@ var Comment = React.createClass({
 
         <p>{comment.body}</p>
         <button onClick={this.toggleForm}>reply</button>
+        {this.deleteButton()}
         {commentForm}
         <Comments
           commentClass={commentClass}

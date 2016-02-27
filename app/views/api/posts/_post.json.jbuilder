@@ -22,5 +22,5 @@ json.comments post.comments do |comment|
 end
 
 json.votes post.votes do |vote|
-  json.extract! vote, :id, :user_id
+  json.extract! vote, :id, :user_id, :value
 end

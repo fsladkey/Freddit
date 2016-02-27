@@ -14,23 +14,24 @@ var VoteForm = React.createClass({
   },
 
   getStateFromStore: function () {
-    return {post: PostStore.find(this.props.post.id)};
+    return {
+      post: PostStore.find(this.props.post.id),
+      currentUser: UserStore.currentUser()
+    };
   },
 
   componentDidMount: function () {
-    this.postListener = PostStore.addListener(this._postsChanged);
-    // do I need this fetch?
-    if (!this.state.post) {
-      PostApiUtil.fetchPost(this.props.post.id);
-    }
+    this.postListener = PostStore.addListener(this._change);
+    this.userListener = UserStore.addListener(this._change);
   },
 
   componentWillUnmount: function () {
     this.postListener.remove();
+    this.userListener.remove();
   },
 
   upvote: function () {
-    if (UserStore.currentUser()) {
+    if (this.state.currentUser) {
       PostApiUtil.upvote(this.props.post.id);
     } else {
       ModalActions.receiveModal(<SignInModal/>);
@@ -41,50 +42,46 @@ var VoteForm = React.createClass({
     PostApiUtil.downvote(this.props.post.id);
   },
 
-  upvoteActive: function () {
+  voteActive: function (direction, val) {
     var result = "";
-    var currentUser = UserStore.currentUser();
-    if (!currentUser) {
-      return result;
-    }
-    this.props.post.votes.forEach(function (vote) {
-      if (vote.user_id == currentUser.id && vote.value == 1) {
-        result = "active";
-      }
-    });
-    return result;
-  },
+    var currentUser = this.state.currentUser;
 
-  downvoteActive: function () {
-    var result = "";
-    var currentUser = UserStore.currentUser();
     if (!currentUser) {
       return result;
     }
     this.props.post.votes.forEach(function (vote) {
-      if (vote.user_id == currentUser.id && vote.value == -1) {
-        result = "active";
+      if (vote.user_id == currentUser.id && vote.value == val) {
+        result = " active-" + direction;
       }
     });
     return result;
   },
 
   render: function () {
-    var upvoteActive = this.upvoteActive();
-    var downvoteActive = this.downvoteActive();
+    var upvoteActive = this.voteActive("up", 1);
+    var downvoteActive = this.voteActive("down", -1);
     return (
     <div className="post-vote-form">
-      <button className="vote-arrow" onClick={this.upvote}><i className={"fa fa-arrow-up" + upvoteActive}></i></button>
-        <div className="votes">{this.props.post.total_votes}</div>
-      <button className="vote-arrow"  onClick={this.downvote}><i className={"fa fa-arrow-down" + downvoteActive}></i></button>
+
+      <button className="vote-arrow" onClick={this.upvote}>
+        <i className={"fa fa-arrow-up" + upvoteActive}></i>
+      </button>
+
+      <div className="votes">
+        {this.props.post.total_votes}
+      </div>
+
+      <button className="vote-arrow" onClick={this.downvote}>
+        <i className={"fa fa-arrow-down" + downvoteActive}></i>
+      </button>
     </div>
     );
   },
 
 
-  _postsChanged: function () {
+  _change: function () {
     this.setState(this.getStateFromStore());
-  }
+  },
 
 });
 

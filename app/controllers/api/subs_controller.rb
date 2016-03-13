@@ -6,7 +6,8 @@ class Api::SubsController < ApplicationController
   end
 
   def show
-    @sub = Sub.includes(posts: [:user, :votes]).find_by(title: params[:id])
+    @sub = Sub.find_by(title: params[:id])
+    @posts = @sub.posts.by_params(params)
     render :show
   end
 

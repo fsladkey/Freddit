@@ -1,3 +1,4 @@
+puts "Creating users..."
 User.destroy_all
 fred = User.create!(username: "Fred", email: "fred@fred.com", password: "fredfred")
 lily = User.create!(username: "Lily", email: "lily@lily.com", password: "lilylily")
@@ -8,13 +9,12 @@ sennnacy = User.create!(username: "Sennacy", email: "sennacy@sennacy.com", passw
 firetrux = User.create!(username: "Firetrux", email: "firetrux@firetrux.com", password: "firetruxfiretrux")
 
 50.times do
-  name = Faker::Internet.user_name
-  email = Faker::Internet.email
-  user = User.new(username: name, email: email, password: "password")
+  user = FactoryGirl.build(:user)
   redo unless user.valid?
   user.save!
 end
 
+puts "Creating subs..."
 Sub.destroy_all
 cats = Sub.create!(title: "cats", description: "This is a subfreddit all about cats. Cats cats cats.")
 dogs = Sub.create!(title: "dogs", description: "Dogs are great! Don't you like dogs?")
@@ -26,57 +26,82 @@ javascript = Sub.create!(title: "javascript", description: "Abandon all hope, ye
 app_academy = Sub.create!(title: "appacademy", description: "Learn all the things!")
 
 22.times do
-  new_sub = User.all.sample.moderated_subs.new(
-    title: [Faker::Hipster.word, Faker::Hacker.noun].sample,
-    description: [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
-    )
+  new_sub = FactoryGirl.build(:sub)
   redo unless new_sub.valid?
   new_sub.save!
 end
 
+puts "Creating moderations..."
 Moderation.destroy_all
-Moderation.create!(user_id: fred.id, sub_id: python.id)
-Moderation.create!(user_id: jonathan.id, sub_id: ruby.id)
-Moderation.create!(user_id: carl.id, sub_id: cplusplus.id)
-Moderation.create!(user_id: lily.id, sub_id: java.id)
-Moderation.create!(user_id: tommy.id, sub_id: javascript.id)
-Moderation.create!(user_id: jonathan.id, sub_id: app_academy.id)
-Moderation.create!(user_id: tommy.id, sub_id: app_academy.id)
-Moderation.create!(user_id: lily.id, sub_id: app_academy.id)
-Moderation.create!(user_id: carl.id, sub_id: app_academy.id)
-Moderation.create!(user_id: fred.id, sub_id: app_academy.id)
+python.moderations.create!(user_id: fred.id)
+ruby.moderations.create!(user_id: jonathan.id)
+cplusplus.moderations.create!(user_id: carl.id)
+java.moderations.create!(user_id: lily.id)
+javascript.moderations.create!(user_id: tommy.id)
+app_academy.moderator_ids = [fred.id, carl.id, lily.id, jonathan.id, tommy.id]
 
+puts "Creating posts..."
 Post.destroy_all
-500.times do
-  title = ["#{Faker::Hacker.noun} #{Faker::Hacker.ingverb}", Faker::Hipster.sentence].sample
-  body = [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
-  Post.create!(
-    user_id: User.pluck(:id).sample,
-    sub_id: Sub.pluck(:id).sample,
-    title: title,
-    body: body
+sub_ids = Sub.pluck(:id)
+user_ids = User.pluck(:id)
+posts = []
+Timecop.freeze(12.hours.ago)
+720.times do
+  posts << FactoryGirl.create(
+    :post,
+    sub_id: sub_ids.sample,
+    user_id: user_ids.sample,
   )
+  Timecop.freeze(Time.now + 1.minutes)
 end
 
+
+Timecop.return
+
+puts "Creating comments..."
 Comment.destroy_all
-5000.times do
-  post = (Post.all).sample
+posts = Post.all
 
+comments = []
+5000.times do
+  post = posts.sample
   parent_comment_id = [post.comments.pluck(:id).sample, nil].sample
-  body = [Faker::Hacker.say_something_smart, Faker::Hipster.paragraph].sample
-  post.comments.create!(
-    body: body,
-    user_id: User.pluck(:id).sample,
-    parent_comment_id: parent_comment_id
+
+  comments << FactoryGirl.build(
+    :comment,
+    post_id: post.id,
+    parent_comment_id: parent_comment_id,
   )
 end
 
+Comment.import(comments)
+
+puts "Creating votes..."
 Vote.destroy_all
+comments = Comment.all
+
+votes = []
+
 User.all.each do |user|
   300.times do
-    post = Post.all.sample
-    vote = user.votes.new(votable_id: post.id, votable_type: "Post", value: [1, -1].sample)
-    redo unless vote.valid?
-    vote.save!
+    vote = FactoryGirl.build(
+      :post_vote,
+      votable_id: posts.sample.id,
+      user_id: user.id
+    )
+    votes << vote if vote.valid?
+  end
+
+  300.times do
+    vote = FactoryGirl.build(
+      :comment_vote,
+      votable_id: comments.sample.id,
+      user_id: user.id
+    )
+    votes << vote if vote.valid?
   end
 end
+
+Vote.import(votes)
+
+puts "Done!"

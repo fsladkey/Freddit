@@ -1,4 +1,4 @@
-# == Schema Information
+# == Schema Information# == Schema Information
 #
 # Table name: posts
 #
@@ -9,7 +9,24 @@
 #  body       :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#
+
+# SELECT
+#   posts.*, SUM(votes.value) AS score
+# FROM
+#   "posts"
+# LEFT OUTER JOIN
+#   votes ON votes.votable_id = posts.id AND votes.votable_type = 'Post'
+# WHERE
+#   ("posts"."created_at" BETWEEN '2016-03-11 22:45:53.986652' AND '2016-03-12 22:45:53.986682')
+# GROUP BY
+#   "posts"."id"
+# ORDER BY
+#   (LOG(GREATEST(ABS(SUM(votes.value)), 1), 10) * SIGN(SUM(votes.value))) + ((EXTRACT(epoch from posts.created_at) - 1457822407) / 45000) DESC
+# LIMIT
+#   25
+# OFFSET
+#   0
+
 
 class Post < ActiveRecord::Base
   validates :user, :sub, :title, :body, presence: true
@@ -19,7 +36,55 @@ class Post < ActiveRecord::Base
   has_many :comments
   has_many :votes, as: :votable
 
-  def total_votes
+
+  def self.with_score
+    join_string = "LEFT OUTER JOIN votes ON votes.votable_id = posts.id"
+    join_string += " AND votes.votable_type = 'Post'"
+
+    posts = self
+    .joins(join_string)
+    .select("posts.*, SUM(votes.value) AS score")
+    .group(:id)
+  end
+
+  def self.by_params(params = {})
+    params = {
+      sort: "hot",
+      order: "num_posts",
+      page: "1",
+    }.merge(params)
+
+    posts = with_score
+    posts = by_time(posts, params)
+    posts = by_order(posts, params)
+
+    posts.page(params[:page].to_i)
+  end
+
+  def self.by_order(posts, params)
+    if params[:sort] == "top"
+      posts.order("SUM(votes.value) DESC")
+    elsif params[:sort] == "hot"
+      order_string = "( LOG(GREATEST(ABS(SUM(votes.value)), 1)) * SIGN(SUM(votes.value)) ) "
+      order_string += "+ ( (EXTRACT(epoch from posts.created_at) - 1457822407) / 45000) DESC"
+
+      posts.order(order_string)
+    end
+  end
+
+  def self.by_time(posts, params)
+    if params[:hours]
+      posts
+        .where(created_at: (Time.now - params[:hours].to_i.hours)..Time.now)
+    elsif params[:days]
+      posts
+        .where(created_at: (Time.now - params[:days].to_i.days)..Time.now)
+    else
+      posts
+    end
+  end
+
+  def num_votes
     votes.pluck(:value).inject(&:+) || 0
   end
 

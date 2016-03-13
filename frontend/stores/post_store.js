@@ -14,7 +14,7 @@ var recentCompare = function compare(a, b) {
 };
 
 var upvotedCompare = function compare(a, b) {
-  if (a.total_votes > b.total_votes) {
+  if (a.score > b.score) {
     return -1;
   }
   else {

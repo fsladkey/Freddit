@@ -1,12 +1,19 @@
 class Api::PostsController < ApplicationController
 
   def index
-    @posts = Post.includes(:sub, :user, :votes).limit(30)
+    @posts = Post
+      .by_params(params)
+      .includes(:sub, :user, :votes)
     render :index
   end
 
   def show
-    @post = Post.includes(:sub, :user, :votes, {comments: [:user]}).find(params[:id])
+    @post = Post
+      .with_score
+      .includes(:sub, :user, :votes)
+      .find(params[:id])
+      
+    @comments = Comment.confidence_sorted_by_post(@post)
     render :show
   end
 
@@ -29,8 +36,8 @@ class Api::PostsController < ApplicationController
       votable_id: params[:id],
       votable_type: "Post"
     )
-
     @vote.value = (@vote.value == direction ? 0 : direction)
+
     if @vote.save
       @post = @vote.votable
       render :show
@@ -50,4 +57,5 @@ class Api::PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title, :body, :sub_id)
   end
+
 end

@@ -61,6 +61,7 @@ Timecop.return
 puts "Creating comments..."
 Comment.destroy_all
 posts = Post.all
+users = User.all
 
 comments = []
 5000.times do
@@ -70,6 +71,7 @@ comments = []
   comments << FactoryGirl.build(
     :comment,
     post_id: post.id,
+    user_id: users.sample.id,
     parent_comment_id: parent_comment_id,
   )
 end

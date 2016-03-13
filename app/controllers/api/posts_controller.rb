@@ -3,7 +3,7 @@ class Api::PostsController < ApplicationController
   def index
     @posts = Post
       .by_params(params)
-      .includes(:sub, :user, :votes)
+      .includes(:sub, :user, :votes, comments: [:user, :votes])
     render :index
   end
 
@@ -12,8 +12,9 @@ class Api::PostsController < ApplicationController
       .with_score
       .includes(:sub, :user, :votes)
       .find(params[:id])
-      
+
     @comments = Comment.confidence_sorted_by_post(@post)
+    ActiveRecord::Associations::Preloader.new.preload(@comments, :user)
     render :show
   end
 
@@ -39,7 +40,7 @@ class Api::PostsController < ApplicationController
     @vote.value = (@vote.value == direction ? 0 : direction)
 
     if @vote.save
-      @post = @vote.votable
+      @post = Post.with_score.includes(:sub, :user, :votes).find(@vote.votable_id)
       render :show
     else
       render json: @vote.errors.full_messages

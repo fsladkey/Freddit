@@ -9,7 +9,7 @@ var SubApiUtil = require('../util/sub_api_util');
 var Sub = React.createClass({
 
   getInitialState: function () {
-    return this.getStateFromStore();
+    return { sub: null, posts: null };
   },
 
   componentDidMount: function () {
@@ -22,7 +22,7 @@ var Sub = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    this.setState(this.getStateFromStore());
+    this.setState({ sub: null, posts: null });
     SubApiUtil.fetchSub(newProps.params.subName);
   },
 
@@ -30,7 +30,7 @@ var Sub = React.createClass({
     var sub = SubStore.findByName(this.props.params.subName);
     var posts = [];
     if (sub) {
-      posts = PostStore.findBySub(sub.id, "upvoted");
+      posts = PostStore.findBySub(sub.id);
     }
 
     return { sub: sub, posts: posts };
@@ -41,14 +41,20 @@ var Sub = React.createClass({
   },
 
   render: function () {
-    var body;
+    var body,
+        posts;
+    if (this.state.posts) {
+      posts = <Posts posts={this.state.posts} showSub={false}/>;
+    } else {
+      posts = "Loading posts... ";
+    }
 
     if (this.props.children) {
       body = this.props.children;
     } else {
       body = (
         <div>
-          <Posts posts={this.state.posts} showSub={false}/>
+          {posts}
           <SideBar history={this.props.history} sub={this.state.sub}/>
         </div>
       );

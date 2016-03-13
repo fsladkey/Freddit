@@ -17,6 +17,7 @@ class Comment < ActiveRecord::Base
   belongs_to :comment
   belongs_to :post
   belongs_to :user
+  has_many :votes, as: :votable
   has_many :child_comments, class_name: "Comment", foreign_key: :parent_comment_id
 
   def self.confidence_sort(comments)
@@ -39,7 +40,7 @@ class Comment < ActiveRecord::Base
   end
 
   def self.confidence_sorted_by_post(post)
-    comments = self.find_by_sql(<<-SQL, post.id)
+    comments = self.find_by_sql(<<-SQL)
       SELECT
         comments.*, COUNT(positive) AS positive, COUNT(negative) AS negative, (COUNT(positive) - COUNT(negative)) AS score
       FROM
@@ -57,25 +58,29 @@ class Comment < ActiveRecord::Base
         positive.votable_id = comments.id
       AND
         positive.votable_type = 'Comment'
-        LEFT OUTER JOIN
-          (
-            SELECT
-              votes.*
-            FROM
-              votes
-            WHERE
-              votes.value = 1
-          ) AS negative
-        ON
-          negative.votable_id = comments.id
-        AND
-          negative.votable_type = 'Comment'
+      LEFT OUTER JOIN
+        (
+          SELECT
+            votes.*
+          FROM
+            votes
+          WHERE
+            votes.value = -1
+        ) AS negative
+      ON
+        negative.votable_id = comments.id
+      AND
+        negative.votable_type = 'Comment'
       WHERE
-        comments.post_id = ?
+        comments.post_id = #{post.id}
       GROUP BY
         comments.id
     SQL
     confidence_sort(comments)
+  end
+
+  def num_votes
+    votes.pluck(:value).inject(&:+) || 0
   end
 
 end

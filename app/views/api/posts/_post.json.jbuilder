@@ -4,7 +4,7 @@ json.created_at post.created_at.iso8601
 json.updated_at post.updated_at.iso8601
 json.comments post.comments
 
-json.score post.score || num_votes
+json.score post.score
 
 json.sub do
   json.title post.sub.title
@@ -16,11 +16,12 @@ end
 
 
 # json.posts post.comments, partial: 'api/comments/comment', as: :comment
-json.comments post.comments do |comment|
+json.comments (@comments || post.comments) do |comment|
   json.extract! comment, :id, :body, :user_id, :parent_comment_id, :post_id
   json.user comment.user
 end
 
+
 json.votes post.votes do |vote|
-  json.extract! vote, :id, :user_id
+  json.extract! vote, :id, :user_id, :value
 end

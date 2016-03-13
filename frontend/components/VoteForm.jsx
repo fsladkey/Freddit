@@ -49,7 +49,7 @@ var VoteForm = React.createClass({
     }
     this.props.post.votes.forEach(function (vote) {
       if (vote.user_id == currentUser.id && vote.value == 1) {
-        result = "active";
+        result = " up-active";
       }
     });
     return result;
@@ -63,7 +63,7 @@ var VoteForm = React.createClass({
     }
     this.props.post.votes.forEach(function (vote) {
       if (vote.user_id == currentUser.id && vote.value == -1) {
-        result = "active";
+        result = " down-active";
       }
     });
     return result;
@@ -74,9 +74,13 @@ var VoteForm = React.createClass({
     var downvoteActive = this.downvoteActive();
     return (
     <div className="post-vote-form">
-      <button className="vote-arrow" onClick={this.upvote}><i className={"fa fa-arrow-up" + upvoteActive}></i></button>
+      <button className="vote-arrow" onClick={this.upvote}>
+        <i className={"fa fa-arrow-up" + upvoteActive}></i>
+      </button>
         <div className="votes">{this.props.post.score}</div>
-      <button className="vote-arrow"  onClick={this.downvote}><i className={"fa fa-arrow-down" + downvoteActive}></i></button>
+      <button className="vote-arrow"  onClick={this.downvote}>
+        <i className={"fa fa-arrow-down" + downvoteActive}></i>
+      </button>
     </div>
     );
   },

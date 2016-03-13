@@ -16,7 +16,6 @@ SubApiUtil = {
     $.ajax({
       method: "GET",
       url: "/api/subs/" + subName,
-      data: {subName: subName},
       success: function (sub) {
         SubActions.receiveSub(sub);
         PostActions.receiveSubPosts(sub.posts, sub.id);

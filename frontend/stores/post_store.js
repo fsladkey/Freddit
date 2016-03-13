@@ -4,35 +4,6 @@ var _posts = {};
 var PostStore = new Store(AppDispatcher);
 var PostConstants = require('../constants/post_constants');
 
-var recentCompare = function compare(a, b) {
-  if (a.created_at > b.created_at) {
-    return -1;
-  }
-  else {
-    return 1;
-  }
-};
-
-var upvotedCompare = function compare(a, b) {
-  if (a.score > b.score) {
-    return -1;
-  }
-  else {
-    return 1;
-  }
-};
-
-var findCompare = function (sortBy) {
-  switch (sortBy) {
-    case "recent":
-      return recentCompare;
-    case "upvoted":
-      return upvotedCompare;
-    default:
-      return upvotedCompare;
-  }
-};
-
 var addPosts = function (posts) {
   _posts = {};
   posts.forEach(function (post) {
@@ -85,16 +56,14 @@ var removeComment = function (comment) {
 };
 
 PostStore.all = function (sortBy) {
-  var compare = findCompare(sortBy);
-
   var posts = [];
 
   var keys = Object.keys(_posts);
   for (var idx = 0; idx < keys.length; idx++) {
     posts = posts.concat(_posts[keys[idx]]);
   }
-
-  return posts.sort(compare);
+  
+  return posts.slice();
 };
 
 PostStore.find = function (id) {
@@ -103,11 +72,10 @@ PostStore.find = function (id) {
   });
 };
 
-PostStore.findBySub = function (id, sortBy) {
-  var compare = findCompare(sortBy);
+PostStore.findBySub = function (id) {
   var posts = _posts[id] || [];
 
-  return posts.sort(compare).slice();
+  return posts.slice();
 };
 
 PostStore.__onDispatch = function (payload) {

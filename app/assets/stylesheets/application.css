@@ -312,8 +312,12 @@ label {
   padding: 2px 6px;
 }
 
-.active {
+.up-active {
   color: orange;
+}
+
+.down-active {
+  color: blue;
 }
 
 .post-preview-left {

@@ -28,6 +28,9 @@ var SubList = React.createClass({
     return (
       <div className="sub-list">
       <ul>
+        <li>
+          <a href={"#/"}>all</a>
+        </li>
         {subs}
       </ul>
       </div>

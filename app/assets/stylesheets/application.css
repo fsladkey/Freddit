@@ -312,11 +312,11 @@ label {
   padding: 2px 6px;
 }
 
-.up-active {
+.active-up {
   color: orange;
 }
 
-.down-active {
+.active-down {
   color: blue;
 }
 

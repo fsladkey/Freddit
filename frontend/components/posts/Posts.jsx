@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var PostStore = require('../stores/post_store');
-var PostApiUtil = require('../util/post_api_util');
+var PostStore = require('../../stores/post_store');
+var PostApiUtil = require('../../util/post_api_util');
 var PostPreview = require('./PostPreview');
 
 var Posts = React.createClass({

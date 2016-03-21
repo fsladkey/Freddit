@@ -64,6 +64,8 @@ class Post < ActiveRecord::Base
   def self.by_order(posts, params)
     if params[:sort] == "top"
       posts.order("SUM(votes.value) DESC")
+    elsif params[:sort] == "new"
+      posts.order("created_at DESC")
     elsif params[:sort] == "hot"
       order_string = "( LOG(GREATEST(ABS(SUM(votes.value)), 1)) * SIGN(SUM(votes.value)) ) "
       order_string += "+ ( (EXTRACT(epoch from posts.created_at) - 1457822407) / 45000) DESC"

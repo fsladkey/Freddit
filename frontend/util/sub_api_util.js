@@ -12,9 +12,12 @@ SubApiUtil = {
     });
   },
 
-  fetchSub: function(subName){
+  fetchSub: function(subName, data){
+    data = data || {};
+     
     $.ajax({
       method: "GET",
+      data: data,
       url: "/api/subs/" + subName,
       success: function (sub) {
         SubActions.receiveSub(sub);

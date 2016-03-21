@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var UserApiUtil = require('../util/user_api_util');
-var ModalActions = require('../actions/modal_actions');
+var UserApiUtil = require('../../../util/user_api_util');
+var ModalActions = require('../../../actions/modal_actions');
 
 var SignUpForm = React.createClass({
 

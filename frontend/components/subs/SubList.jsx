@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var SubStore = require('../stores/sub_store');
-var SubApiUtil = require('../util/sub_api_util');
+var SubStore = require('../../stores/sub_store');
+var SubApiUtil = require('../../util/sub_api_util');
 
 var SubList = React.createClass({
 

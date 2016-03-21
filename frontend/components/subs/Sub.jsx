@@ -1,10 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var NavBar = require('./NavBar');
-var Posts = require('./Posts');
-var SideBar = require('./SideBar');
-var PostStore = require('../stores/post_store');
-var SubApiUtil = require('../util/sub_api_util');
+var NavBar = require('../navbar/NavBar');
+var Posts = require('../posts/Posts');
+var SideBar = require('../shared/SideBar');
+var PostStore = require('../../stores/post_store');
+var SubApiUtil = require('../../util/sub_api_util');
 
 var Sub = React.createClass({
 

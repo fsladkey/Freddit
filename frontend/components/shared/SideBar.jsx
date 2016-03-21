@@ -1,12 +1,12 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var SideSignInForm = require('./SideSignInForm');
-var ModalStore = require('../stores/modal_store');
-var ModalActions = require('../actions/modal_actions');
-var UserStore = require('../stores/user_store');
-var SignInModal = require('./SignInModal');
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    ModalStore = require('../../stores/modal_store'),
+    ModalActions = require('../../actions/modal_actions'),
+    UserStore = require('../../stores/user_store'),
+    SideSignInForm = require('./SideSignInForm'),
+    SignInModal = require('./sign_in_modal/SignInModal');
 
-var SideBar = React.createClass({
+module.exports = React.createClass({
 
   getInitialState: function () {
     return this.getStateFromStore();
@@ -14,7 +14,7 @@ var SideBar = React.createClass({
 
   handleClick: function () {
     if (UserStore.currentUser()) {
-      this.props.history.push("/r/" + this.props.sub.title + "/new");
+      this.props.history.push("/r/" + this.props.sub.title + "/submit");
     } else {
       ModalActions.receiveModal(<SignInModal/>);
     }
@@ -49,5 +49,3 @@ var SideBar = React.createClass({
   }
 
 });
-
-module.exports = SideBar;

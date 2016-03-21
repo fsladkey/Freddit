@@ -1,8 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var PostStore = require('../stores/post_store');
-var SubStore = require('../stores/sub_store');
-var PostApiUtil = require('../util/post_api_util');
+var PostStore = require('../../stores/post_store');
+var SubStore = require('../../stores/sub_store');
+var PostApiUtil = require('../../util/post_api_util');
 
 var PostForm = React.createClass({
   getInitialState: function () {

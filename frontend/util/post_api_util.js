@@ -11,10 +11,12 @@ PostApiUtil = {
     });
   },
 
-  fetchAllPosts: function(){
+  fetchAllPosts: function(data){
+    data = data || {};
     $.ajax({
       method: "GET",
       url: "/api/posts",
+      data: data,
       success: function (posts) {
         PostActions.receiveAll(posts);
       }

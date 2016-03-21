@@ -2,10 +2,10 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Comments = require('./Comments');
 var CommentForm = require('./CommentForm');
-var SignInModal = require('./SignInModal');
-var ModalActions = require('../actions/modal_actions');
-var CommentApiUtil = require('../util/comment_api_util');
-var UserStore = require('../stores/user_store');
+var SignInModal = require('../shared/sign_in_modal/SignInModal');
+var ModalActions = require('../../actions/modal_actions');
+var CommentApiUtil = require('../../util/comment_api_util');
+var UserStore = require('../../stores/user_store');
 
 var Comment = React.createClass({
 

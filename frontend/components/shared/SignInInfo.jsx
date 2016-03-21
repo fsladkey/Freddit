@@ -1,9 +1,9 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var SignInModal = require('./SignInModal');
-var ModalActions = require('../actions/modal_actions');
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    ModalActions = require('../../actions/modal_actions'),
+    SignInModal = require('./sign_in_modal/SignInModal');
 
-var UserInfo = React.createClass({
+module.exports = React.createClass({
 
   handleClick: function () {
     ModalActions.receiveModal(<SignInModal/>);
@@ -24,6 +24,3 @@ var UserInfo = React.createClass({
   }
 
 });
-
-
-module.exports = UserInfo;

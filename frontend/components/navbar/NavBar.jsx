@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var SubList = require('./SubList');
+var SubList = require('../subs/SubList');
 var UserInfo = require('./UserInfo');
 
 var NavBar = React.createClass({

@@ -1,13 +1,13 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var SignInModal = require('./SignInModal');
-var Comments = require('./Comments');
-var PostApiUtil = require('../util/post_api_util');
-var ModalActions = require('../actions/modal_actions');
-var PostStore = require('../stores/post_store');
-var UserStore = require('../stores/user_store');
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    PostApiUtil = require('../../util/post_api_util'),
+    ModalActions = require('../../actions/modal_actions'),
+    PostStore = require('../../stores/post_store'),
+    UserStore = require('../../stores/user_store'),
+    SignInModal = require('./sign_in_modal/SignInModal'),
+    Comments = require('../comments/Comments');
 
-var VoteForm = React.createClass({
+module.exports = React.createClass({
 
   getInitialState: function () {
     return this.getStateFromStore();
@@ -68,7 +68,7 @@ var VoteForm = React.createClass({
       </button>
 
       <div className="votes">
-        {this.props.post.total_votes}
+        {this.props.post.score}
       </div>
 
       <button className="vote-arrow" onClick={this.downvote}>
@@ -78,11 +78,8 @@ var VoteForm = React.createClass({
     );
   },
 
-
   _change: function () {
     this.setState(this.getStateFromStore());
   },
 
 });
-
-module.exports = VoteForm;

@@ -1,21 +1,21 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var NavBar = require('./NavBar');
-var Posts = require('./Posts');
-var SideBar = require('./SideBar');
+var NavBar = require('../navbar/NavBar');
+var Posts = require('../posts/Posts');
+var SideBar = require('../shared/SideBar');
 
-var FrontPage = React.createClass({
+module.exports = React.createClass({
   getInitialState: function () {
-    return this.getStateFromStore();
+    return { posts: []};
   },
 
   getStateFromStore: function () {
-    return { posts: PostStore.all("upvoted")};
+    return { posts: PostStore.all() };
   },
 
   componentDidMount: function () {
     this.postListener = PostStore.addListener(this._postsChanged);
-    PostApiUtil.fetchAllPosts();
+    PostApiUtil.fetchAllPosts(this.state.params);
   },
 
   componentWillUnmount: function () {
@@ -46,5 +46,3 @@ var FrontPage = React.createClass({
   }
 
 });
-
-module.exports = FrontPage;

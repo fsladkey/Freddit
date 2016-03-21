@@ -1,9 +1,9 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var UserApiUtil = require('../util/user_api_util');
-var ModalActions = require('../actions/modal_actions');
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    UserApiUtil = require('../../util/user_api_util'),
+    ModalActions = require('../../actions/modal_actions');
 
-var SideSignInForm = React.createClass({
+module.exports = React.createClass({
 
   getInitialState: function () {
     return {username: "", password: ""};
@@ -52,5 +52,3 @@ var SideSignInForm = React.createClass({
   }
 
 });
-
-module.exports = SideSignInForm;

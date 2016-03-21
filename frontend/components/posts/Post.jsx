@@ -1,15 +1,17 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var PostStore = require('../stores/post_store');
-var PostApiUtil = require('../util/post_api_util');
-var Comments = require('./Comments');
-var VoteForm = require('./VoteForm');
-var CommentForm = require('./CommentForm');
+var PostStore = require('../../stores/post_store');
+var PostApiUtil = require('../../util/post_api_util');
+var Comments = require('../comments/Comments');
+var VoteForm = require('../shared/VoteForm');
+var CommentForm = require('../comments/CommentForm');
 
 var Post = React.createClass({
 
   getInitialState: function () {
-    return {post: PostStore.find(this.props.params.id)};
+    return {post:
+      PostStore.find(this.props.params.id)
+    };
   },
 
   componentDidMount: function () {
@@ -82,7 +84,9 @@ var Post = React.createClass({
   },
 
   _postsChanged: function () {
-    this.setState({post: PostStore.find(this.props.params.id)});
+    this.setState({
+      post: PostStore.find(this.props.params.id)
+    });
   }
 
 

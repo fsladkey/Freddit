@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var CommentApiUtil = require('../util/comment_api_util');
-var UserStore = require('../stores/user_store');
+var CommentApiUtil = require('../../util/comment_api_util');
+var UserStore = require('../../stores/user_store');
 
 var CommentForm = React.createClass({
 
@@ -27,7 +27,6 @@ var CommentForm = React.createClass({
 
     CommentApiUtil.createComment(comment, function () {
       this.setState({ body: "" });
-      debugger
       this.props.toggleForm && this.props.toggleForm();
     }.bind(this));
   },

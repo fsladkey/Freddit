@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var SignInForm = require('./SignInForm');
 var SignUpForm = require('./SignUpForm');
-var ModalActions = require('../actions/modal_actions');
+var ModalActions = require('../../../actions/modal_actions');
 
 var SignInModal = React.createClass({
 

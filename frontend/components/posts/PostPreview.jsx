@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var VoteForm = require('./VoteForm');
+var VoteForm = require('../shared/VoteForm');
 
 var PostPreview = React.createClass({
 

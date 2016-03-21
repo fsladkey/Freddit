@@ -1,14 +1,12 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    ModalActions = require('../../actions/modal_actions'),
+    UserStore = require('../../stores/user_store'),
+    SignInModal = require('../shared/sign_in_modal/SignInModal'),
+    SignInInfo = require('../shared/SignInInfo'),
+    CurrentUserInfo = require('../shared/CurrentUserInfo');
 
-var ModalActions = require('../actions/modal_actions');
-var UserStore = require('../stores/user_store');
-
-var SignInModal = require('./SignInModal');
-var SignInInfo = require('./SignInInfo');
-var CurrentUserInfo = require('./CurrentUserInfo');
-
-var UserInfo = React.createClass({
+module.exports = React.createClass({
 
   getInitialState: function () {
     return {currentUser: UserStore.currentUser()};
@@ -40,6 +38,3 @@ var UserInfo = React.createClass({
   }
 
 });
-
-
-module.exports = UserInfo;

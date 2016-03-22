@@ -10,7 +10,7 @@ class Api::SubsController < ApplicationController
     @posts = @sub
       .posts
       .by_params(params)
-      .includes(:user, :votes, comments: [:user, :votes]
+      .includes(:user, :votes, comments: [:votes, { user: :votes }]
     )
     render :show
   end

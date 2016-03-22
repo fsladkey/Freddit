@@ -29,6 +29,7 @@
 
 
 class Post < ActiveRecord::Base
+  include Votable
   validates :user, :sub, :title, :body, presence: true
 
   belongs_to :user
@@ -71,7 +72,7 @@ class Post < ActiveRecord::Base
         ( LOG(GREATEST(ABS(SUM(votes.value)), 1)) * SIGN(SUM(votes.value)) )
       + ( (EXTRACT(epoch from posts.created_at) - 1457822407) / 45000) DESC
       SQL
-      
+
       posts.order(order_string)
     end
   end
@@ -86,10 +87,6 @@ class Post < ActiveRecord::Base
     else
       posts
     end
-  end
-
-  def score
-    attributes["score"] || votes.pluck(:value).inject(&:+) || 0
   end
 
 end

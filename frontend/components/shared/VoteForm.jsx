@@ -1,6 +1,7 @@
 var React = require('react'),
     ReactDOM = require('react-dom'),
     PostApiUtil = require('../../util/post_api_util'),
+    CommentApiUtil = require('../../util/comment_api_util'),
     ModalActions = require('../../actions/modal_actions'),
     PostStore = require('../../stores/post_store'),
     UserStore = require('../../stores/user_store'),
@@ -70,7 +71,7 @@ var VoteForm = React.createClass({
       </button>
 
       <div className="votes">
-        {this.props.item.score}
+        { this.props.hideScore ? "" : this.props.item.score }
       </div>
 
       <button className="vote-arrow" onClick={this.downvote}>

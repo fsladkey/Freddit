@@ -6,7 +6,7 @@ var SideBar = require('../shared/SideBar');
 
 var FrontPage = React.createClass({
   getInitialState: function () {
-    return { posts: []};
+    return { posts: null};
   },
 
   getStateFromStore: function () {
@@ -31,7 +31,11 @@ var FrontPage = React.createClass({
     if (this.props.children) {
       body = this.props.children;
     } else {
-      body = <Posts posts={this.state.posts} showSub={true}/>;
+      if (this.state.posts) {
+        body = <Posts posts={this.state.posts} showSub={true}/>;
+      } else {
+        body = <img className="spinner" src={window.fredditAssests.spinner}/>;
+      }
     }
 
     return (

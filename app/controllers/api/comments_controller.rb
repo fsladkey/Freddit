@@ -16,14 +16,11 @@ class Api::CommentsController < ApplicationController
   end
 
   def vote(direction)
-    @vote = current_user.votes.find_or_create_by(
-      votable_id: params[:id],
-      votable_type: "Comment"
-    )
+    @vote = Comment.find_or_create_vote_for_user(current_user, params[:id])
     @vote.value = (@vote.value == direction ? 0 : direction)
 
     if @vote.save
-      @comment = Comment.includes(:sub, :user, :votes).find(@vote.votable_id)
+      @comment = Comment.includes(:user, :votes).find(@vote.votable_id)
       render :show
     else
       render json: @vote.errors.full_messages

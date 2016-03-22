@@ -46,7 +46,7 @@ var Sub = React.createClass({
     if (this.state.posts) {
       posts = <Posts posts={this.state.posts} showSub={false}/>;
     } else {
-      posts = "Loading posts... ";
+      posts = <img className="spinner" src={window.fredditAssests.spinner}/>;
     }
 
     if (this.props.children) {
@@ -64,7 +64,6 @@ var Sub = React.createClass({
         <NavBar subName={this.props.params.subName}/>
         <div className="main-content">
           {body}
-
         </div>
       </div>
     );

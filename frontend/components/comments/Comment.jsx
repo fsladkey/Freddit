@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Comments = require('./Comments');
 var CommentForm = require('./CommentForm');
+var CommentBody = require('./CommentBody');
 var SignInModal = require('../shared/sign_in_modal/SignInModal');
 var VoteForm = require('../shared/VoteForm');
 var ModalActions = require('../../actions/modal_actions');
@@ -76,18 +77,15 @@ var Comment = React.createClass({
     return (
       <div className={"comment " + commentClass}>
         <li>
-          <p>
-            <a href="#" className="clickable">
-            {comment.user.username}
-            </a>
-          </p>
 
-          <p>{comment.body}</p>
+          <div className="comment-row">
+            <VoteForm item={comment} itemType="Comment" hideScore={true}/>
+            <CommentBody comment={comment} />
+          </div>
 
           <button onClick={this.toggleForm}>reply</button>
           {this.deleteButton()}
           {this.commentForm()}
-          <VoteForm item={comment}/>
           <Comments
             commentClass={commentClass}
             comments={this.childComments()}

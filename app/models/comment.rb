@@ -12,6 +12,8 @@
 #
 
 class Comment < ActiveRecord::Base
+  include Votable
+  
   validates :body, :user_id, :post_id, presence: true
 
   belongs_to :comment

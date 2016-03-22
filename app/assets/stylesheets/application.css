@@ -63,6 +63,12 @@ label {
   position: relative;
 }
 
+.spinner {
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+}
+
 .flex-container {
   display: flex;
 }
@@ -180,6 +186,10 @@ label {
   text-transform: uppercase;
 }
 
+.modal-content input[type="submit"] {
+  background: #4f86b5;
+}
+
 .clickable {
   color: #315b7d;
 }
@@ -263,6 +273,7 @@ label {
   border: 1px solid #aaa;
   padding: 5px;
   background: white;
+  margin-right: 10px;
 }
 .comment > p {
   padding: 5px;
@@ -270,6 +281,19 @@ label {
 
 .comment > a {
  padding: 2px 5px;
+}
+
+.comment-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-body {
+  padding: 5px;
+}
+
+.comment-body p {
+  margin-bottom: 5px;
 }
 
 .odd {

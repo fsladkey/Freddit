@@ -34,7 +34,20 @@ var replacePost = function (newPost) {
 var addComment = function (comment) {
   var post = PostStore.find(comment.post_id);
   if (post) {
-    post.comments.unshift(comment);
+    var index;
+
+    post.comments.find(function (oldComment, idx) {
+      if (comment.id == oldComment.id) {
+        index = idx;
+        return true;
+      }
+    });
+    
+    if (index) {
+      post.comments[index] = comment;
+    } else {
+      post.comments.unshift(comment);
+    }
   }
 };
 
@@ -62,7 +75,7 @@ PostStore.all = function (sortBy) {
   for (var idx = 0; idx < keys.length; idx++) {
     posts = posts.concat(_posts[keys[idx]]);
   }
-  
+
   return posts.slice();
 };
 

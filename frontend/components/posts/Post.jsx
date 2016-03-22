@@ -18,7 +18,7 @@ var Post = React.createClass({
     this.postListener = PostStore.addListener(this._postsChanged);
 
     var setTimeAgo = function () {
-      jQuery("abbr.timeago").timeago();
+      $("abbr.timeago").timeago();
     }.bind(this);
 
     if (!this.state.post) {
@@ -78,7 +78,7 @@ var Post = React.createClass({
 
         <div className="post-detail">
           <div className="post-detail-left">
-            <VoteForm item={post}/>
+            <VoteForm item={post} itemType="Post"/>
           </div>
 
           <div className="post-detail-right">

@@ -48,7 +48,7 @@ var PostPreview = React.createClass({
       <li className="post-preview">
 
         <div className="post-preview-left">
-          <VoteForm item={post}/>
+          <VoteForm item={post} itemType="Post"/>
         </div>
 
         <div className="post-preview-right">

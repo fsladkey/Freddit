@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var Comments = require('./Comments');
 var CommentForm = require('./CommentForm');
 var SignInModal = require('../shared/sign_in_modal/SignInModal');
+var VoteForm = require('../shared/VoteForm');
 var ModalActions = require('../../actions/modal_actions');
 var CommentApiUtil = require('../../util/comment_api_util');
 var UserStore = require('../../stores/user_store');
@@ -10,7 +11,10 @@ var UserStore = require('../../stores/user_store');
 var Comment = React.createClass({
 
   getInitialState: function () {
-    return { showForm: false, currentUser: UserStore.currentUser() };
+    return {
+      showForm: false,
+      currentUser: UserStore.currentUser()
+    };
   },
 
   componentDidMount: function () {
@@ -54,38 +58,42 @@ var Comment = React.createClass({
     CommentApiUtil.destroyComment(this.props.comment.id);
   },
 
-  render: function () {
-    var comment = this.props.comment,
-        commentClass = this.props.commentClass == "even" ? "odd" : "even",
-        commentForm;
+  commentForm: function () {
     if (this.state.showForm) {
-      commentForm = (
+      return (
         <CommentForm
           toggleForm={this.toggleForm}
-          parentComment={comment}
+          parentComment={this.props.comment}
           post={this.props.post} />
       );
     }
+  },
+
+  render: function () {
+    var comment = this.props.comment,
+        commentClass = this.props.commentClass == "even" ? "odd" : "even";
 
     return (
       <div className={"comment " + commentClass}>
-      <li>
-        <p>
-          <a href="#" className="clickable">
-          {comment.user.username}
-          </a>
-        </p>
+        <li>
+          <p>
+            <a href="#" className="clickable">
+            {comment.user.username}
+            </a>
+          </p>
 
-        <p>{comment.body}</p>
-        <button onClick={this.toggleForm}>reply</button>
-        {this.deleteButton()}
-        {commentForm}
-        <Comments
-          commentClass={commentClass}
-          comments={this.childComments()}
-          post={this.props.post}
-          />
-      </li>
+          <p>{comment.body}</p>
+
+          <button onClick={this.toggleForm}>reply</button>
+          {this.deleteButton()}
+          {this.commentForm()}
+          <VoteForm item={comment}/>
+          <Comments
+            commentClass={commentClass}
+            comments={this.childComments()}
+            post={this.props.post}
+            />
+        </li>
       </div>
     );
   }

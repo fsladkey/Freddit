@@ -4,7 +4,7 @@ var NavBar = require('../navbar/NavBar');
 var Posts = require('../posts/Posts');
 var SideBar = require('../shared/SideBar');
 
-module.exports = React.createClass({
+var FrontPage = React.createClass({
   getInitialState: function () {
     return { posts: []};
   },
@@ -46,3 +46,5 @@ module.exports = React.createClass({
   }
 
 });
+
+module.exports = FrontPage;

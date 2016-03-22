@@ -1,6 +1,6 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var VoteForm = require('../shared/VoteForm');
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    VoteForm = require('../shared/VoteForm');
 
 var PostPreview = React.createClass({
 
@@ -14,7 +14,10 @@ var PostPreview = React.createClass({
 
   subInfo: function () {
     var subUrl = this.subUrl();
-    return this.props.showSub ? <span> to: <a className="clickable" href={subUrl}>{subUrl.slice(1)}</a></span> : null;
+
+    if (this.props.showSub) {
+      <span> to: <a className="clickable" href={subUrl}>{subUrl.slice(1)}</a></span>;
+    }
   },
 
   subUrl: function () {
@@ -45,7 +48,7 @@ var PostPreview = React.createClass({
       <li className="post-preview">
 
         <div className="post-preview-left">
-          <VoteForm post={post}/>
+          <VoteForm item={post}/>
         </div>
 
         <div className="post-preview-right">

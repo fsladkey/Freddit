@@ -36,6 +36,7 @@ module.exports = React.createClass({
                 onChange={this.usernameChange}
                 type="text"
                 placeholder="email"
+                required="true"
                 value={this.state.username}/>
 
             <label>Password</label>
@@ -43,6 +44,7 @@ module.exports = React.createClass({
                 onChange={this.passwordChange}
                 type="password"
                 placeholder="password"
+                required="true"
                 value={this.state.password}/>
           </div>
           <input className="side-login-button" type="submit" value="Sign In"/>

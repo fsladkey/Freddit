@@ -22,6 +22,26 @@ module.exports = {
         PostActions.deleteComment(comment);
       }
     });
+  },
+
+  upvote: function(commentId){
+    $.ajax({
+      method: "POST",
+      url: "/api/comments/" + commentId + "/upvote",
+      success: function (comment) {
+        PostActions.receiveComment(comment);
+      }
+    });
+  },
+
+  downvote: function(commentId){
+    $.ajax({
+      method: "POST",
+      url: "/api/comments/" + commentId + "/downvote",
+      success: function (comment) {
+        PostActions.receiveComment(comment);
+      }
+    });
   }
 
 

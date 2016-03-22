@@ -16,6 +16,7 @@ var React = require('react'),
     FrontPageTop = require('./components/frontpage/FrontPageTop'),
     FrontPageControversial = require('./components/frontpage/FrontPageControversial'),
     Post = require('./components/posts/Post'),
+    CommentShow = require('./components/comments/CommentShow'),
     PostForm = require('./components/posts/PostForm'),
     SideBar = require('./components/shared/SideBar'),
     App = require('./components/App'),
@@ -47,7 +48,9 @@ var routes = (
       <Route path="controversial" component={FrontPageControversial}/>
       <Route path="r/:subName" component={Sub}>
         <Route path="submit" component={PostForm}/>
-        <Route path=":id" component={Post}/>
+        <Route path=":id" component={Post}>
+          <Route path="comments/:commentId" component={CommentShow}/>
+        </Route>
       </Route>
       <Route path="r/:subName/new" component={SubNew}/>
       <Route path="r/:subName/hot" component={SubHot}/>

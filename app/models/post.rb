@@ -67,9 +67,11 @@ class Post < ActiveRecord::Base
     elsif params[:sort] == "new"
       posts.order("created_at DESC")
     elsif params[:sort] == "hot"
-      order_string = "( LOG(GREATEST(ABS(SUM(votes.value)), 1)) * SIGN(SUM(votes.value)) ) "
-      order_string += "+ ( (EXTRACT(epoch from posts.created_at) - 1457822407) / 45000) DESC"
-
+      order_string = <<-SQL
+        ( LOG(GREATEST(ABS(SUM(votes.value)), 1)) * SIGN(SUM(votes.value)) )
+      + ( (EXTRACT(epoch from posts.created_at) - 1457822407) / 45000) DESC
+      SQL
+      
       posts.order(order_string)
     end
   end
@@ -86,8 +88,8 @@ class Post < ActiveRecord::Base
     end
   end
 
-  def num_votes
-    votes.pluck(:value).inject(&:+) || 0
+  def score
+    attributes["score"] || votes.pluck(:value).inject(&:+) || 0
   end
 
 end

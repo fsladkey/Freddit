@@ -42,6 +42,7 @@ var SignInForm = React.createClass({
               ref="usernameInput"
               type="text"
               placeholder="email"
+              required="true"
               value={this.state.username}/>
 
           <label>Password</label>
@@ -49,7 +50,8 @@ var SignInForm = React.createClass({
               onChange={this.passwordChange}
               type="password"
               placeholder="password"
-              value={this.state.password}/>
+              value={this.state.password}
+              required="true"/>
           <input  type="submit" value="Sign In"/>
         </form>
       </div>

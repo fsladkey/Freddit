@@ -4,52 +4,54 @@ var React = require('react'),
     ModalActions = require('../../actions/modal_actions'),
     PostStore = require('../../stores/post_store'),
     UserStore = require('../../stores/user_store'),
-    SignInModal = require('./sign_in_modal/SignInModal'),
-    Comments = require('../comments/Comments');
+    SignInModal = require('./sign_in_modal/SignInModal');
 
-module.exports = React.createClass({
+var VoteForm = React.createClass({
 
   getInitialState: function () {
-    return this.getStateFromStore();
-  },
-
-  getStateFromStore: function () {
-    return {
-      post: PostStore.find(this.props.post.id),
-      currentUser: UserStore.currentUser()
-    };
+    return { currentUser: UserStore.currentUser() };
   },
 
   componentDidMount: function () {
-    this.postListener = PostStore.addListener(this._change);
     this.userListener = UserStore.addListener(this._change);
   },
 
   componentWillUnmount: function () {
-    this.postListener.remove();
     this.userListener.remove();
   },
 
   upvote: function () {
+    this.tryVote(1);
+  },
+
+  downvote: function () {
+    this.tryVote(-1);
+  },
+
+  tryVote: function (dir) {
     if (this.state.currentUser) {
-      PostApiUtil.upvote(this.props.post.id);
+      this.vote(dir);
     } else {
       ModalActions.receiveModal(<SignInModal/>);
     }
   },
 
-  downvote: function () {
-    PostApiUtil.downvote(this.props.post.id);
+  vote: function (dir) {
+    var apiUtil = this.props.itemType == "Post" ? PostApiUtil : CommentApiUtil;
+    if (dir === 1) {
+      apiUtil.upvote(this.props.item.id);
+    } else {
+      apiUtil.downvote(this.props.item.id);
+    }
   },
 
   voteActive: function (direction, val) {
     var result = "";
     var currentUser = this.state.currentUser;
 
-    if (!currentUser) {
-      return result;
-    }
-    this.props.post.votes.forEach(function (vote) {
+    if (!currentUser) { return result; }
+
+    this.props.item.votes.forEach(function (vote) {
       if (vote.user_id == currentUser.id && vote.value == val) {
         result = " active-" + direction;
       }
@@ -68,7 +70,7 @@ module.exports = React.createClass({
       </button>
 
       <div className="votes">
-        {this.props.post.score}
+        {this.props.item.score}
       </div>
 
       <button className="vote-arrow" onClick={this.downvote}>
@@ -79,7 +81,9 @@ module.exports = React.createClass({
   },
 
   _change: function () {
-    this.setState(this.getStateFromStore());
+    this.setState({ currentUser: UserStore.currentUser() });
   },
 
 });
+
+module.exports = VoteForm;

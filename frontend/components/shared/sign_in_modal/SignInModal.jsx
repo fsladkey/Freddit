@@ -18,6 +18,9 @@ var SignInModal = React.createClass({
     return (
       <div onClick={this.removeModal} className="modal">
         <div onClick={this.stopProp} className="modal-content">
+          <button onClick={this.removeModal} className="exit-modal">
+            x
+          </button>
           <SignUpForm/>
           <SignInForm/>
         </div>

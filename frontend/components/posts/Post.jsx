@@ -9,8 +9,8 @@ var CommentForm = require('../comments/CommentForm');
 var Post = React.createClass({
 
   getInitialState: function () {
-    return {post:
-      PostStore.find(this.props.params.id)
+    return {
+      post: PostStore.find(this.props.params.id)
     };
   },
 
@@ -33,7 +33,7 @@ var Post = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    PostApiUtil.fetchPost(this.newProps.params.id);
+    PostApiUtil.fetchPost(newProps.params.id);
   },
 
   postComments: function () {
@@ -42,44 +42,61 @@ var Post = React.createClass({
     });
   },
 
-  render: function () {
-    var post = this.state.post;
+  comments: function () {
+    var children = this.props.children;
 
-    if (post) {
-      return (
-        <div>
-
-          <div className="post-detail">
-            <div className="post-detail-left">
-              <VoteForm post={post}/>
-            </div>
-
-            <div className="post-detail-right">
-              <h3>{post.title}</h3>
-              <p className="submitter-info">
-              Submitted <abbr
-              className="timeago"
-              title={post.created_at}>{post.created_at}
-              </abbr> by <a className="clickable" href="#">{post.user.username}</a>
-              </p>
-              <div className="post-body">
-                <p>{post.body}</p>
-              </div>
-            </div>
-
-            </div>
-            <div className="post-comments">
-              <CommentForm post={post} hideCancel={true} />
-              <Comments post={post} comments={this.postComments()} />
-            </div>
-
-        </div>
-      );
+    if (children) {
+      return children;
     } else {
       return (
-        <div></div>
+        <div className="post-comments">
+          <CommentForm post={this.state.post} hideCancel={true} />
+          <Comments post={this.state.post} comments={this.postComments()} />
+        </div>
       );
     }
+  },
+
+  submitterInfo: function () {
+    var post = this.state.post;
+    return (
+      <p className="submitter-info">
+        Submitted <abbr
+          className="timeago"
+          title={post.created_at}>{post.created_at}
+        </abbr> by <a className="clickable" href="#">{post.user.username}</a>
+      </p>
+    );
+  },
+
+  render: function () {
+    var post = this.state.post;
+    if (!post) { return <div></div>; }
+
+    return (
+      <div>
+
+        <div className="post-detail">
+          <div className="post-detail-left">
+            <VoteForm item={post}/>
+          </div>
+
+          <div className="post-detail-right">
+            <h3>{post.title}</h3>
+
+            {this.submitterInfo()}
+
+            <div className="post-body">
+              <p>{post.body}</p>
+            </div>
+          </div>
+
+        </div>
+
+        {this.comments()}
+
+      </div>
+    );
 
   },
 

@@ -15,6 +15,7 @@ class Api::PostsController < ApplicationController
 
     @comments = Comment.confidence_sorted_by_post(@post)
     ActiveRecord::Associations::Preloader.new.preload(@comments, :user)
+    ActiveRecord::Associations::Preloader.new.preload(@comments, :votes)
     render :show
   end
 

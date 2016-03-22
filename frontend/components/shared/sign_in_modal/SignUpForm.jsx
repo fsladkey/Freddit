@@ -48,28 +48,36 @@ var SignUpForm = React.createClass({
             onChange={this.usernameChange}
             type="text"
             placeholder="username"
-            value={this.state.username}/>
+            value={this.state.username}
+            required="true"
+          />
 
           <label>Email</label>
             <input
               onChange={this.emailChange}
                 type="text"
                 placeholder="email"
-                value={this.state.email}/>
+                value={this.state.email}
+                required="true"
+              />
 
           <label>Password</label>
             <input
               onChange={this.passwordChange}
               type="password"
               placeholder="password"
-              value={this.state.password}/>
+              value={this.state.password}
+              required="true"
+            />
 
           <label>Password Confirmation</label>
             <input
               onChange={this.passwordConfirmationChange}
               type="password"
               placeholder="confirm password"
-              value={this.state.passwordConfirmation}/>
+              value={this.state.passwordConfirmation}
+              required="true"
+            />
           <input  type="submit" value="Sign Up"/>
         </form>
       </div>

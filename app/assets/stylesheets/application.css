@@ -46,7 +46,7 @@ input {
   display: block;
   background: white;
   border-radius: 3px;
-  padding: 3px 2px;
+  padding: 7px 7px;
   margin: 10px 0;
 }
 
@@ -159,6 +159,13 @@ label {
   background: #D6F5FF;
   display: flex;
   flex-direction: row;
+}
+
+.exit-modal {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  top: 10px;
 }
 
 .sign-up-form,

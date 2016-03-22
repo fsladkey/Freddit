@@ -19,6 +19,8 @@ end
 json.comments (@comments || post.comments) do |comment|
   json.extract! comment, :id, :body, :user_id, :parent_comment_id, :post_id
   json.user comment.user
+  json.votes comment.votes
+  json.score comment.score
 end
 
 

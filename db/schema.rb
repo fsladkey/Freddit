@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215061050) do
+ActiveRecord::Schema.define(version: 20160322155738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,12 +39,14 @@ ActiveRecord::Schema.define(version: 20160215061050) do
   add_index "moderations", ["user_id", "sub_id"], name: "index_moderations_on_user_id_and_sub_id", unique: true, using: :btree
 
   create_table "posts", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "sub_id",     null: false
-    t.string   "title",      null: false
-    t.text     "body",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",                    null: false
+    t.integer  "sub_id",                     null: false
+    t.string   "title",                      null: false
+    t.text     "body",                       null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "url"
+    t.boolean  "deleted",    default: false, null: false
   end
 
   add_index "posts", ["sub_id"], name: "index_posts_on_sub_id", using: :btree

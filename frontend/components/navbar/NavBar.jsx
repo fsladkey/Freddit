@@ -9,9 +9,13 @@ var NavBar = React.createClass({
 
     return (
       <div className="nav-bar">
-        <SubList/>
-        <h1 className="logo"><a href="/#/">freddit</a></h1>
+        <SubList subName={this.props.subName}/>
+        <div className="logo-container">
+          <a className="logo-image"href="/#/"></a>
+          <h1 className="logo"><a href="/#/">freddit</a></h1>
+        </div>
         <h3 className="sub-name"><a href={"/#/r/" + subName}>{subName}</a></h3>
+        {this.props.tabs}
         <UserInfo/>
       </div>
     );

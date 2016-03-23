@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var NavBar = require('../navbar/NavBar');
+var SortingTabs = require('../navbar/SortingTabs');
 var Posts = require('../posts/Posts');
 var SideBar = require('../shared/SideBar');
 
@@ -27,7 +28,8 @@ var FrontPage = React.createClass({
   },
 
   render: function () {
-    var body;
+    var body,
+        url = "#";
     if (this.props.children) {
       body = this.props.children;
     } else {
@@ -40,7 +42,7 @@ var FrontPage = React.createClass({
 
     return (
       <div>
-        <NavBar subName={"all"}/>
+        <NavBar subName={"all"} tabs={<SortingTabs url={url} sort={this.props.sort} />}/>
         <div className="main-content">
           {body}
         </div>

@@ -3,13 +3,14 @@ var ReactDOM = require('react-dom');
 var NavBar = require('../navbar/NavBar');
 var Posts = require('../posts/Posts');
 var SideBar = require('../shared/SideBar');
+var SortingTabs = require('../navbar/SortingTabs');
 var PostStore = require('../../stores/post_store');
 var SubApiUtil = require('../../util/sub_api_util');
 
 var Sub = React.createClass({
 
   getInitialState: function () {
-    return { sub: null, posts: null };
+    return this.getStateFromStore(this.props);
   },
 
   componentDidMount: function () {
@@ -22,13 +23,14 @@ var Sub = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    this.setState({ sub: null, posts: null });
+    this.setState(this.getStateFromStore(newProps));
     SubApiUtil.fetchSub(newProps.params.subName);
   },
 
-  getStateFromStore: function () {
-    var sub = SubStore.findByName(this.props.params.subName);
-    var posts = [];
+  getStateFromStore: function (props) {
+    var sub = SubStore.findByName(props.params.subName),
+        posts;
+
     if (sub) {
       posts = PostStore.findBySub(sub.id);
     }
@@ -37,18 +39,18 @@ var Sub = React.createClass({
   },
 
   _postsChanged: function () {
-    this.setState(this.getStateFromStore());
+    this.setState(this.getStateFromStore(this.props));
   },
 
   render: function () {
     var body,
-        posts;
-    if (this.state.posts) {
+        posts,
+        url = "#r/" + this.props.subName;
+    if (this.state.posts && this.state.posts.length > 1) {
       posts = <Posts posts={this.state.posts} showSub={false}/>;
     } else {
       posts = <img className="spinner" src={window.fredditAssests.spinner}/>;
     }
-
     if (this.props.children) {
       body = this.props.children;
     } else {
@@ -61,7 +63,11 @@ var Sub = React.createClass({
     }
     return (
       <div>
-        <NavBar subName={this.props.params.subName}/>
+        <NavBar
+          subName={this.props.params.subName}
+          tabs={<SortingTabs url={url}
+          sort={this.props.sort} />}
+        />
         <div className="main-content">
           {body}
         </div>

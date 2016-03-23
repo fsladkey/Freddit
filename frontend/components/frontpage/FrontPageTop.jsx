@@ -5,7 +5,7 @@ var React = require('react'),
 module.exports = React.createClass({
 
   render: function () {
-    return <FrontPage sort="top"/>;
+    return <FrontPage sort="top" history={this.props.history}/>;
   }
 
 });

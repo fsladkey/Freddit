@@ -6,7 +6,7 @@ var React = require('react'),
     SideSignInForm = require('./SideSignInForm'),
     SignInModal = require('./sign_in_modal/SignInModal');
 
-module.exports = React.createClass({
+var SideBar = React.createClass({
 
   getInitialState: function () {
     return this.getStateFromStore();
@@ -49,3 +49,6 @@ module.exports = React.createClass({
   }
 
 });
+
+
+module.exports = SideBar;

@@ -38,7 +38,7 @@ img {
 
 body {
   font-family: sans-serif;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 input {
@@ -76,16 +76,38 @@ label {
 .nav-bar {
   position: fixed;
   z-index: 100;
-  background: paleturquoise;
+  background: #CEE3F8;
   height: 75px;
   width: 100%;
-  box-shadow: 1px 2px 3px steelblue;
+  border-bottom: 1px solid #5F99CF;
+}
+
+.tabs {
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 250px;
+  display: flex;
+  flex-direction: row;
+}
+
+.tabs li {
+  background: #EFF7FF;
+  padding: 5px 10px;
+  margin-right: 10px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.tabs li.selected {
+  background: white;
+  margin-bottom: -5px;
 }
 
 
 .sub-list {
   font-size: 10px;
-  background: #ddd;
+  background: #F0F0F0;
   border-bottom: 1px solid grey;
 }
 
@@ -101,19 +123,38 @@ label {
   flex-shrink: 0;
 }
 
+.sub-list .current-sub {
+  color: #FC5F00;
+  font-weight: bold;
+}
+
 .sub-list > ul > li:hover {
   text-decoration: underline;
 }
 
-.logo {
-  padding: 5px 10px;
+.logo-container {
+  display: flex;
   margin-top: 10px;
   font-size: 30px;
+  padding-left: 5px;
+}
+
+.logo {
+  padding: 5px;
+}
+
+.logo-image {
+  margin-top: 10px;
+  height: 35px;
+  width: 35px;
+  background-size: 35px 35px;
+  display: block;
+  background-image: image-url("beard_logo.gif");
 }
 
 .sub-name {
   position: absolute;
-  left: 120px;
+  left: 140px;
   top: 53px;
 }
 
@@ -127,7 +168,7 @@ label {
   z-index: 10;
   right: 0;
   top: 55px;
-  background: lightcyan;
+  background: #EFF7FF;
   border-top-left-radius: 5px;
   padding: 3px;
 }
@@ -340,15 +381,21 @@ label {
 }
 
 .post-vote-form > .votes {
-  padding: 2px 6px;
+  padding: 2px 6px 2px 0;
+  margin-left: -3px;
+  text-align: center;
 }
 
 .active-up {
-  color: orange;
+  background: linear-gradient(100deg, #FFDA2F, #FF8F35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .active-down {
-  color: blue;
+  background: linear-gradient(100deg, #35A6FF, #0040FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .post-preview-left {
@@ -372,7 +419,7 @@ label {
 .sidebar .new-post-button {
   padding: 10px 20px;
   margin: 15px;
-  background: linear-gradient(45deg, paleturquoise, steelblue);
+  background: linear-gradient(45deg, #CEE3F8, #5F99CF);
   border: 2px outset black;
   border-radius: 3px;
   font-weight: bold;

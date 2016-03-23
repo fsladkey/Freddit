@@ -70,7 +70,7 @@ var VoteForm = React.createClass({
         <i className={"fa fa-arrow-up" + upvoteActive}></i>
       </button>
 
-      <div className="votes">
+      <div className={"votes" + upvoteActive + downvoteActive}>
         { this.props.hideScore ? "" : this.props.item.score }
       </div>
 

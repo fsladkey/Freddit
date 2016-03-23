@@ -18,18 +18,27 @@ var SubList = React.createClass({
     this.subListener.remove();
   },
 
+  subClassName: function (item, match) {
+    return item === match ? "current-sub" : "";
+  },
+
   render: function () {
     var subs =  (
       this.state.subs.map(function (sub) {
-        return <li key={sub.id}><a href={"#/r/" + sub.title}>{sub.title}</a></li>;
-      })
+        var className = this.subClassName(this.props.subName, sub.title);
+        return (
+          <li className={className} key={sub.id}>
+            <a href={"#/r/" + sub.title}>{sub.title}</a>
+          </li>
+        );
+      }, this)
     );
-
+    var className = this.subClassName(this.props.subName, "all");
     return (
       <div className="sub-list">
       <ul>
         <li>
-          <a href={"#/"}>all</a>
+          <a className={className} href={"#/"}>all</a>
         </li>
         {subs}
       </ul>

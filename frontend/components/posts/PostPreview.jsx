@@ -16,7 +16,9 @@ var PostPreview = React.createClass({
     var subUrl = this.subUrl();
 
     if (this.props.showSub) {
-      <span> to: <a className="clickable" href={subUrl}>{subUrl.slice(1)}</a></span>;
+      return (
+        <span> to: <a className="clickable" href={subUrl}>{subUrl.slice(1)}</a></span>
+      );
     }
   },
 

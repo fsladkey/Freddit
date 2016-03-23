@@ -6,10 +6,10 @@ var React = require('react'),
     Route = ReactRouter.Route,
     IndexRoute = ReactRouter.IndexRoute,
     Sub = require('./components/subs/Sub'),
-    SubControversial = require('./components/subs/SubControversial'),
     SubNew = require('./components/subs/SubNew'),
     SubHot = require('./components/subs/SubHot'),
     SubTop = require('./components/subs/SubTop'),
+    SubControversial = require('./components/subs/SubControversial'),
     FrontPage = require('./components/frontpage/FrontPage'),
     FrontPageNew = require('./components/frontpage/FrontPageNew'),
     FrontPageHot = require('./components/frontpage/FrontPageHot'),
@@ -18,7 +18,6 @@ var React = require('react'),
     Post = require('./components/posts/Post'),
     CommentShow = require('./components/comments/CommentShow'),
     PostForm = require('./components/posts/PostForm'),
-    SideBar = require('./components/shared/SideBar'),
     App = require('./components/App'),
     UserStore = require('./stores/user_store'),
     UserApiUtil = require('./util/user_api_util');
@@ -45,8 +44,9 @@ var routes = (
       <Route path="new" component={FrontPageNew}/>
       <Route path="hot" component={FrontPageHot}/>
       <Route path="top" component={FrontPageTop}/>
+      <Route path="submit" component={PostForm}/>
       <Route path="controversial" component={FrontPageControversial}/>
-      <Route path="r/:subName" component={Sub}>
+      <Route path="r/:subName" component={SubHot}>
         <Route path="submit" component={PostForm}/>
         <Route path=":id" component={Post}>
           <Route path="comments/:commentId" component={CommentShow}/>

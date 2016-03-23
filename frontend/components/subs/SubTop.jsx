@@ -5,7 +5,7 @@ var React = require('react'),
 module.exports = React.createClass({
 
   render: function () {
-    return <Sub sort="top"/>;
+    return <Sub sort="top" params={this.props.params} history={this.props.history}/>;
   }
 
 });

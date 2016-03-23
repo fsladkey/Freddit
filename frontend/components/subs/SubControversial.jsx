@@ -5,7 +5,7 @@ var React = require('react'),
 module.exports = React.createClass({
 
   render: function () {
-    return <Sub sort="controversial"/>;
+    return <Sub sort="controversial" history={this.props.history}/>;
   }
 
 });

@@ -1,12 +1,13 @@
-var SubActions = require('../actions/sub_actions');
-var PostActions = require('../actions/post_actions');
+import SubActions from '../actions/sub_actions';
+import PostActions from '../actions/post_actions';
 
-SubApiUtil = {
+const subApiUtil = {
+
   fetchSubs: function(){
     $.ajax({
       method: "GET",
       url: "/api/subs",
-      success: function (subs) {
+      success: subs => {
         SubActions.receiveAll(subs);
       }
     });
@@ -14,17 +15,18 @@ SubApiUtil = {
 
   fetchSub: function(subName, data){
     data = data || {};
-     
+
     $.ajax({
       method: "GET",
       data: data,
       url: "/api/subs/" + subName,
-      success: function (sub) {
+      success: sub => {
         SubActions.receiveSub(sub);
         PostActions.receiveSubPosts(sub.posts, sub.id);
       }
     });
   }
+
 };
 
-module.exports = SubApiUtil;
+export default subApiUtil;

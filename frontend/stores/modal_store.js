@@ -1,22 +1,21 @@
-var Store = require('flux/utils').Store;
-var AppDispatcher = require('../dispatcher/dispatcher');
-var _modal;
-var ModalStore = new Store(AppDispatcher);
-var ModalConstants = require('../constants/modal_constants');
+import { Store } from 'flux/utils';
+import AppDispatcher from '../dispatcher/dispatcher';
+import modalConstants from '../constants/modal_constants';
 
-ModalStore.modal = function () {
+let _modal;
+const modalStore = new Store(AppDispatcher);
+
+modalStore.modal = function () {
   return _modal;
 };
 
-ModalStore.__onDispatch = function (payload) {
+modalStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
-    case ModalConstants.RECEIVE_MODAL:
+    case modalConstants.RECEIVE_MODAL:
       _modal = payload.modal;
-      ModalStore.__emitChange();
+      modalStore.__emitChange();
       break;
   }
 };
 
-window.ModalStore = ModalStore;
-
-module.exports = ModalStore;
+export default modalStore;

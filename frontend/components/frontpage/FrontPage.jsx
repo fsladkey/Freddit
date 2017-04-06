@@ -1,34 +1,36 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var NavBar = require('../navbar/NavBar');
-var SortingTabs = require('../navbar/SortingTabs');
-var Posts = require('../posts/Posts');
-var SideBar = require('../shared/SideBar');
+import React from 'react';
+import PostApiUtil from '../../util/post_api_util';
+import PostStore from '../../stores/post_store';
+import NavBar from '../navbar/NavBar';
+import SortingTabs from '../navbar/SortingTabs';
+import Posts from '../posts/Posts';
+import SideBar from '../shared/SideBar';
 
-var FrontPage = React.createClass({
-  getInitialState: function () {
-    return { posts: null};
-  },
+let getStateFromStore = function () {
+  return { posts: PostStore.all() };
+};
 
-  getStateFromStore: function () {
-    return { posts: PostStore.all() };
-  },
+export default class FrontPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { posts: null };
+  }
 
-  componentDidMount: function () {
-    this.postListener = PostStore.addListener(this._postsChanged);
+  componentDidMount() {
+    this.postListener = PostStore.addListener(this._postsChanged.bind(this));
     PostApiUtil.fetchAllPosts(this.state.params);
-  },
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.postListener.remove();
-  },
+  }
 
-  _postsChanged: function () {
-    this.setState(this.getStateFromStore());
-  },
+  _postsChanged() {
+    this.setState(getStateFromStore());
+  }
 
-  render: function () {
-    var body,
+  render() {
+    let body,
         url = "#";
     if (this.props.children) {
       body = this.props.children;
@@ -42,15 +44,25 @@ var FrontPage = React.createClass({
 
     return (
       <div>
-        <NavBar subName={"all"} tabs={<SortingTabs url={url} sort={this.props.sort} />}/>
+
+        <NavBar
+          subName={"all"}
+          tabs={<SortingTabs
+            url={url}
+            sort={this.props.sort} />}
+        />
+
         <div className="main-content">
           {body}
         </div>
-        <SideBar history={this.props.history} sub={this.state.sub}/>
+
+        <SideBar
+          history={this.props.history}
+          sub={this.state.sub}
+        />
+
       </div>
     );
   }
 
-});
-
-module.exports = FrontPage;
+}

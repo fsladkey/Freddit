@@ -1,5 +1,5 @@
-var UserConstants = {
+const userConstants = {
   RECEIVE_CURRENT_USER: "RECEIVE_CURRENT_USER"
 };
 
-module.exports = UserConstants;
+export default userConstants;

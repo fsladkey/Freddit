@@ -198,12 +198,12 @@ label {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
+  width: 650px;
+  height: 450px;
   padding: 50px;
   box-shadow: 3px 3px 10px black;
   border-radius: 5px;
-  background: #D6F5FF;
+  background: #F8FBFD;
   display: flex;
   flex-direction: row;
 }
@@ -225,10 +225,18 @@ label {
 .sign-in-form > h2{
   font-weight: bold;
   text-transform: uppercase;
+  color: #4F86B5;
+}
+
+.sign-in-form {
+  border-left: 1px solid #aaa;
 }
 
 .modal-content input[type="submit"] {
-  background: #4f86b5;
+  background: #4F86B5;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .clickable {
@@ -419,17 +427,18 @@ label {
 .sidebar .new-post-button {
   padding: 10px 20px;
   margin: 15px;
-  background: linear-gradient(45deg, #CEE3F8, #5F99CF);
-  border: 2px outset black;
+  background: linear-gradient(110deg, #F8FBFE, #cfe1f6);
+  border: 2px solid #c4dbf1;
   border-radius: 3px;
   font-weight: bold;
   cursor: pointer;
+  color: #369;
 }
 
 .sidebar .new-post-button:hover {
+  background: linear-gradient(110deg, #C3D9ED, #75A5D3);
   color: white;
-  border: 2px inset black;
-  text-shadow: 1px 1px 1px black;
+  border: 2px solid #369;
 }
 
 .sidebar .search {

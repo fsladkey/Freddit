@@ -1,12 +1,12 @@
-var UserActions = require('../actions/user_actions');
+import userActions from '../actions/user_actions';
 
-UserApiUtil = {
+const userApiUtil = {
   fetchCurrentUser: function(cb){
     $.ajax({
       method: "GET",
       url: "/api/session",
-      success: function (currentUser) {
-        UserActions.receiveCurrentUser(currentUser);
+      success: currentUser => {
+        userActions.receiveCurrentUser(currentUser);
         cb && cb();
       }
     });
@@ -16,19 +16,20 @@ UserApiUtil = {
     $.ajax({
       method: "DELETE",
       url: "/api/session",
-      success: function (currentUser) {
-        UserActions.receiveCurrentUser(null);
+      success: currentUser => {
+        userActions.receiveCurrentUser(null);
       },
     });
   },
 
-  signUpUser: function (data) {
+  signUpUser: function (data, cb) {
     $.ajax({
       method: "POST",
       data: {user: data},
       url: "/api/users",
-      success: function (currentUser) {
-        UserActions.receiveCurrentUser(currentUser);
+      success: currentUser => {
+        userActions.receiveCurrentUser(currentUser);
+        cb && cb();
       },
     });
   },
@@ -38,8 +39,8 @@ UserApiUtil = {
       method: "POST",
       url: "/api/session",
       data: {user: data},
-      success: function (currentUser) {
-        UserActions.receiveCurrentUser(currentUser);
+      success: currentUser => {
+        userActions.receiveCurrentUser(currentUser);
       },
       error: function () {
         debugger
@@ -49,4 +50,4 @@ UserApiUtil = {
 
 };
 
-module.exports = UserApiUtil;
+export default userApiUtil;

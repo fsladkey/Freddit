@@ -10,6 +10,17 @@
 #
 
 class Sub < ActiveRecord::Base
+  has_attached_file(
+    :bg_image,
+    styles: { medium: "300x300>", thumb: "100x100>" }
+  )
+  validates_attachment(
+    :bg_image,
+    content_type: {
+      content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+    }
+  )
+
   validates :title, :description, presence: true
   validates :title, uniqueness: true
 

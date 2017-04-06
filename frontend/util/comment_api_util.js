@@ -1,13 +1,13 @@
-var PostActions = require('../actions/post_actions');
+import PostActions from '../actions/post_actions';
 
-module.exports = {
+const commentApiUtil = {
 
   createComment: function(comment, cb){
     $.ajax({
       method: "POST",
       url: "/api/comments/",
       data: {comment: comment},
-      success: function (comment) {
+      success: comment => {
         PostActions.receiveComment(comment);
         cb && cb();
       }
@@ -18,9 +18,7 @@ module.exports = {
     $.ajax({
       method: "DELETE",
       url: "/api/comments/" + id,
-      success: function (comment) {
-        PostActions.deleteComment(comment);
-      }
+      success: comment => PostActions.deleteComment(comment)
     });
   },
 
@@ -28,9 +26,7 @@ module.exports = {
     $.ajax({
       method: "POST",
       url: "/api/comments/" + commentId + "/upvote",
-      success: function (comment) {
-        PostActions.receiveComment(comment);
-      }
+      success: comment => PostActions.receiveComment(comment)
     });
   },
 
@@ -38,11 +34,10 @@ module.exports = {
     $.ajax({
       method: "POST",
       url: "/api/comments/" + commentId + "/downvote",
-      success: function (comment) {
-        PostActions.receiveComment(comment);
-      }
+      success: comment => PostActions.receiveComment(comment)
     });
   }
 
-
 };
+
+export default commentApiUtil;

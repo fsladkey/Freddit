@@ -1,80 +1,84 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var NavBar = require('../navbar/NavBar');
-var Posts = require('../posts/Posts');
-var SideBar = require('../shared/SideBar');
-var SortingTabs = require('../navbar/SortingTabs');
-var PostStore = require('../../stores/post_store');
-var SubApiUtil = require('../../util/sub_api_util');
+import React from 'react';
+import NavBar from '../navbar/NavBar';
+import Posts from '../posts/Posts';
+import SideBar from '../shared/SideBar';
+import SortingTabs from '../navbar/SortingTabs';
+import PostStore from '../../stores/post_store';
+import SubStore from '../../stores/sub_store';
+import SubApiUtil from '../../util/sub_api_util';
 
-var Sub = React.createClass({
+let getStateFromStore = function (props) {
+  let sub = SubStore.findByName(props.params.subName),
+      posts;
 
-  getInitialState: function () {
-    return this.getStateFromStore(this.props);
-  },
+  if (sub) { posts = PostStore.findBySub(sub.id); }
 
-  componentDidMount: function () {
-    this.postListener = PostStore.addListener(this._postsChanged);
+  return { sub: sub, posts: posts };
+};
+
+export default class Sub extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = getStateFromStore(this.props);
+  }
+
+  componentDidMount() {
+    this.postListener = PostStore.addListener(this._postsChanged.bind(this));
     SubApiUtil.fetchSub(this.props.params.subName);
-  },
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.postListener.remove();
-  },
+  }
 
-  componentWillReceiveProps: function (newProps) {
-    this.setState(this.getStateFromStore(newProps));
+  componentWillReceiveProps(newProps) {
+    this.setState(getStateFromStore(newProps));
     SubApiUtil.fetchSub(newProps.params.subName);
-  },
+  }
 
-  getStateFromStore: function (props) {
-    var sub = SubStore.findByName(props.params.subName),
-        posts;
+  _postsChanged() {
+    this.setState(getStateFromStore(this.props));
+  }
 
-    if (sub) {
-      posts = PostStore.findBySub(sub.id);
-    }
-
-    return { sub: sub, posts: posts };
-  },
-
-  _postsChanged: function () {
-    this.setState(this.getStateFromStore(this.props));
-  },
-
-  render: function () {
-    var body,
-        posts,
-        url = "#r/" + this.props.subName;
-    if (this.state.posts && this.state.posts.length > 1) {
-      posts = <Posts posts={this.state.posts} showSub={false}/>;
+  posts() {
+    if (this.state.posts && this.state.posts.length > 0) {
+      return <Posts posts={this.state.posts} showSub={false}/>;
     } else {
-      posts = <img className="spinner" src={window.fredditAssests.spinner}/>;
+      return <img className="spinner" src={window.fredditAssests.spinner}/>;
     }
-    if (this.props.children) {
-      body = this.props.children;
-    } else {
-      body = (
-        <div>
-          {posts}
-          <SideBar history={this.props.history} sub={this.state.sub}/>
-        </div>
-      );
-    }
+  }
+
+  body() {
+    if (this.props.children) { return this.props.children; }
     return (
       <div>
-        <NavBar
-          subName={this.props.params.subName}
-          tabs={<SortingTabs url={url}
-          sort={this.props.sort} />}
-        />
-        <div className="main-content">
-          {body}
-        </div>
+        {this.posts()}
+        <SideBar history={this.props.history} sub={this.state.sub}/>
       </div>
     );
   }
 
-});
+  render() {
+    let url = "#r/" + this.props.params.subName,
+        imageUrl = this.state.sub && this.state.sub.imageUrl;
+        
+    return (
+      <div>
 
-module.exports = Sub;
+        <NavBar
+          imageUrl={imageUrl}
+          subName={this.props.params.subName}
+          tabs={<SortingTabs url={url}
+          sort={this.props.sort} />}
+        />
+
+        <div className="main-content">
+          {this.body()}
+        </div>
+
+      </div>
+    );
+  }
+
+}

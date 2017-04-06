@@ -1,37 +1,37 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    VoteForm = require('../shared/VoteForm');
+import React from 'react';
+import VoteForm from '../shared/VoteForm';
 
-var PostPreview = React.createClass({
+export default class PostPreview extends React.Component {
 
-  getInitialState: function () {
-    return { showPreview: false };
-  },
+  constructor(props) {
+    super(props);
+    this.state = { showPreview: false };
+  }
 
-  componentDidMount: function () {
+  componentDidMount() {
     jQuery("abbr.timeago").timeago();
-  },
+  }
 
-  subInfo: function () {
-    var subUrl = this.subUrl();
+  subInfo() {
+    let subUrl = this.subUrl();
 
     if (this.props.showSub) {
       return (
         <span> to: <a className="clickable" href={subUrl}>{subUrl.slice(1)}</a></span>
       );
     }
-  },
+  }
 
-  subUrl: function () {
-    var subName = this.props.post.sub.title;
-    return"#/r/" + subName;
-  },
+  subUrl() {
+    let subName = this.props.post.sub.title;
+    return" #/r/" + subName;
+  }
 
-  togglePreview: function () {
+  togglePreview() {
     this.setState({ showPreview: !this.state.showPreview });
-  },
+  }
 
-  postPreview: function () {
+  postPreview() {
     if (this.state.showPreview) {
       return (
         <p className="preview">
@@ -39,10 +39,10 @@ var PostPreview = React.createClass({
         </p>
       );
     }
-  },
+  }
 
-  render: function () {
-    var post = this.props.post,
+  render() {
+    let post = this.props.post,
         sub = post.sub,
         postUrl = this.subUrl() + "/" + post.id;
 
@@ -65,8 +65,14 @@ var PostPreview = React.createClass({
             {this.subInfo()}
           </p>
           <p>
-            <button className="clickable" onClick={this.togglePreview}>Preview</button>
-            <a className="clickable" href={postUrl}>{post.comments.length} comments</a>
+            <button
+              className="clickable"
+              onClick={this.togglePreview.bind(this)}
+            >Preview</button>
+            <a
+              className="clickable"
+              href={postUrl}
+            >{post.comments.length} comments</a>
           </p>
           {this.postPreview()}
         </div>
@@ -75,6 +81,4 @@ var PostPreview = React.createClass({
     );
   }
 
-});
-
-module.exports = PostPreview;
+}

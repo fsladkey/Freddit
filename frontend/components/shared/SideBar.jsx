@@ -1,40 +1,42 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    ModalStore = require('../../stores/modal_store'),
-    ModalActions = require('../../actions/modal_actions'),
-    UserStore = require('../../stores/user_store'),
-    SideSignInForm = require('./SideSignInForm'),
-    SignInModal = require('./sign_in_modal/SignInModal');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ModalStore from '../../stores/modal_store';
+import ModalActions from '../../actions/modal_actions';
+import UserStore from '../../stores/user_store';
+import SideSignInForm from './SideSignInForm';
+import SignInModal from './sign_in_modal/SignInModal';
 
-var SideBar = React.createClass({
+let getStateFromStore = function () {
+      return { loggedIn: !!UserStore.currentUser() };
+};
 
-  getInitialState: function () {
-    return this.getStateFromStore();
-  },
+export default class SideBar extends React.Component {
 
-  handleClick: function () {
+  constructor(props) {
+    super(props);
+    this.state = getStateFromStore();
+  }
+
+  handleClick(e) {
     if (UserStore.currentUser()) {
       this.props.history.push("/r/" + this.props.sub.title + "/submit");
     } else {
       ModalActions.receiveModal(<SignInModal/>);
     }
-  },
+  }
 
-  componentDidMount: function () {
-    this.userListener = UserStore.addListener(this._userChanged);
-  },
+  componentDidMount() {
+    this.userListener = UserStore.addListener(this._userChanged.bind(this));
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.userListener.remove();
-  },
+  }
 
-  getStateFromStore: function () {
-    return { loggedIn: !!UserStore.currentUser() };
-  },
+  render() {
+    let sub = this.props.sub,
+        signInForm = this.state.loggedIn ? null : <SideSignInForm sub={sub} />;
 
-  render: function () {
-    var sub = this.props.sub;
-    var signInForm = this.state.loggedIn ? null : <SideSignInForm sub={sub} />;
     return (
       <div className="sidebar">
         <button className="new-post-button" onClick={this.handleClick}>Make A New Post</button>
@@ -42,13 +44,10 @@ var SideBar = React.createClass({
         {signInForm}
       </div>
     );
-  },
-
-  _userChanged: function () {
-    this.setState(this.getStateFromStore());
   }
 
-});
+  _userChanged() {
+    this.setState(getStateFromStore());
+  }
 
-
-module.exports = SideBar;
+}

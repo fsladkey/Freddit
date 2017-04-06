@@ -1,6 +1,6 @@
-var SubConstants = {
+const subConstants = {
   RECEIVE_SUBS: "RECEIVE_SUBS",
   RECEIVE_SUB: "RECEIVE_SUB"
 };
 
-module.exports = SubConstants;
+export default subConstants;

@@ -1,15 +1,15 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    ModalActions = require('../../actions/modal_actions'),
-    SignInModal = require('./sign_in_modal/SignInModal');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ModalActions from '../../actions/modal_actions';
+import SignInModal from './sign_in_modal/SignInModal';
 
-module.exports = React.createClass({
+export default class SignInInfo extends React.Component {
 
-  handleClick: function () {
+  handleClick() {
     ModalActions.receiveModal(<SignInModal/>);
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <div className="user-info">
         <p>
@@ -23,4 +23,4 @@ module.exports = React.createClass({
     );
   }
 
-});
+}

@@ -1,7 +1,7 @@
-var AppDispatcher = require('../dispatcher/dispatcher');
-var SubConstants = require('../constants/sub_constants');
+import AppDispatcher from '../dispatcher/dispatcher';
+import SubConstants from '../constants/sub_constants';
 
-var SubActions = {
+let SubActions = {
   receiveAll: function(subs){
     AppDispatcher.dispatch({
       actionType: SubConstants.RECEIVE_SUBS,

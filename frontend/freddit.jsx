@@ -1,32 +1,24 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    ReactRouter = require('react-router'),
-    browserHistory = ReactRouter.browserHistory,
-    Router = ReactRouter.Router,
-    Route = ReactRouter.Route,
-    IndexRoute = ReactRouter.IndexRoute,
-    Sub = require('./components/subs/Sub'),
-    SubNew = require('./components/subs/SubNew'),
-    SubHot = require('./components/subs/SubHot'),
-    SubTop = require('./components/subs/SubTop'),
-    SubControversial = require('./components/subs/SubControversial'),
-    FrontPage = require('./components/frontpage/FrontPage'),
-    FrontPageNew = require('./components/frontpage/FrontPageNew'),
-    FrontPageHot = require('./components/frontpage/FrontPageHot'),
-    FrontPageTop = require('./components/frontpage/FrontPageTop'),
-    FrontPageControversial = require('./components/frontpage/FrontPageControversial'),
-    Post = require('./components/posts/Post'),
-    CommentShow = require('./components/comments/CommentShow'),
-    PostForm = require('./components/posts/PostForm'),
-    App = require('./components/App'),
-    UserStore = require('./stores/user_store'),
-    UserApiUtil = require('./util/user_api_util');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import App from './components/App';
+import SubNew from './components/subs/SubNew';
+import SubHot from './components/subs/SubHot';
+import SubTop from './components/subs/SubTop';
+import SubControversial from './components/subs/SubControversial';
+import FrontPageTop from './components/frontpage/FrontPageTop';
+import FrontPageHot from './components/frontpage/FrontPageHot';
+import FrontPageNew from './components/frontpage/FrontPageNew';
+import FrontPageControversial from './components/frontpage/FrontPageControversial';
+import Post from './components/posts/Post';
+import CommentShow from './components/comments/CommentShow';
+import PostForm from './components/posts/PostForm';
 
-var _scrollToTop = function () {
+let _scrollToTop = function () {
   window.scrollTo(0, 0);
 };
 
-var _checkForSignedIn = function (state, replace, callback) {
+let _checkForSignedIn = function (state, replace, callback) {
   if (UserStore.currentUser()) {
     callback();
   } else {
@@ -37,7 +29,7 @@ var _checkForSignedIn = function (state, replace, callback) {
 
 };
 
-var routes = (
+let routes = (
   <Router history={browserHistory} onUpdate={_scrollToTop}>
     <Route path="/" component={App} >
       <IndexRoute component={FrontPageHot}/>
@@ -46,16 +38,16 @@ var routes = (
       <Route path="top" component={FrontPageTop}/>
       <Route path="submit" component={PostForm}/>
       <Route path="controversial" component={FrontPageControversial}/>
+      <Route path="r/:subName/new" component={SubNew}/>
+      <Route path="r/:subName/hot" component={SubHot}/>
+      <Route path="r/:subName/top" component={SubTop}/>
+      <Route path="r/:subName/controversial" component={SubControversial}/>
       <Route path="r/:subName" component={SubHot}>
         <Route path="submit" component={PostForm}/>
         <Route path=":id" component={Post}>
           <Route path="comments/:commentId" component={CommentShow}/>
         </Route>
       </Route>
-      <Route path="r/:subName/new" component={SubNew}/>
-      <Route path="r/:subName/hot" component={SubHot}/>
-      <Route path="r/:subName/top" component={SubTop}/>
-      <Route path="r/:subName/controversial" component={SubControversial}/>
     </Route>
   </Router>
 );
@@ -67,6 +59,6 @@ $.ajaxSetup({
 });
 
 $(function () {
-  var root = document.getElementById('content');
+  let root = document.getElementById('content');
   ReactDOM.render(routes, root);
 });

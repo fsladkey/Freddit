@@ -1,50 +1,56 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var PostStore = require('../../stores/post_store');
-var SubStore = require('../../stores/sub_store');
-var PostApiUtil = require('../../util/post_api_util');
+import React from 'react';
+import PostStore from '../../stores/post_store';
+import SubStore from '../../stores/sub_store';
+import PostApiUtil from '../../util/post_api_util';
 
-var PostForm = React.createClass({
-  getInitialState: function () {
-    return {title: "", body: "", sub: SubStore.findByName(this.props.params.subName)};
-  },
+export default class PostForm extends React.Component {
 
-  componentDidMount: function () {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      body: "",
+      sub: SubStore.findByName(this.props.params.subName)
+    };
+  }
+
+  componentDidMount() {
     this.subListener = SubStore.addListener(this._subsChanged);
     if (!this.state.sub) {
       SubApiUtil.fetchSub(this.props.params.subName);
     }
-  },
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.subListener.remove();
-  },
+  }
 
-  handleTitleChange: function (e) {
+  handleTitleChange(e) {
     this.setState({title: e.currentTarget.value});
-  },
+  }
 
-  handleBodyChange: function (e) {
+  handleBodyChange(e) {
     this.setState({body: e.currentTarget.value});
-  },
+  }
 
-  handleSubChange: function (e) {
+  handleSubChange(e) {
 
-  },
+  }
 
-  handleSubmit: function (e) {
+  handleSubmit(e) {
     e.preventDefault();
+
     PostApiUtil.createPost({
       title: this.state.title,
       body: this.state.body,
       sub_id: this.state.sub.id
-    }, function () {
+    }, () => {
       this.props.history.push("/r/" + this.state.sub.title);
-    }.bind(this));
-  },
+    });
+  }
 
-  render: function () {
-    var sub = this.state.sub,
+  render() {
+    let sub = this.state.sub,
         subName = sub ? sub.title : "";
 
     return (
@@ -52,22 +58,32 @@ var PostForm = React.createClass({
 
         <h4>Submit to {subName}</h4>
 
-        <label>Title</label>
+        <label for="post-title">Title</label>
         <form onSubmit={this.handleSubmit}>
           <section>
             <h4>Title</h4>
-            <input onChange={this.handleTitleChange} placeholder="the title!" value={this.state.title}/>
+            <input
+              id="post-title"
+              onChange={this.handleTitleChange}
+              placeholder="the title!"
+              value={this.state.title}
+            />
           </section>
 
-          <label>Title</label>
+          <label for="post-body">Body</label>
           <section>
             <h4>Body</h4>
-            <textarea onChange={this.handleBodyChange} placeholder="the body!" value={this.state.body}></textarea>
+            <textarea
+              id="post-body"
+              onChange={this.handleBodyChange}
+              placeholder="the body!"
+              value={this.state.body}
+            ></textarea>
           </section>
 
           <section>
             <h4>Choose a Subfreddit</h4>
-            <input value={subName} />
+            <input on value={subName} />
           </section>
 
           <button>Submit</button>
@@ -75,12 +91,10 @@ var PostForm = React.createClass({
         </form>
       </div>
     );
-  },
+  }
 
-  _subsChanged: function () {
+  _subsChanged() {
     this.setState({sub: SubStore.findByName(this.props.params.subName)});
   }
 
-});
-
-module.exports = PostForm;
+}

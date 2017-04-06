@@ -1,45 +1,45 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var UserApiUtil = require('../../../util/user_api_util');
-var ModalActions = require('../../../actions/modal_actions');
+import React from 'react';
+import UserApiUtil from '../../../util/user_api_util';
+import ModalActions from '../../../actions/modal_actions';
 
-var SignUpForm = React.createClass({
+export default class SignUpForm extends React.Component {
 
-  getInitialState: function () {
-    return {username: "", email: "", password: "", passwordConfirmation: ""};
-  },
-
-  handleSubmit: function (e) {
-    e.preventDefault();
-    var data = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      password_confirmation: this.state.passwordConfirmation
+  constructor(props) {
+    super(props);
+    this.state =  {
+      username: "",
+      email: "",
+      password: "",
+      password_confirmation: ""
     };
-    UserApiUtil.signUpUser(data);
-    ModalActions.receiveModal(null);
-  },
+  }
 
-  usernameChange: function (e) {
-    this.setState({username: e.currentTarget.value});
-  },
+  handleSubmit(e) {
+    e.preventDefault();
+    UserApiUtil.signUpUser(this.state, () => {
+      ModalActions.receiveModal(null);
+    });
+  }
 
-  emailChange: function (e) {
-    this.setState({email: e.currentTarget.value});
-  },
+  usernameChange(e) {
+    this.setState({ username: e.currentTarget.value });
+  }
 
-  passwordChange: function (e) {
-    this.setState({password: e.currentTarget.value});
-  },
+  emailChange(e) {
+    this.setState({ email: e.currentTarget.value });
+  }
 
-  passwordConfirmationChange: function (e) {
-    this.setState({passwordConfirmation: e.currentTarget.value});
-  },
+  passwordChange(e) {
+    this.setState({ password: e.currentTarget.value });
+  }
 
-  render: function () {
+  passwordConfirmationChange(e) {
+    this.setState({ passwordConfirmation: e.currentTarget.value });
+  }
+
+  render() {
     return (
-      <div className="sign-in-form">
+      <div className="sign-up-form">
         <h2>Create an Account</h2>
 
         <form onSubmit={this.handleSubmit}>
@@ -75,7 +75,7 @@ var SignUpForm = React.createClass({
               onChange={this.passwordConfirmationChange}
               type="password"
               placeholder="confirm password"
-              value={this.state.passwordConfirmation}
+              value={this.state.password_confirmation}
               required="true"
             />
           <input  type="submit" value="Sign Up"/>
@@ -84,6 +84,4 @@ var SignUpForm = React.createClass({
     );
   }
 
-});
-
-module.exports = SignUpForm;
+}

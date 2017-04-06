@@ -1,27 +1,22 @@
-var Store = require('flux/utils').Store;
-var AppDispatcher = require('../dispatcher/dispatcher');
-var _users = [];
-var _currentUser = null;
-var UserStore = new Store(AppDispatcher);
-var UserConstants = require('../constants/user_constants');
+import { Store } from 'flux/utils';
+import AppDispatcher from '../dispatcher/dispatcher';
+import UserConstants from '../constants/user_constants';
 
-UserStore.all = function () {
-  return _users.slice();
-};
+const userStore = new Store(AppDispatcher);
+let _currentUser = null,
+    _users = [];
 
-UserStore.currentUser = function () {
-  return _currentUser;
-};
+userStore.all = () => _users.slice();
 
-UserStore.__onDispatch = function (payload) {
+userStore.currentUser = () =>  _currentUser;
+
+userStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case UserConstants.RECEIVE_CURRENT_USER:
       _currentUser = payload.currentUser;
-      UserStore.__emitChange();
+      userStore.__emitChange();
       break;
   }
 };
 
-window.UserStore = UserStore;
-
-module.exports = UserStore;
+export default userStore;

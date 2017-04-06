@@ -1,4 +1,4 @@
-# == Schema Information# == Schema Information
+# == Schema Information
 #
 # Table name: posts
 #
@@ -9,6 +9,9 @@
 #  body       :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  url        :string
+#  deleted    :boolean          default(FALSE), not null
+#
 
 # SELECT
 #   posts.*, SUM(votes.value) AS score

@@ -1,37 +1,34 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var UserApiUtil = require('../../../util/user_api_util');
-var ModalActions = require('../../../actions/modal_actions');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import UserApiUtil from '../../../util/user_api_util';
+import ModalActions from '../../../actions/modal_actions';
 
-var SignInForm = React.createClass({
+export default class SignInForm extends React.Component {
 
-  getInitialState: function () {
-    return {username: "", password: ""};
-  },
+  constructor(props) {
+    super(props);
+    this.state = { username: "", password: "" };
+  }
 
-  componentDidMount: function () {
+  componentDidMount() {
     ReactDOM.findDOMNode(this.refs.usernameInput).focus();
-  },
+  }
 
-  handleSubmit: function (e) {
+  handleSubmit(e) {
     e.preventDefault();
-    var data = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    UserApiUtil.signInUser(data);
+    UserApiUtil.signInUser(this.state);
     ModalActions.receiveModal(null);
-  },
+  }
 
-  usernameChange: function (e) {
-    this.setState({username: e.currentTarget.value});
-  },
+  usernameChange(e) {
+    this.setState({ username: e.currentTarget.value });
+  }
 
-  passwordChange: function (e) {
-    this.setState({password: e.currentTarget.value});
-  },
+  passwordChange(e) {
+    this.setState({ password: e.currentTarget.value });
+  }
 
-  render: function () {
+  render() {
     return (
       <div className="sign-in-form">
         <h2>Sign In</h2>
@@ -58,6 +55,4 @@ var SignInForm = React.createClass({
     );
   }
 
-});
-
-module.exports = SignInForm;
+}

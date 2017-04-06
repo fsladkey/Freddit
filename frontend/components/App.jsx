@@ -1,38 +1,38 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var ModalStore = require('../stores/modal_store');
-var UserStore = require('../stores/user_store');
+import React from 'react';
+import UserStore from '../stores/user_store';
+import ModalStore from '../stores/modal_store';
+import UserApiUtil from '../util/user_api_util';
 
-var App = React.createClass({
+export default class App extends React.Component {
 
-  getInitialState: function () {
-    return {modal: null};
-  },
+  constructor(props) {
+    super(props);
+    this.state = { modal: null };
+  }
 
-  componentDidMount: function () {
+  componentDidMount() {
     if (!UserStore.currentUser()) {
       UserApiUtil.fetchCurrentUser();
     }
 
     this.modalListener = ModalStore.addListener(this._modalChanged);
-  },
+  }
 
-  componentWillUnMount: function () {
+  componentWillUnMount() {
     this.modalListener.remove();
-  },
+  }
 
-  render: function(){
+  render() {
     return (
       <div>
         {this.state.modal}
         {this.props.children}
       </div>
     );
-  },
-
-  _modalChanged: function () {
-    this.setState({modal: ModalStore.modal()});
   }
-});
 
-module.exports = App;
+  _modalChanged() {
+    this.setState({ modal: ModalStore.modal() });
+  }
+
+}

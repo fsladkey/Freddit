@@ -1,4 +1,4 @@
-var PostConstants = {
+const postConstants = {
   RECEIVE_POSTS: "RECEIVE_POSTS",
   RECEIVE_SUB_POSTS: "RECEIVE_SUB_POSTS",
   RECEIVE_POST: "RECEIVE_POST",
@@ -6,4 +6,4 @@ var PostConstants = {
   DELETE_COMMENT: "DELETE_COMMENT"
 };
 
-module.exports = PostConstants;
+export default postConstants;

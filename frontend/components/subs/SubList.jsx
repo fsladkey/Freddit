@@ -1,39 +1,40 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var SubStore = require('../../stores/sub_store');
-var SubApiUtil = require('../../util/sub_api_util');
+import React from 'react';
+import SubStore from '../../stores/sub_store';
+import SubApiUtil from '../../util/sub_api_util';
 
-var SubList = React.createClass({
-
-  getInitialState: function () {
-    return {subs: SubStore.all()};
-  },
-
-  componentDidMount: function () {
-    this.subListener = SubStore.addListener(this._subChanged);
-    SubApiUtil.fetchSubs();
-  },
-
-  componentWillUnmount: function () {
-    this.subListener.remove();
-  },
-
-  subClassName: function (item, match) {
+let subClassName = function (item, match) {
     return item === match ? "current-sub" : "";
-  },
+};
 
-  render: function () {
-    var subs =  (
-      this.state.subs.map(function (sub) {
-        var className = this.subClassName(this.props.subName, sub.title);
+export default class Sub extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { subs: SubStore.all() };
+  }
+
+  componentDidMount() {
+    this.subListener = SubStore.addListener(this._subChanged.bind(this));
+    SubApiUtil.fetchSubs();
+  }
+
+  componentWillUnmount() {
+    this.subListener.remove();
+  }
+
+  render() {
+    let className = subClassName(this.props.subName, "all");
+    let subs = (
+      this.state.subs.map(sub => {
+        let className = subClassName(this.props.subName, sub.title);
         return (
           <li className={className} key={sub.id}>
             <a href={"#/r/" + sub.title}>{sub.title}</a>
           </li>
         );
-      }, this)
+      })
     );
-    var className = this.subClassName(this.props.subName, "all");
+
     return (
       <div className="sub-list">
       <ul>
@@ -44,13 +45,10 @@ var SubList = React.createClass({
       </ul>
       </div>
     );
-  },
-
-  _subChanged: function () {
-    this.setState({subs: SubStore.all()});
   }
 
-});
+  _subChanged() {
+    this.setState({ subs: SubStore.all() });
+  }
 
-
-module.exports = SubList;
+}

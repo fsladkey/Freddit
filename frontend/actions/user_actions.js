@@ -1,7 +1,7 @@
-var AppDispatcher = require('../dispatcher/dispatcher');
-var UserConstants = require('../constants/user_constants');
+import AppDispatcher from '../dispatcher/dispatcher';
+import UserConstants from '../constants/user_constants';
 
-var UserActions = {
+let UserActions = {
   receiveCurrentUser: function(currentUser){
     AppDispatcher.dispatch({
       actionType: UserConstants.RECEIVE_CURRENT_USER,

@@ -1,5 +1,5 @@
-var ModalConstants = {
+const modalConstants = {
   RECEIVE_MODAL: "RECEIVE_MODAL"
 };
 
-module.exports = ModalConstants;
+export default modalConstants;

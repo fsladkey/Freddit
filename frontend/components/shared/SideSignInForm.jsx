@@ -1,32 +1,34 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    UserApiUtil = require('../../util/user_api_util'),
-    ModalActions = require('../../actions/modal_actions');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import UserApiUtil from '../../util/user_api_util';
+import ModalActions from '../../actions/modal_actions';
 
-module.exports = React.createClass({
+export default class SideSignInForm extends React.Component {
 
-  getInitialState: function () {
-    return {username: "", password: ""};
-  },
+  constructor(props) {
+    super(props);
+    this.state = { username: "", password: "" };
+  }
 
-  handleSubmit: function (e) {
+  handleSubmit(e) {
     e.preventDefault();
+
     var data = {
       username: this.state.username,
       password: this.state.password,
     };
     UserApiUtil.signInUser(data);
-  },
+  }
 
-  usernameChange: function (e) {
+  usernameChange(e) {
     this.setState({username: e.currentTarget.value});
-  },
+  }
 
-  passwordChange: function (e) {
+  passwordChange(e) {
     this.setState({password: e.currentTarget.value});
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <div className="side-sign-in-form">
         <form onSubmit={this.handleSubmit}>
@@ -53,4 +55,4 @@ module.exports = React.createClass({
     );
   }
 
-});
+}

@@ -1,11 +1,9 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
 
-var Comments = React.createClass({
+class Comments extends React.Component {
 
-  render: function () {
-    var comments = this.props.comments.map(
-      function (comment) {
+  render() {
+    let comments = this.props.comments.map(comment => {
         return (
           <Comment
             commentClass={this.props.commentClass}
@@ -13,7 +11,7 @@ var Comments = React.createClass({
             post={this.props.post}
             key={comment.id}/>
         );
-    }, this);
+    });
 
     return (
       <div>
@@ -24,7 +22,7 @@ var Comments = React.createClass({
     );
   }
 
-});
+}
 
-module.exports = Comments;
-var Comment = require('./Comment');
+import Comment from './Comment';
+export default Comments;

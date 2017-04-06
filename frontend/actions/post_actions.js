@@ -1,7 +1,7 @@
-var AppDispatcher = require('../dispatcher/dispatcher');
-var PostConstants = require('../constants/post_constants');
+import AppDispatcher from '../dispatcher/dispatcher';
+import PostConstants from '../constants/post_constants';
 
-var PostActions = {
+let PostActions = {
   receiveAll: function(posts){
     AppDispatcher.dispatch({
       actionType: PostConstants.RECEIVE_POSTS,

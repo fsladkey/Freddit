@@ -1,11 +1,10 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    FrontPage = require('./FrontPage');
+import React from 'react';
+import FrontPage from './FrontPage';
 
-module.exports = React.createClass({
+export default class FrontPageHot extends React.Component {
 
-  render: function () {
+  render() {
     return <FrontPage sort="hot" history={this.props.history}/>;
   }
 
-});
+}

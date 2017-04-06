@@ -1,11 +1,14 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    Sub = require('./Sub');
+import React from 'react';
+import Sub from './Sub';
 
-module.exports = React.createClass({
+export default class SubControversial extends React.Component {
 
-  render: function () {
-    return <Sub sort="controversial" history={this.props.history}/>;
+  render() {
+    return <Sub sort="controversial"
+      children={this.props.children}
+      params={this.props.params}
+      history={this.props.history}
+    />;
   }
 
-});
+}

@@ -1,13 +1,12 @@
-var PostActions = require('../actions/post_actions');
+import postActions from '../actions/post_actions';
 
-PostApiUtil = {
+const postApiUtil = {
+
   fetchSubPosts: function(subId){
     $.ajax({
       method: "GET",
       url: "/api/subs/" + subId + "/posts",
-      success: function (posts) {
-        PostActions.receiveAll(posts);
-      }
+      success: posts => postActions.receiveAll(posts)
     });
   },
 
@@ -17,9 +16,7 @@ PostApiUtil = {
       method: "GET",
       url: "/api/posts",
       data: data,
-      success: function (posts) {
-        PostActions.receiveAll(posts);
-      }
+      success: posts => postActions.receiveAll(posts)
     });
   },
 
@@ -27,21 +24,20 @@ PostApiUtil = {
     $.ajax({
       method: "GET",
       url: "/api/posts/" + postId,
-      success: function (post) {
-        PostActions.receivePost(post);
+      success: post => {
+        postActions.receivePost(post);
         cb && cb();
       }
     });
   },
 
   createPost: function(post, cb){
-    debugger
     $.ajax({
       method: "POST",
       url: "/api/posts/",
       data: { post: post },
-      success: function (post) {
-        PostActions.receivePost(post);
+      success: post => {
+        postActions.receivePost(post);
         cb && cb();
       }
     });
@@ -51,9 +47,7 @@ PostApiUtil = {
     $.ajax({
       method: "POST",
       url: "/api/posts/" + postId + "/upvote",
-      success: function (post) {
-        PostActions.receivePost(post);
-      }
+      success: post => postActions.receivePost(post)
     });
   },
 
@@ -62,10 +56,10 @@ PostApiUtil = {
       method: "POST",
       url: "/api/posts/" + postId + "/downvote",
       success: function (post) {
-        PostActions.receivePost(post);
+        postActions.receivePost(post);
       }
     });
   }
 };
 
-module.exports = PostApiUtil;
+export default postApiUtil;

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322155738) do
+ActiveRecord::Schema.define(version: 20160329144133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,10 +53,14 @@ ActiveRecord::Schema.define(version: 20160322155738) do
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
   create_table "subs", force: :cascade do |t|
-    t.string   "title",       null: false
-    t.text     "description", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "title",                 null: false
+    t.text     "description",           null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "bg_image_file_name"
+    t.string   "bg_image_content_type"
+    t.integer  "bg_image_file_size"
+    t.datetime "bg_image_updated_at"
   end
 
   add_index "subs", ["title"], name: "index_subs_on_title", unique: true, using: :btree

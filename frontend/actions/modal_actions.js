@@ -1,7 +1,7 @@
-var AppDispatcher = require('../dispatcher/dispatcher');
-var ModalConstants = require('../constants/modal_constants');
+import AppDispatcher from '../dispatcher/dispatcher';
+import ModalConstants from '../constants/modal_constants';
 
-var ModalActions = {
+let ModalActions = {
   receiveModal: function(modal){
     AppDispatcher.dispatch({
       actionType: ModalConstants.RECEIVE_MODAL,

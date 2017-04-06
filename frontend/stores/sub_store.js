@@ -1,12 +1,12 @@
-var Store = require('flux/utils').Store;
-var AppDispatcher = require('../dispatcher/dispatcher');
-var SubConstants = require('../constants/sub_constants');
+import { Store } from 'flux/utils';
+import AppDispatcher from '../dispatcher/dispatcher';
+import SubConstants from '../constants/sub_constants';
 
-var SubStore = new Store(AppDispatcher);
-var _subs = [];
+let _subs = [];
+const subStore = new Store(AppDispatcher);
 
-var addSub = function (newSub) {
-  var replaced = false;
+let addSub = function (newSub) {
+  let replaced = false;
   _subs.forEach(function (sub, idx) {
     if (sub.id == newSub.id) {
       _subs[idx] = newSub;
@@ -19,29 +19,27 @@ var addSub = function (newSub) {
   }
 };
 
-SubStore.all = function () {
+subStore.all = function () {
   return _subs.slice();
 };
 
-SubStore.findByName = function (subName) {
+subStore.findByName = function (subName) {
   return _subs.find(function(sub) {
     return sub.title == subName;
   });
 };
 
-SubStore.__onDispatch = function (payload) {
+subStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case SubConstants.RECEIVE_SUBS:
       _subs = payload.subs;
-      SubStore.__emitChange();
+      subStore.__emitChange();
       break;
     case SubConstants.RECEIVE_SUB:
       addSub(payload.sub);
-      SubStore.__emitChange();
+      subStore.__emitChange();
       break;
   }
 };
 
-window.SubStore = SubStore;
-
-module.exports = SubStore;
+export default subStore;

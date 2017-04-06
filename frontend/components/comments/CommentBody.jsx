@@ -1,17 +1,16 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
 
-var CommentBody = React.createClass({
+export default class CommentBody extends React.Component {
 
-  componentDidMount: function () {
+  componentDidMount() {
 
     var setTimeAgo = function () {
       $("abbr.timeago").timeago();
     }.bind(this);
 
-  },
+  }
 
-  render: function () {
+  render() {
     var comment = this.props.comment;
 
     return (
@@ -35,6 +34,4 @@ var CommentBody = React.createClass({
     );
   }
 
-});
-
-module.exports = CommentBody;
+}

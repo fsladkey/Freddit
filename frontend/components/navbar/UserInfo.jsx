@@ -1,40 +1,40 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    ModalActions = require('../../actions/modal_actions'),
-    UserStore = require('../../stores/user_store'),
-    SignInModal = require('../shared/sign_in_modal/SignInModal'),
-    SignInInfo = require('../shared/SignInInfo'),
-    CurrentUserInfo = require('../shared/CurrentUserInfo');
+import React from 'react';
+import ModalActions from '../../actions/modal_actions';
+import UserStore from '../../stores/user_store';
+import SignInModal from '../shared/sign_in_modal/SignInModal';
+import SignInInfo from '../shared/SignInInfo';
+import CurrentUserInfo from '../shared/CurrentUserInfo';
 
-module.exports = React.createClass({
+export default class UserInfo extends React.Component {
 
-  getInitialState: function () {
-    return {currentUser: UserStore.currentUser()};
-  },
+  constructor(props) {
+    super(props);
+    this.state =  { currentUser: UserStore.currentUser() };
+  }
 
-  handleClick: function () {
+  handleClick() {
     ModalActions.receiveModal(<SignInModal/>);
-  },
+  }
 
-  componentDidMount: function () {
-    this.userListener = UserStore.addListener(this._usersChanged);
-  },
+  componentDidMount() {
+    this.userListener = UserStore.addListener(this._usersChanged.bind(this));
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.userListener.remove();
-  },
+  }
 
-  render: function () {
-    var content;
+  render() {
+    let content;
     if (this.state.currentUser) {
       return <CurrentUserInfo/>;
     } else {
       return <SignInInfo/>;
     }
-  },
-
-  _usersChanged: function () {
-    this.setState({currentUser: UserStore.currentUser()});
   }
 
-});
+  _usersChanged() {
+    this.setState({ currentUser: UserStore.currentUser() });
+  }
+
+}

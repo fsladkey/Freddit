@@ -1,23 +1,22 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var SignInForm = require('./SignInForm');
-var SignUpForm = require('./SignUpForm');
-var ModalActions = require('../../../actions/modal_actions');
+import React from 'react';
+import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
+import ModalActions from '../../../actions/modal_actions';
 
-var SignInModal = React.createClass({
+export default class SignInModal extends React.Component {
 
-  removeModal: function () {
+  removeModal() {
     ModalActions.receiveModal(null);
-  },
+  }
 
-  stopProp: function (e) {
+  stopPropagation(e) {
     e.stopPropagation();
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <div onClick={this.removeModal} className="modal">
-        <div onClick={this.stopProp} className="modal-content">
+        <div onClick={this.stopPropagation} className="modal-content">
           <button onClick={this.removeModal} className="exit-modal">
             x
           </button>
@@ -28,6 +27,4 @@ var SignInModal = React.createClass({
     );
   }
 
-});
-
-module.exports = SignInModal;
+}

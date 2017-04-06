@@ -1,16 +1,19 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var PostStore = require('../../stores/post_store');
-var PostApiUtil = require('../../util/post_api_util');
-var PostPreview = require('./PostPreview');
+import React from 'react';
+import PostPreview from './PostPreview';
 
-var Posts = React.createClass({
+export default class Posts extends React.Component {
 
-  render: function () {
-    var posts = (
-      this.props.posts.map(function (post) {
-        return <PostPreview showSub={this.props.showSub} key={post.id }post={post}/>;
-      }, this)
+  render() {
+    let posts = (
+      this.props.posts.map(post => {
+        return (
+          <PostPreview
+            showSub={this.props.showSub}
+            key={post.id }
+            post={post}
+          />
+        );
+      })
     );
 
     return (
@@ -20,9 +23,6 @@ var Posts = React.createClass({
         </ul>
       </div>
     );
-  },
+  }
 
-
-});
-
-module.exports = Posts;
+}

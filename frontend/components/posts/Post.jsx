@@ -1,23 +1,34 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var PostStore = require('../../stores/post_store');
-var PostApiUtil = require('../../util/post_api_util');
-var Comments = require('../comments/Comments');
-var VoteForm = require('../shared/VoteForm');
-var CommentForm = require('../comments/CommentForm');
+import React from 'react';
+import PostStore from '../../stores/post_store';
+import PostApiUtil from '../../util/post_api_util';
+import Comments from '../comments/Comments';
+import VoteForm from '../shared/VoteForm';
+import CommentForm from '../comments/CommentForm';
 
-var Post = React.createClass({
+let submitterInfo = function (post) {
+  return (
+    <p className="submitter-info">
+      Submitted <abbr
+        className="timeago"
+        title={post.created_at}>{post.created_at}
+      </abbr> by <a className="clickable" href="#">{post.user.username}</a>
+    </p>
+  );
+};
 
-  getInitialState: function () {
-    return {
+export default class Post extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
       post: PostStore.find(this.props.params.id)
     };
-  },
+  }
 
-  componentDidMount: function () {
-    this.postListener = PostStore.addListener(this._postsChanged);
+  componentDidMount() {
+    this.postListener = PostStore.addListener(this._postsChanged.bind(this));
 
-    var setTimeAgo = function () {
+    let setTimeAgo = function () {
       $("abbr.timeago").timeago();
     }.bind(this);
 
@@ -26,24 +37,24 @@ var Post = React.createClass({
     } else {
       setTimeAgo();
     }
-  },
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.postListener.remove();
-  },
+  }
 
-  componentWillReceiveProps: function (newProps) {
+  componentWillReceiveProps(newProps) {
     PostApiUtil.fetchPost(newProps.params.id);
-  },
+  }
 
-  postComments: function () {
-    return this.state.post.comments.filter(function (comment) {
+  postComments() {
+    return this.state.post.comments.filter(comment => {
       return !comment.parent_comment_id;
     });
-  },
+  }
 
-  comments: function () {
-    var children = this.props.children;
+  comments() {
+    let children = this.props.children;
 
     if (children) {
       return children;
@@ -55,22 +66,10 @@ var Post = React.createClass({
         </div>
       );
     }
-  },
+  }
 
-  submitterInfo: function () {
-    var post = this.state.post;
-    return (
-      <p className="submitter-info">
-        Submitted <abbr
-          className="timeago"
-          title={post.created_at}>{post.created_at}
-        </abbr> by <a className="clickable" href="#">{post.user.username}</a>
-      </p>
-    );
-  },
-
-  render: function () {
-    var post = this.state.post;
+  render() {
+    let post = this.state.post;
     if (!post) { return <div></div>; }
 
     return (
@@ -84,7 +83,7 @@ var Post = React.createClass({
           <div className="post-detail-right">
             <h3>{post.title}</h3>
 
-            {this.submitterInfo()}
+            {submitterInfo(post)}
 
             <div className="post-body">
               <p>{post.body}</p>
@@ -98,15 +97,12 @@ var Post = React.createClass({
       </div>
     );
 
-  },
+  }
 
-  _postsChanged: function () {
+  _postsChanged() {
     this.setState({
       post: PostStore.find(this.props.params.id)
     });
   }
 
-
-});
-
-module.exports = Post;
+}

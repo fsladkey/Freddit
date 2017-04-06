@@ -1,65 +1,66 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Comments = require('./Comments');
-var CommentForm = require('./CommentForm');
-var CommentBody = require('./CommentBody');
-var SignInModal = require('../shared/sign_in_modal/SignInModal');
-var VoteForm = require('../shared/VoteForm');
-var ModalActions = require('../../actions/modal_actions');
-var CommentApiUtil = require('../../util/comment_api_util');
-var UserStore = require('../../stores/user_store');
+import React from 'react';
+import ModalActions from '../../actions/modal_actions';
+import CommentApiUtil from '../../util/comment_api_util';
+import UserStore from '../../stores/user_store';
+import PostStore from '../../stores/post_store';
+import Comments from './Comments';
+import CommentForm from './CommentForm';
+import CommentBody from './CommentBody';
+import SignInModal from '../shared/sign_in_modal/SignInModal';
+import VoteForm from '../shared/VoteForm';
 
-var Comment = React.createClass({
+export default class Comment extends React.Component {
 
-  getInitialState: function () {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       showForm: false,
       currentUser: UserStore.currentUser()
     };
-  },
+  }
 
-  componentDidMount: function () {
-    this.userListener = UserStore.addListener(this._usersChanged);
-  },
+  componentDidMount() {
+    this.userListener = UserStore.addListener(this._usersChanged.bind(this));
+  }
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
   this.userListener.remove();
-  },
+  }
 
-  _usersChanged: function () {
+  _usersChanged() {
     this.setState({ currentUser: UserStore.currentUser() });
-  },
+  }
 
-  childComments: function () {
-    var parentComment = this.props.comment;
-    var post = PostStore.find(parentComment.post_id);
+  childComments() {
+    let parentComment = this.props.comment,
+        post = PostStore.find(parentComment.post_id);
 
-    return post.comments.filter(function(comment) {
+    return post.comments.filter(comment => {
       return comment.parent_comment_id === parentComment.id;
     });
 
-  },
+  }
 
-  toggleForm: function () {
+  toggleForm() {
     if (UserStore.currentUser()) {
       this.setState({ showForm: !this.state.showForm });
     } else {
       ModalActions.receiveModal(<SignInModal/>);
     }
-  },
+  }
 
-  deleteButton: function () {
-    var currentUser = this.state.currentUser;
+  deleteButton() {
+    let currentUser = this.state.currentUser;
     if (currentUser && currentUser.id == this.props.comment.user_id) {
       return <button onClick={this.deleteComment}>delete</button>;
     }
-  },
+  }
 
-  deleteComment: function () {
+  deleteComment(e) {
     CommentApiUtil.destroyComment(this.props.comment.id);
-  },
+  }
 
-  commentForm: function () {
+  commentForm() {
     if (this.state.showForm) {
       return (
         <CommentForm
@@ -68,10 +69,10 @@ var Comment = React.createClass({
           post={this.props.post} />
       );
     }
-  },
+  }
 
-  render: function () {
-    var comment = this.props.comment,
+  render() {
+    let comment = this.props.comment,
         commentClass = this.props.commentClass == "even" ? "odd" : "even";
 
     return (
@@ -96,6 +97,4 @@ var Comment = React.createClass({
     );
   }
 
-});
-
-module.exports = Comment;
+}

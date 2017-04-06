@@ -1,27 +1,27 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Comment = require('./Comment');
+import { Component } from 'react';
+import Comment from './Comment';
 
-var CommentShow = React.createClass({
+let getStateFromProps = function (props) {
+  var post = PostStore.find(props.params.id);
+  var comment = post.comments.find(function (comment) {
+    return comment.id == props.params.commentId;
+  }, this);
 
-  getInitialState: function () {
-    return this.getStateFromProps(this.props);
-  },
+  return { post: post, comment: comment };
+};
 
-  getStateFromProps: function (props) {
-    var post = PostStore.find(props.params.id);
-    var comment = post.comments.find(function (comment) {
-      return comment.id == props.params.commentId;
-    }, this);
+export default class CommentShow extends Component {
 
-    return { post: post, comment: comment };
-  },
+  constructor(props) {
+    super(props);
+    this.state = getStateFromProps(this.props);
+  }
 
-  componentWillReceiveProps: function (newProps) {
-    this.setState(this.getStateFromProps(newProps));
-  },
+  componentWillReceiveProps(newProps) {
+    this.setState(getStateFromProps(newProps));
+  }
 
-  render: function () {
+  render() {
     if (!this.state.comment) { return <div></div>; }
 
     return (
@@ -32,6 +32,4 @@ var CommentShow = React.createClass({
     );
   }
 
-});
-
-module.exports = CommentShow;
+}

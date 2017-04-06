@@ -13,7 +13,7 @@
 
 class Comment < ActiveRecord::Base
   include Votable
-  
+
   validates :body, :user_id, :post_id, presence: true
 
   belongs_to :comment
@@ -44,7 +44,10 @@ class Comment < ActiveRecord::Base
   def self.confidence_sorted_by_post(post)
     comments = self.find_by_sql(<<-SQL)
       SELECT
-        comments.*, COUNT(positive) AS positive, COUNT(negative) AS negative, (COUNT(positive) - COUNT(negative)) AS score
+        comments.*,
+        COUNT(positive) AS positive,
+        COUNT(negative) AS negative,
+        (COUNT(positive) - COUNT(negative)) AS score
       FROM
         comments
       LEFT OUTER JOIN
@@ -79,10 +82,6 @@ class Comment < ActiveRecord::Base
         comments.id
     SQL
     confidence_sort(comments)
-  end
-
-  def num_votes
-    votes.pluck(:value).inject(&:+) || 0
   end
 
 end
